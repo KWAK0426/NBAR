@@ -3,64 +3,802 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>현장조사 보고서 목록</title>
+
+    <title>NBAR 현장 관측 아카이브</title>
+
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: #f8f9fa;
-            color: #333333;
-            max-width: 650px;
-            margin: 50px auto;
-            padding: 20px;
+        * {
             box-sizing: border-box;
-        }
-        .container {
-            background-color: #ffffff;
-            border: 1px solid #e1e4e8;
-            border-radius: 8px;
-            padding: 30px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-        h1 {
-            font-size: 1.4rem;
-            color: #1b1f23;
-            margin-top: 0;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #0366d6;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
             margin: 0;
+            padding: 0;
         }
-        li {
-            padding: 12px 0;
-            border-bottom: 1px solid #e1e4e8;
+
+        body {
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Pretendard",
+                "Noto Sans KR",
+                "Segoe UI",
+                sans-serif;
+
+            background: #f5f7fa;
+            color: #172033;
         }
-        li:last-child {
-            border-bottom: none;
+
+        /* ================================
+           HEADER
+        ================================= */
+
+        header {
+            background: #0b3263;
+            color: white;
         }
-        a {
-            color: #0366d6;
+
+        .header-inner {
+            max-width: 1500px;
+            margin: auto;
+            padding: 24px 32px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .brand-title {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .brand-subtitle {
+            margin-top: 4px;
+            font-size: 14px;
+            color: #d8e3f0;
+        }
+
+        nav {
+            display: flex;
+            gap: 32px;
+            font-size: 15px;
+        }
+
+        nav a {
+            color: white;
             text-decoration: none;
-            font-weight: 500;
-            font-size: 1.05rem;
+            opacity: 0.85;
         }
-        a:hover {
-            color: #0056b3;
-            text-decoration: underline;
+
+        nav a:hover {
+            opacity: 1;
+        }
+
+        /* ================================
+           MAIN GRID
+        ================================= */
+
+        main {
+            max-width: 1500px;
+            margin: 32px auto;
+            padding: 0 28px;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e3e8ef;
+            border-radius: 14px;
+            padding: 26px;
+
+            box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            width: 30px;
+            height: 30px;
+
+            border-radius: 50%;
+            background: #285ea8;
+            color: white;
+
+            font-size: 14px;
+        }
+
+        /* ================================
+           REPORT TABLE
+        ================================= */
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        th {
+            text-align: left;
+            padding: 13px 12px;
+            background: #f7f9fb;
+            color: #556070;
+            font-weight: 600;
+            border-bottom: 1px solid #dfe5ec;
+        }
+
+        td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #e8edf2;
+            vertical-align: middle;
+        }
+
+        .report-button {
+            display: inline-block;
+
+            padding: 8px 14px;
+            border-radius: 7px;
+
+            background: #124b91;
+            color: white;
+
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .report-button:hover {
+            background: #0b376d;
+        }
+
+        /* ================================
+           STATUS BADGE
+        ================================= */
+
+        .badge {
+            display: inline-block;
+            min-width: 60px;
+
+            padding: 5px 10px;
+            border-radius: 20px;
+
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .done {
+            color: #207a42;
+            background: #eaf7ef;
+            border: 1px solid #bde4ca;
+        }
+
+        .progress {
+            color: #a86700;
+            background: #fff6df;
+            border: 1px solid #f2d68a;
+        }
+
+        .planned {
+            color: #6c7480;
+            background: #f2f4f6;
+            border: 1px solid #d8dde3;
+        }
+
+        /* ================================
+           PROGRESS
+        ================================= */
+
+        .progress-row {
+            display: grid;
+            grid-template-columns: 120px 80px 1fr 55px;
+            align-items: center;
+
+            gap: 14px;
+            padding: 15px 0;
+
+            border-bottom: 1px solid #edf0f3;
+        }
+
+        .progress-label {
+            font-weight: 600;
+        }
+
+        .progress-count {
+            color: #606a78;
+            font-size: 14px;
+        }
+
+        .progress-track {
+            height: 9px;
+            background: #e8edf3;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #285ea8;
+            border-radius: 10px;
+        }
+
+        .progress-percent {
+            text-align: right;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* ================================
+           UPDATE LIST
+        ================================= */
+
+        .update-list {
+            list-style: none;
+        }
+
+        .update-item {
+            display: grid;
+            grid-template-columns: 100px 90px 1fr;
+            gap: 15px;
+
+            padding: 16px 0;
+            border-bottom: 1px solid #edf0f3;
+
+            align-items: center;
+        }
+
+        .update-date {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .update-type {
+            font-size: 12px;
+            font-weight: 600;
+
+            padding: 5px 9px;
+            border-radius: 5px;
+
+            text-align: center;
+
+            color: #285ea8;
+            background: #edf4fc;
+        }
+
+        .update-text {
+            font-size: 14px;
+            color: #424b58;
+        }
+
+        /* ================================
+           INFO BOX
+        ================================= */
+
+        .summary-box {
+            margin-top: 22px;
+            padding: 18px 20px;
+
+            background: #f2f6fb;
+            border-radius: 9px;
+
+            display: flex;
+            justify-content: space-between;
+
+            font-size: 14px;
+        }
+
+        .summary-box strong {
+            color: #174a87;
+        }
+
+        /* ================================
+           FOOTER
+        ================================= */
+
+        footer {
+            margin-top: 40px;
+
+            padding: 25px;
+            text-align: center;
+
+            color: #7b8491;
+            font-size: 13px;
+
+            border-top: 1px solid #e0e5ea;
+        }
+
+        /* ================================
+           MOBILE
+        ================================= */
+
+        @media (max-width: 900px) {
+
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .header-inner {
+                padding: 20px;
+            }
+
+            main {
+                padding: 0 15px;
+            }
+
+            .card {
+                overflow-x: auto;
+            }
         }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <h1>현장조사 보고서 목록</h1>
-        <ul>
-            <li>
-                <a href="report_0630_joint_campaign.html">[1] 2026/06/10 농과원-부산대 공동 현장조사</a>
-            </li>
-        </ul>
+
+<header>
+    <div class="header-inner">
+
+        <div class="brand">
+            <div>
+                <div class="brand-title">
+                    NBAR
+                </div>
+
+                <div class="brand-subtitle">
+                    현장 관측 자료 아카이브
+                </div>
+            </div>
+        </div>
+
+        <nav>
+            <a href="#">홈</a>
+            <a href="#reports">관측 보고서</a>
+            <a href="#processing">처리 현황</a>
+            <a href="#progress">진행 현황</a>
+        </nav>
+
     </div>
+</header>
+
+
+<main>
+
+<div class="dashboard">
+
+    <!-- ====================================
+         1. 현장 관측 보고서
+    ===================================== -->
+
+    <section class="card" id="reports">
+
+        <div class="card-header">
+
+            <div class="card-title">
+                <span class="number">1</span>
+                현장 관측 보고서
+            </div>
+
+        </div>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>날짜</th>
+                    <th>관측 지역</th>
+                    <th>참여 기관</th>
+                    <th>보고서</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>2026.06.10</td>
+                    <td>현장 관측 지역</td>
+                    <td>농과원 · 부산대</td>
+
+                    <td>
+                        <a
+                            class="report-button"
+                            href="report_0630_joint_campaign.html"
+                        >
+                            보고서 보기
+                        </a>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>2026.07.16</td>
+                    <td>현장 관측 지역</td>
+                    <td>부산대</td>
+
+                    <td>
+                        <span class="badge planned">
+                            준비 중
+                        </span>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>2026.07.31</td>
+                    <td>현장 관측 지역</td>
+                    <td>농과원 · 부산대</td>
+
+                    <td>
+                        <span class="badge planned">
+                            준비 중
+                        </span>
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+
+
+    <!-- ====================================
+         2. 자료 처리 현황
+    ===================================== -->
+
+    <section class="card" id="processing">
+
+        <div class="card-header">
+
+            <div class="card-title">
+                <span class="number">2</span>
+                자료 처리 현황
+            </div>
+
+        </div>
+
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>관측일</th>
+                    <th>자료 정리</th>
+                    <th>영상 처리</th>
+                    <th>품질 검토</th>
+                    <th>보고서</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>2026.06.10</td>
+
+                    <td>
+                        <span class="badge done">완료</span>
+                    </td>
+
+                    <td>
+                        <span class="badge done">완료</span>
+                    </td>
+
+                    <td>
+                        <span class="badge done">완료</span>
+                    </td>
+
+                    <td>
+                        <span class="badge done">완료</span>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>2026.07.16</td>
+
+                    <td>
+                        <span class="badge done">완료</span>
+                    </td>
+
+                    <td>
+                        <span class="badge progress">진행 중</span>
+                    </td>
+
+                    <td>
+                        <span class="badge planned">예정</span>
+                    </td>
+
+                    <td>
+                        <span class="badge progress">진행 중</span>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>2026.07.31</td>
+
+                    <td>
+                        <span class="badge done">완료</span>
+                    </td>
+
+                    <td>
+                        <span class="badge progress">진행 중</span>
+                    </td>
+
+                    <td>
+                        <span class="badge planned">예정</span>
+                    </td>
+
+                    <td>
+                        <span class="badge planned">예정</span>
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+
+
+    <!-- ====================================
+         3. 전체 진행 현황
+    ===================================== -->
+
+    <section class="card" id="progress">
+
+        <div class="card-header">
+
+            <div class="card-title">
+                <span class="number">3</span>
+                전체 진행 현황
+            </div>
+
+        </div>
+
+
+        <div class="progress-row">
+
+            <div class="progress-label">
+                현장 관측
+            </div>
+
+            <div class="progress-count">
+                7 / 9회
+            </div>
+
+            <div class="progress-track">
+                <div
+                    class="progress-fill"
+                    style="width: 78%;">
+                </div>
+            </div>
+
+            <div class="progress-percent">
+                78%
+            </div>
+
+        </div>
+
+
+        <div class="progress-row">
+
+            <div class="progress-label">
+                보고서 작성
+            </div>
+
+            <div class="progress-count">
+                6 / 9건
+            </div>
+
+            <div class="progress-track">
+                <div
+                    class="progress-fill"
+                    style="width: 67%;">
+                </div>
+            </div>
+
+            <div class="progress-percent">
+                67%
+            </div>
+
+        </div>
+
+
+        <div class="progress-row">
+
+            <div class="progress-label">
+                자료 처리
+            </div>
+
+            <div class="progress-count">
+                5 / 9건
+            </div>
+
+            <div class="progress-track">
+                <div
+                    class="progress-fill"
+                    style="width: 56%;">
+                </div>
+            </div>
+
+            <div class="progress-percent">
+                56%
+            </div>
+
+        </div>
+
+
+        <div class="progress-row">
+
+            <div class="progress-label">
+                품질 검토
+            </div>
+
+            <div class="progress-count">
+                4 / 9건
+            </div>
+
+            <div class="progress-track">
+                <div
+                    class="progress-fill"
+                    style="width: 44%;">
+                </div>
+            </div>
+
+            <div class="progress-percent">
+                44%
+            </div>
+
+        </div>
+
+
+        <div class="summary-box">
+
+            <div>
+                <strong>관측 기간</strong><br>
+                2026.05 ~ 2026.11
+            </div>
+
+            <div>
+                <strong>최종 업데이트</strong><br>
+                2026.08.09
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ====================================
+         4. 최근 업데이트
+    ===================================== -->
+
+    <section class="card">
+
+        <div class="card-header">
+
+            <div class="card-title">
+                <span class="number">4</span>
+                최근 업데이트
+            </div>
+
+        </div>
+
+
+        <ul class="update-list">
+
+            <li class="update-item">
+
+                <div class="update-date">
+                    2026.08.09
+                </div>
+
+                <div class="update-type">
+                    보고서 수정
+                </div>
+
+                <div class="update-text">
+                    06.10 공동 현장 관측 보고서 내용 수정
+                </div>
+
+            </li>
+
+
+            <li class="update-item">
+
+                <div class="update-date">
+                    2026.07.31
+                </div>
+
+                <div class="update-type">
+                    신규 관측
+                </div>
+
+                <div class="update-text">
+                    현장 관측 수행
+                </div>
+
+            </li>
+
+
+            <li class="update-item">
+
+                <div class="update-date">
+                    2026.07.16
+                </div>
+
+                <div class="update-type">
+                    자료 추가
+                </div>
+
+                <div class="update-text">
+                    다각도 UAV 관측 자료 추가
+                </div>
+
+            </li>
+
+
+            <li class="update-item">
+
+                <div class="update-date">
+                    2026.06.10
+                </div>
+
+                <div class="update-type">
+                    신규 관측
+                </div>
+
+                <div class="update-text">
+                    농과원-부산대 공동 현장 관측 수행
+                </div>
+
+            </li>
+
+        </ul>
+
+    </section>
+
+</div>
+
+</main>
+
+
+<footer>
+    © 2026 NBAR Field Observation Archive
+</footer>
+
+
 </body>
 </html>
