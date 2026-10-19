@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NBAR 사용 가능 이미지 목록</title>
+    <style>
+        :root { --navy:#0b2545; --green:#0f8a5f; --ink:#172033; --muted:#64748b; --line:#dbe3ee; --soft:#eef2f7; }
+        * { box-sizing:border-box; }
+        body { margin:0; background:var(--soft); color:var(--ink); font-family:"Malgun Gothic","Apple SD Gothic Neo",Arial,sans-serif; letter-spacing:0; }
+        header { min-height:88px; display:flex; align-items:center; gap:14px; padding:12px 24px; color:#fff; background:var(--navy); border-bottom:4px solid var(--green); }
+        header img { width:58px; height:58px; object-fit:contain; padding:4px; border-radius:6px; background:#fff; }
+        h1 { margin:0; font-size:24px; }
+        header p { margin:3px 0 0; color:#d7e4f3; font-size:14px; }
+        main { width:min(1480px,calc(100% - 32px)); margin:0 auto; padding:24px 0 48px; }
+        .notice { padding:14px 16px; border-left:5px solid var(--green); background:#ecfdf5; }
+        .notice strong { color:#065f46; }
+        h2 { margin:30px 0 12px; padding-bottom:9px; border-bottom:2px solid var(--navy); font-size:20px; }
+        .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+        figure { margin:0; overflow:hidden; border:1px solid var(--line); border-radius:6px; background:#fff; }
+        figure a { display:flex; align-items:center; justify-content:center; height:300px; padding:10px; background:#f8fafc; }
+        figure img { display:block; width:100%; height:100%; object-fit:contain; }
+        figcaption { padding:13px 14px 15px; border-top:1px solid var(--line); }
+        figcaption strong { display:block; margin-bottom:4px; font-size:15px; }
+        figcaption span { color:var(--muted); font-size:13px; }
+        .wide { grid-column:span 2; }
+        .wide a { height:350px; }
+        @media (max-width:980px) { .grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+        @media (max-width:640px) { header { padding:14px 16px; } h1 { font-size:20px; } main { width:min(100% - 20px,1480px); } .grid { grid-template-columns:1fr; } .wide { grid-column:auto; } figure a,.wide a { height:260px; } }
+    </style>
+</head>
+<body>
+<header>
+    <img src="assets/pnu_logo.webp" alt="부산대학교 로고">
+    <div><h1>NBAR 사용 가능 이미지 목록</h1><p>현재 패키지와 6월 10일 보고서에서 바로 재사용할 수 있는 이미지</p></div>
+</header>
+<main>
+    <div class="notice"><strong>현재 실제 현장 분위기를 보여주는 사진은 1번 썸네일뿐입니다.</strong> 나머지는 UAV 처리과정과 산출물을 설명하는 영상입니다. 이미지를 누르면 원본 크기로 열립니다.</div>
+
+    <h2>현장 및 대상지 표현</h2>
+    <div class="grid">
+        <figure class="wide"><a href="assets/field_observation_thumb.png" target="_blank"><img src="assets/field_observation_thumb.png" alt="논 생육 단계 현장관측 사진"></a><figcaption><strong>A1. 논 생육 단계 현장관측</strong><span>실제 현장 사진 합성 · 1052×434 · 메인·현장관측 소개용</span></figcaption></figure>
+        <figure><a href="assets/method_candidates/01_ortho_tarp_location.png" target="_blank"><img src="assets/method_candidates/01_ortho_tarp_location.png" alt="타프 위치 Ortho 영상"></a><figcaption><strong>A2. Ortho 영상의 타프 위치</strong><span>3443×4191 · 타프 배치와 대상지 공간관계 설명용</span></figcaption></figure>
+    </div>
+
+    <h2>방사·분광 전처리 과정</h2>
+    <div class="grid">
+        <figure><a href="assets/method_candidates/02_radiometric_correction_example.png" target="_blank"><img src="assets/method_candidates/02_radiometric_correction_example.png" alt="방사보정 영상 예시"></a><figcaption><strong>B1. 방사보정 영상 예시</strong><span>900×620 · DN→Radiance 단계</span></figcaption></figure>
+        <figure><a href="assets/method_candidates/03_before_band_alignment.gif" target="_blank"><img src="assets/method_candidates/03_before_band_alignment.gif" alt="밴드 정합 전 GIF"></a><figcaption><strong>B2. 밴드 정합 전</strong><span>720×560 GIF · 밴드별 위치 차이 설명</span></figcaption></figure>
+        <figure><a href="assets/method_candidates/04_after_band_alignment.gif" target="_blank"><img src="assets/method_candidates/04_after_band_alignment.gif" alt="밴드 정합 후 GIF"></a><figcaption><strong>B3. 밴드 정합 후</strong><span>720×590 GIF · 정합 결과 비교</span></figcaption></figure>
+        <figure class="wide"><a href="assets/method_candidates/05_roi_gui.png" target="_blank"><img src="assets/method_candidates/05_roi_gui.png" alt="ROI 설정 화면"></a><figcaption><strong>B4. ROI 설정 화면</strong><span>2000×1075 · 타프 ROI 지정 절차</span></figcaption></figure>
+        <figure><a href="assets/method_candidates/06_roi_locations_and_ids.png" target="_blank"><img src="assets/method_candidates/06_roi_locations_and_ids.png" alt="ROI 위치와 타프 ID"></a><figcaption><strong>B5. ROI 위치와 타프 ID</strong><span>1550×1125 · 타프별 ROI 구분</span></figcaption></figure>
+        <figure><a href="assets/method_candidates/07_before_sensor_intercalibration.png" target="_blank"><img src="assets/method_candidates/07_before_sensor_intercalibration.png" alt="센서 상호교정 전"></a><figcaption><strong>B6. 센서 간 상호교정 전</strong><span>1008×688 · 센서 응답 차이 비교</span></figcaption></figure>
+        <figure><a href="assets/method_candidates/08_after_sensor_intercalibration.png" target="_blank"><img src="assets/method_candidates/08_after_sensor_intercalibration.png" alt="센서 상호교정 후"></a><figcaption><strong>B7. 센서 간 상호교정 후</strong><span>1008×688 · 교정 후 일치도 비교</span></figcaption></figure>
+    </div>
+
+    <h2>ELC 및 반사도 모자이크 결과</h2>
+    <div class="grid">
+        <figure><a href="assets/method_candidates/09_cycle1_elc_roi.png" target="_blank"><img src="assets/method_candidates/09_cycle1_elc_roi.png" alt="1회차 ELC ROI"></a><figcaption><strong>C1. 1회차 ELC 계수 산정 ROI</strong><span>548×294 · ELC 입력자료 예시</span></figcaption></figure>
+        <figure><a href="assets/method_candidates/10_cycle2_elc_roi.png" target="_blank"><img src="assets/method_candidates/10_cycle2_elc_roi.png" alt="2회차 ELC ROI"></a><figcaption><strong>C2. 2회차 ELC 계수 산정 ROI</strong><span>1285×898 · ELC 입력자료 예시</span></figcaption></figure>
+        <figure><a href="assets/method_candidates/11_cycle1_rgb_mosaic.png" target="_blank"><img src="assets/method_candidates/11_cycle1_rgb_mosaic.png" alt="1회차 RGB 모자이크"></a><figcaption><strong>C3. 1회차 RGB 모자이크</strong><span>1600×1515 · 결과 영상·뷰어 예시</span></figcaption></figure>
+        <figure><a href="assets/method_candidates/12_cycle2_rgb_mosaic.png" target="_blank"><img src="assets/method_candidates/12_cycle2_rgb_mosaic.png" alt="2회차 RGB 모자이크"></a><figcaption><strong>C4. 2회차 RGB 모자이크</strong><span>1600×1282 · 결과 영상·뷰어 예시</span></figcaption></figure>
+    </div>
+</main>
+</body>
+</html>

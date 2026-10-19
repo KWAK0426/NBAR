@@ -1,66 +1,395 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>현장조사 보고서 목록</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NBAR 1차년도 연구 현황 허브</title>
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: #f8f9fa;
-            color: #333333;
-            max-width: 650px;
-            margin: 50px auto;
-            padding: 20px;
+        :root {
+            --navy: #0a2f5d;
+            --navy-deep: #072548;
+            --line: #d8e2ee;
+            --paper: #ffffff;
+            --bg: #eef2f6;
+            --text: #142033;
+            --muted: #617289;
+            --green: #1f8a70;
+            --amber: #c98a2d;
+            --violet: #7b5aa6;
+            --steel: #486b8f;
+            --radius: 8px;
+        }
+
+        * {
             box-sizing: border-box;
         }
-        .container {
-            background-color: #ffffff;
-            border: 1px solid #e1e4e8;
-            border-radius: 8px;
-            padding: 30px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-        h1 {
-            font-size: 1.4rem;
-            color: #1b1f23;
-            margin-top: 0;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #0366d6;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
+
+        html,
+        body {
             margin: 0;
+            min-height: 100%;
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Pretendard",
+                "Noto Sans KR",
+                "Segoe UI",
+                sans-serif;
+            background: var(--bg);
+            color: var(--text);
         }
-        li {
-            padding: 12px 0;
-            border-bottom: 1px solid #e1e4e8;
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
-        li:last-child {
-            border-bottom: none;
+
+        header {
+            flex: 0 0 auto;
+            background: var(--navy);
+            color: #ffffff;
+            border-bottom: 4px solid var(--green);
         }
-        a {
-            color: #0366d6;
-            text-decoration: none;
+
+        .header-inner {
+            width: 100%;
+            max-width: 1240px;
+            margin: 0 auto;
+            min-height: 88px;
+            padding: 16px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+        }
+
+        .brand-lockup {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            min-width: 0;
+        }
+
+        .logo-badge {
+            width: 54px;
+            height: 54px;
+            flex: 0 0 54px;
+            border-radius: 8px;
+            background: #ffffff;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+
+        .logo-badge img {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+        }
+
+        .brand-title {
+            font-size: 24px;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: 0;
+        }
+
+        .brand-subtitle {
+            margin-top: 5px;
+            color: #dbe6f2;
+            font-size: 14px;
             font-weight: 500;
-            font-size: 1.05rem;
+            line-height: 1.45;
+            letter-spacing: 0;
         }
-        a:hover {
-            color: #0056b3;
-            text-decoration: underline;
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 0 0 auto;
+        }
+
+        .last-updated {
+            flex: 0 0 auto;
+            padding: 6px 9px;
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 6px;
+            background: rgba(255,255,255,0.08);
+            color: #d8e3f0;
+            font-size: 11px;
+            line-height: 1.25;
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .last-updated span {
+            display: block;
+            color: #a9bad0;
+            font-weight: 700;
+        }
+
+        .last-updated strong {
+            display: block;
+            margin-top: 2px;
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        main {
+            flex: 1 1 auto;
+            padding: 30px 28px 44px;
+        }
+
+        .task-grid {
+            width: min(1180px, 100%);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        .task-card {
+            min-height: 142px;
+            display: grid;
+            grid-template-columns: 54px minmax(0, 1fr) auto;
+            align-items: center;
+            gap: 22px;
+            padding: 24px 24px 24px 20px;
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-left: 4px solid var(--steel);
+            border-radius: var(--radius);
+            box-shadow: 0 4px 14px rgba(15, 38, 64, 0.05);
+        }
+
+        .task-card.field {
+            border-left-color: var(--green);
+        }
+
+        .task-card.dataset {
+            border-left-color: var(--amber);
+        }
+
+        .task-card.prototype {
+            border-left-color: var(--violet);
+        }
+
+        .task-card.leop {
+            border-left-color: var(--steel);
+        }
+
+        .task-number {
+            color: #8695a8;
+            font-size: 15px;
+            font-weight: 900;
+            text-align: center;
+        }
+
+        .task-content {
+            min-width: 0;
+        }
+
+        .task-title-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .task-title {
+            margin: 0;
+            font-size: 19px;
+            line-height: 1.35;
+            font-weight: 800;
+            color: var(--navy-deep);
+        }
+
+        .status-pill {
+            flex: 0 0 auto;
+            min-width: 58px;
+            padding: 4px 8px;
+            border-radius: 999px;
+            border: 1px solid #cfe8dc;
+            background: #ecf8f3;
+            color: #0f6a52;
+            font-size: 12px;
+            font-weight: 800;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .status-pill.pending {
+            border-color: #ead8b7;
+            background: #fff7e8;
+            color: #8a5b13;
+        }
+
+        .task-summary {
+            margin-top: 9px;
+            color: #2c3a4d;
+            font-size: 14px;
+            line-height: 1.55;
+        }
+
+        .task-note {
+            margin-top: 6px;
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: 600;
+            line-height: 1.35;
+        }
+
+        .task-link {
+            flex: 0 0 auto;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 36px;
+            padding: 0 13px;
+            border-radius: 6px;
+            background: var(--navy);
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .task-link:hover {
+            background: #123f74;
+        }
+
+        .task-link.secondary {
+            background: #e8edf3;
+            color: #1f3148;
+        }
+
+        .task-link.secondary:hover {
+            background: #dce5ee;
+        }
+
+        @media (max-width: 760px) {
+            body {
+                min-height: 100%;
+            }
+
+            .header-inner {
+                padding: 13px 12px;
+                flex-wrap: wrap;
+                align-items: flex-start;
+            }
+
+            .header-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+
+            main {
+                padding: 20px 12px 32px;
+            }
+
+            .task-card {
+                min-height: 0;
+                grid-template-columns: 38px minmax(0, 1fr);
+                gap: 12px;
+                padding: 19px 16px 18px 10px;
+            }
+
+            .task-link {
+                grid-column: 2;
+                justify-self: start;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>현장조사 보고서 목록</h1>
-        <ul>
-            <li>
-                <a href="report_0630_joint_campaign.html">[1] 2026/06/10 농과원-부산대 공동 현장조사</a>
-            </li>
-        </ul>
+<header>
+    <div class="header-inner">
+        <div class="brand-lockup">
+            <div class="logo-badge">
+                <img src="assets/pnu_logo.webp" alt="부산대학교 로고">
+            </div>
+            <div>
+                <div class="brand-title">NBAR 1차년도 연구 현황 허브</div>
+                <div class="brand-subtitle">현장관측, 위성 기반 데이터셋, BRDF 보정 알고리즘 개발 및 적용 현황 통합 공유</div>
+            </div>
+        </div>
+
+        <div class="header-actions">
+            <div class="last-updated" aria-label="최신 업데이트 시간">
+                <span>최신 업데이트</span>
+                <strong id="lastUpdatedText">-</strong>
+            </div>
+        </div>
     </div>
+</header>
+
+<main>
+    <section class="task-grid" aria-label="1차년도 과업별 페이지">
+        <article class="task-card field">
+            <div class="task-number">01</div>
+            <div class="task-content">
+                <div class="task-title-row">
+                    <h2 class="task-title">현장관측</h2>
+                    <div class="status-pill">운영 중</div>
+                </div>
+                <div class="task-summary">현장관측 결과와 자료 처리, 산출물 공유 현황을 확인하는 세부 대시보드입니다.</div>
+                <div class="task-note">현장관측 세부 대시보드 운영</div>
+            </div>
+            <a class="task-link" href="field_observation.html">대시보드 열기</a>
+        </article>
+
+        <article class="task-card dataset">
+            <div class="task-number">02</div>
+            <div class="task-content">
+                <div class="task-title-row">
+                    <h2 class="task-title">위성 기반 반사이방성 데이터셋 구축</h2>
+                    <div class="status-pill pending">준비 중</div>
+                </div>
+                <div class="task-summary">위성 기반 반사이방성 데이터셋 구축 현황을 정리하는 페이지입니다.</div>
+                <div class="task-note">자료 구조 확정 후 연결</div>
+            </div>
+            <a class="task-link secondary" href="satellite_anisotropy_dataset.html">페이지 보기</a>
+        </article>
+
+        <article class="task-card prototype">
+            <div class="task-number">03</div>
+            <div class="task-content">
+                <div class="task-title-row">
+                    <h2 class="task-title">BRDF 보정 알고리즘 프로토타입</h2>
+                    <div class="status-pill pending">준비 중</div>
+                </div>
+                <div class="task-summary">BRDF 보정 알고리즘의 프로토타입 구성과 검증 흐름을 정리하는 페이지입니다.</div>
+                <div class="task-note">프로토타입 산출물 추가 예정</div>
+            </div>
+            <a class="task-link secondary" href="brdf_algorithm_prototype.html">페이지 보기</a>
+        </article>
+
+        <article class="task-card leop">
+            <div class="task-number">04</div>
+            <div class="task-content">
+                <div class="task-title-row">
+                    <h2 class="task-title">LEOP 기반 BRDF 보정 알고리즘 테스트 및 적용</h2>
+                    <div class="status-pill pending">준비 중</div>
+                </div>
+                <div class="task-summary">LEOP 기반 BRDF 보정 알고리즘 테스트와 적용 결과를 정리하는 페이지입니다.</div>
+                <div class="task-note">적용 결과 생성 후 연결</div>
+            </div>
+            <a class="task-link secondary" href="leop_brdf_test_application.html">페이지 보기</a>
+        </article>
+    </section>
+</main>
+
+<script src="data/nbar-data.js"></script>
+<script>
+    (function () {
+        const lastUpdatedText = document.getElementById("lastUpdatedText");
+        lastUpdatedText.textContent = window.NBAR_LAST_UPDATED || "-";
+    })();
+</script>
 </body>
 </html>
