@@ -1,0 +1,157 @@
+{
+  "lastUpdated": "2026.09.20 15:51",
+  "observationCount": 8,
+  "categoryCounts": {
+    "농지": 5,
+    "밭": 1,
+    "나지": 1,
+    "경사지": 1
+  },
+  "totalCycles": 38,
+  "registeredReports": 1,
+  "reservedMissingReports": [
+    {
+      "date": "2026.05.07",
+      "path": "reports/2026-05-07_miryang_field.html"
+    },
+    {
+      "date": "2026.05.10",
+      "path": "reports/2026-05-10_gimhae_rice.html"
+    },
+    {
+      "date": "2026.06.30",
+      "path": "reports/2026-06-30_gimhae_rice.html"
+    },
+    {
+      "date": "2026.07.16",
+      "path": "reports/2026-07-16_gimhae_rice.html"
+    },
+    {
+      "date": "2026.07.31",
+      "path": "reports/2026-07-31_gimhae_rice.html"
+    },
+    {
+      "date": "2026.05.15",
+      "path": "reports/2026-05-15_gimhae_cabbage.html"
+    },
+    {
+      "date": "2026.06.12",
+      "path": "reports/2026-06-12_geumjeongsan_slope.html"
+    }
+  ],
+  "problems": [],
+  "observations": [
+    {
+      "date": "2026.05.07",
+      "coverType": "농지",
+      "crop": "",
+      "site": "밀양 부속농장",
+      "cycles": 3,
+      "observationTime": "12:49~14:45",
+      "imageCount": 2104,
+      "tarpInstalled": false,
+      "report": "reports/2026-05-07_miryang_field.html",
+      "reportState": "예정",
+      "reportExists": false,
+      "mosaic": null
+    },
+    {
+      "date": "2026.05.10",
+      "coverType": "농지",
+      "crop": "벼",
+      "site": "김해 농지",
+      "cycles": 5,
+      "observationTime": "10:50~13:30",
+      "imageCount": 5320,
+      "tarpInstalled": false,
+      "report": "reports/2026-05-10_gimhae_rice.html",
+      "reportState": "예정",
+      "reportExists": false,
+      "mosaic": null
+    },
+    {
+      "date": "2026.06.30",
+      "coverType": "농지",
+      "crop": "벼",
+      "site": "김해 농지",
+      "cycles": 4,
+      "observationTime": "10:01~14:18",
+      "imageCount": 4580,
+      "tarpInstalled": false,
+      "report": "reports/2026-06-30_gimhae_rice.html",
+      "reportState": "예정",
+      "reportExists": false,
+      "mosaic": null
+    },
+    {
+      "date": "2026.07.16",
+      "coverType": "농지",
+      "crop": "벼",
+      "site": "김해 농지",
+      "cycles": 6,
+      "observationTime": "10:00~15:28",
+      "imageCount": 6130,
+      "tarpInstalled": true,
+      "report": "reports/2026-07-16_gimhae_rice.html",
+      "reportState": "예정",
+      "reportExists": false,
+      "mosaic": null
+    },
+    {
+      "date": "2026.07.31",
+      "coverType": "농지",
+      "crop": "벼",
+      "site": "김해 농지",
+      "cycles": 5,
+      "observationTime": "09:55~14:42",
+      "imageCount": 5834,
+      "tarpInstalled": true,
+      "report": "reports/2026-07-31_gimhae_rice.html",
+      "reportState": "예정",
+      "reportExists": false,
+      "mosaic": null
+    },
+    {
+      "date": "2026.05.15",
+      "coverType": "밭",
+      "crop": "양배추",
+      "site": "김해 밭",
+      "cycles": 6,
+      "observationTime": "09:30~15:20",
+      "imageCount": 4233,
+      "tarpInstalled": false,
+      "report": "reports/2026-05-15_gimhae_cabbage.html",
+      "reportState": "예정",
+      "reportExists": false,
+      "mosaic": null
+    },
+    {
+      "date": "2026.06.10",
+      "coverType": "나지",
+      "crop": "",
+      "site": "농업위성센터",
+      "cycles": 6,
+      "observationTime": "09:55~15:12",
+      "imageCount": 7679,
+      "tarpInstalled": true,
+      "report": "reports/2026-06-10_field_result_report.html",
+      "reportState": "진행 중",
+      "reportExists": true,
+      "mosaic": null
+    },
+    {
+      "date": "2026.06.12",
+      "coverType": "경사지",
+      "crop": "",
+      "site": "금정산 북문",
+      "cycles": 3,
+      "observationTime": "10:50~14:58",
+      "imageCount": 9128,
+      "tarpInstalled": true,
+      "report": "reports/2026-06-12_geumjeongsan_slope.html",
+      "reportState": "예정",
+      "reportExists": false,
+      "mosaic": null
+    }
+  ]
+}

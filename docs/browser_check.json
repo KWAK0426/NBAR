@@ -1,0 +1,47 @@
+{
+  "externalNetwork": "blocked; external MathJax loading is not tested",
+  "checks": [
+    "Main: four rows, four links, no content images, no horizontal overflow at 1440px/390px",
+    "Dashboard: all eight observations and all five stage selections work; ELC applicability matches tarp installation",
+    "Final July 31 values, NIAS tarp text, and June 10 report popup are preserved",
+    "All 11 HTML pages load with titles and no uncaught page errors (external network disabled); image issues are listed separately"
+  ],
+  "imageProblems": [
+    {
+      "file": "reports/2026-06-10_field_result_report.html",
+      "images": [
+        {
+          "alt": "Case 04 Tarp-wise Error",
+          "type": "data:image/png;base64"
+        },
+        {
+          "alt": "Case 08 Tarp-wise error",
+          "type": "data:image/png;base64"
+        },
+        {
+          "alt": "Case 09 band-wise error",
+          "type": "data:image/png;base64"
+        }
+      ]
+    },
+    {
+      "file": "reports/2026-06-10_joint_field_elc_mosaic_report.html",
+      "images": [
+        {
+          "alt": "Case 04 Tarp-wise Error",
+          "type": "data:image/png;base64"
+        },
+        {
+          "alt": "Case 08 Tarp-wise error",
+          "type": "data:image/png;base64"
+        },
+        {
+          "alt": "Case 09 band-wise error",
+          "type": "data:image/png;base64"
+        }
+      ]
+    }
+  ],
+  "status": "passed with existing image issues",
+  "pageErrors": []
+}

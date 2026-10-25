@@ -1,0 +1,85 @@
+# NBAR 홈페이지 작업 기준
+
+> 2026-10-26 공동 작업 연결: 먼저 `AGENTS.md`와 `docs/COORDINATION.md`,
+> `docs/updates/`의 최신 기록을 읽습니다. Codex와 Claude Code는 동일한 원격
+> `KWAK0426/NBAR`를 기준으로 수정하고, 변경 후 같은 기록 공간에 인수인계합니다.
+> 현재 시험 대상은 사용자 저장소이며 교수님 저장소는 아직 변경하지 않습니다.
+> 아래의 "원격 미확인" 내용은 2026-10-19 패키징 당시 기록입니다.
+
+이 파일은 Claude Code가 홈페이지 작업을 이어받기 위한 프로젝트 문맥입니다. 사용자의 새 요청이 이 문서의 과거 결정과 다르면 새 요청을 우선합니다.
+
+## 먼저 읽기
+
+1. `README.md`
+2. `docs/WEBSITE_HANDOFF.md`
+3. `docs/DATA_EDITING_GUIDE.md`
+4. `docs/VALIDATION.md`
+
+작업 대상은 `site/`입니다. 소스 HTML, CSS, JavaScript로 된 정적 사이트이며 빌드·백엔드·로그인·자동 저장 기능은 없습니다. 파일 수정 후 GitHub Pages로 공유하는 방식입니다.
+
+## 목적과 사용자
+
+부산대학교 연구실과 농과원 등 외부 기관이 관측 이력, 처리 상태, 결과물을 빠르게 파악하는 연구 현황 허브입니다. 관측별 결과는 HTML 보고서로 공유하고, 모든 회차의 공통 처리 설명은 별도의 방법서에 둡니다.
+
+사용자는 GitHub 초보자입니다. 변경할 파일, 표시가 바뀌는 이유, 확인 방법을 한국어로 구체적으로 설명합니다. 로컬 파일 변경과 GitHub 반영을 명확히 구분합니다.
+
+## 합의된 화면
+
+- `site/index.html`: 연구과업 1·2·3·4를 세로 네 행으로 표시합니다.
+- 메인 과업 행에 이미지를 넣지 않습니다. 부산대 헤더 로고는 유지합니다.
+- 과업명·상태·짧은 설명·진입 버튼 중심으로 구성하고 충분한 여백을 둡니다.
+- 메인에 현장관측 전용 수치를 전체 연구 성과처럼 넣지 않습니다.
+- 헤더 높이, 글꼴 두께, 버튼, 날짜와 상태 표기를 페이지 간 일관되게 다룹니다. 현재는 공통 CSS가 없어서 페이지별 차이가 남아 있습니다.
+- 현장관측 대시보드의 기존 선택·연동 구조는 유지합니다. 전체 페이지에 임의의 새 번호를 붙이지 않습니다.
+- 업무 처리 단계의 1~5 번호는 유지합니다.
+- 관측을 선택하면 상세·처리현황이 함께 바뀌고, 업무 상태를 누르면 세부가 바뀝니다. 기본 선택 업무는 자료 정리입니다.
+- 보고서는 새 탭/새 창으로 엽니다.
+- 모바일에서도 읽을 수 있게 하고 겹침·가로 넘침을 확인합니다.
+
+## 페이지와 데이터
+
+- 최상위: `site/index.html`
+- 현장관측: `site/field_observation.html`
+- 2~4번 과업: `site/satellite_anisotropy_dataset.html`, `site/brdf_algorithm_prototype.html`, `site/leop_brdf_test_application.html` (현재 준비 페이지)
+- 데이터: `site/data/nbar-data.js`
+- 공통 문서 선택: `site/reports/field_data_processing_method.html`
+- 전처리: `site/reports/field_data_preprocessing_method.html`
+- 결과 방법: `site/reports/field_data_results_method.html`
+- 회차 결과: `site/reports/2026-06-10_field_result_report.html`
+- 보존 합본: `site/reports/2026-06-10_joint_field_elc_mosaic_report.html`
+
+주요 데이터 전역변수는 `NBAR_LAST_UPDATED`, `NBAR_OBSERVATIONS`, `NBAR_MOSAIC_CYCLE_PROGRESS`, `NBAR_QUALITY_CYCLE_PROGRESS`, `NBAR_TARP_DETAILS`입니다.
+
+## 내용상 지켜야 할 기준
+
+- 관측 날짜·사이클·시간·영상 수·타프 값은 `docs/DATA_EDITING_GUIDE.md`의 기준표를 보존합니다.
+- 완료 수를 늘리거나 실제로 없는 보고서·모자이크를 생성된 결과로 표시하지 않습니다.
+- 타프가 없는 날의 ELC는 `대상 아님`입니다. 패널 처리는 별도로 가능합니다.
+- 현재 회차 완료 수는 1회부터 순서대로 완료된 개수입니다. 임의 회차만 선택한 상태는 표현할 수 없습니다.
+- 현재 상위 업무 상태와 회차 완료 수는 별도 데이터입니다. 자동 연동된 것으로 가정하지 않습니다.
+- BRDF/보고서의 `진행 중 → 첫 세부항목 50%`는 임시 표시입니다. 실측 진행률로 취급하지 않습니다.
+- 공통 이론·방법과 회차별 결과 보고서를 다시 합치지 않습니다.
+- 전처리는 `0 데이터 취득`, `1 반사도 영상 생성(1-1 패널 / 1-2 타프 ELC)`, `2 Metashape 처리 및 산출`입니다.
+- 대상지 마스킹·관측기하·BRDF·NBAR는 전처리 다음의 결과 생성·분석 범위입니다.
+- Ed 조명 정규화와 BRDF 관측각 보정의 의미를 섞지 않습니다.
+- 방법서의 수식과 실제 파이프라인 구현이 항상 검증된 상태라고 가정하지 않습니다. 기술 내용을 고치면 사용자의 실제 코드와 공식 근거를 확인합니다.
+
+## 알려진 빈칸
+
+자세한 목록은 `docs/WEBSITE_HANDOFF.md`에 있습니다. 특히 보고서 7개가 아직 파일로 존재하지 않고, 프로토콜 DOCX 및 버튼이 없으며, 데이터 수정 UI도 없습니다. 이는 이번 포장 과정에서 해결한 사항이 아닙니다.
+
+## 작업과 확인
+
+기존 HTML과 데이터 구조를 먼저 읽고 요청 범위에 맞는 파일만 변경합니다. 사용자가 요청하기 전에는 프레임워크나 데이터베이스로 이관하지 않습니다. 배포에 필요한 파일 경로는 상대 경로를 유지하며 개인 PC의 절대경로를 넣지 않습니다.
+
+```powershell
+python tools/check_links.py
+node tools/check_data.cjs
+python -m http.server 8000 --bind 127.0.0.1 --directory site
+```
+
+변경 후 메인 네 링크, 농지·밭·나지·경사지 탭, 각 날짜, 업무 5단계, 6월 10일 보고서 열기, 타프 없는 날 ELC의 `대상 아님`, 데스크톱·모바일 표시를 관련 범위에서 확인합니다.
+
+`tools/check_links.py`는 HTML의 정적 링크만 검사합니다. `tools/check_data.cjs`는 관측값의 형식·완료 회차 범위·보고서 파일과 로컬 모자이크 경로를 검사합니다. 실제 화면 동작은 브라우저에서 확인합니다. `docs/FILE_MANIFEST.csv`는 인수인계 시점 파일 지문이며 개발 후에는 달라지는 것이 정상입니다.
+
+원격 GitHub는 이 패키지를 만드는 과정에서 확인하거나 변경하지 않았습니다. 기존 권한을 임의로 단정하거나 push·merge·배포 완료를 주장하지 않습니다.

@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NBAR 현장관측 처리 현황 공유</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Pretendard",
+                "Noto Sans KR",
+                "Segoe UI",
+                sans-serif;
+            background: #eef2f6;
+            color: #172033;
+        }
+
+        header {
+            flex: 0 0 auto;
+            background: #0a2f5d;
+            color: white;
+            border-bottom: 4px solid #1f8a70;
+        }
+
+        .header-inner {
+            width: 100%;
+            margin: 0;
+            min-height: 88px;
+            padding: 16px 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .brand-lockup {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            min-width: 0;
+        }
+
+        .logo-badge {
+            width: 54px;
+            height: 54px;
+            flex: 0 0 54px;
+            display: grid;
+            place-items: center;
+            border-radius: 8px;
+            background: #ffffff;
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+
+        .logo-badge img {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .brand-title {
+            font-size: 24px;
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: 0;
+        }
+
+        .brand-subtitle {
+            margin-top: 5px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #dbe6f2;
+            line-height: 1.45;
+            letter-spacing: 0;
+        }
+
+        .header-actions {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-link-button {
+            display: inline-flex;
+            align-items: center;
+            min-height: 38px;
+            padding: 0 12px;
+            border: 1px solid rgba(255,255,255,0.22);
+            border-radius: 6px;
+            background: rgba(255,255,255,0.08);
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .header-link-button:hover {
+            background: rgba(255,255,255,0.14);
+        }
+
+        .last-updated {
+            flex: 0 0 auto;
+            padding: 6px 9px;
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 6px;
+            background: rgba(255,255,255,0.08);
+            color: #d8e3f0;
+            font-size: 11px;
+            line-height: 1.25;
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .last-updated span {
+            display: block;
+            color: #a9bad0;
+            font-weight: 700;
+        }
+
+        .last-updated strong {
+            display: block;
+            margin-top: 2px;
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        main {
+            width: 100%;
+            flex: 1;
+            min-height: 0;
+            margin: 10px auto;
+            padding: 0 10px;
+            display: flex;
+        }
+
+        .dashboard {
+            width: 100%;
+            min-height: 0;
+            flex: 1;
+            display: grid;
+            grid-template-columns: minmax(600px, 1.34fr) minmax(400px, 0.66fr);
+            grid-template-rows: minmax(0, 1.2fr) minmax(0, 0.8fr);
+            gap: 10px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e3e8ef;
+            border-radius: 10px;
+            padding: 16px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+            min-height: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-card {
+            grid-column: 1;
+            grid-row: 1;
+            border-top: 5px solid #0b3263;
+        }
+
+        .process-group {
+            grid-column: 2;
+            grid-row: 1 / 3;
+            padding: 14px;
+            gap: 12px;
+        }
+
+        .process-group-header {
+            flex: 0 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e3e8ef;
+        }
+
+        .process-title-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .process-date-badge {
+            display: inline-flex;
+            align-items: center;
+            min-height: 22px;
+            padding: 3px 7px;
+            border: 1px solid #d8e0ea;
+            border-radius: 6px;
+            background: #f5f8fb;
+            color: #536172;
+            font-size: 11px;
+            font-weight: 800;
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        .process-block {
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .processing-part {
+            flex: 0 0 auto;
+        }
+
+        .stage-detail-part {
+            flex: 1 1 auto;
+        }
+
+        .process-divider {
+            height: 1px;
+            background: #e3e8ef;
+            flex: 0 0 auto;
+        }
+
+        .process-block .card-header {
+            margin-bottom: 10px;
+        }
+
+        .block-title {
+            flex: 0 0 auto;
+            margin-bottom: 8px;
+            color: #174a87;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        #schedule {
+            grid-column: 1;
+            grid-row: 2;
+        }
+
+        .main-card-body {
+            flex: 1;
+            min-height: 0;
+            display: grid;
+            grid-template-columns: 1fr;
+        }
+
+        .inner-panel {
+            min-height: 0;
+            border: 1px solid #dfe5ec;
+            border-radius: 8px;
+            background: #fbfdff;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .inner-panel-title {
+            flex: 0 0 auto;
+            padding: 8px 10px;
+            border-bottom: 1px solid #e8edf2;
+            background: #f7f9fb;
+            color: #556070;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .sheet-tabs {
+            flex: 0 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 6px;
+            padding: 8px;
+            border-bottom: 1px solid #e8edf2;
+            background: white;
+        }
+
+        .sheet-tab {
+            min-width: 0;
+            border: 1px solid #d8dde3;
+            border-radius: 7px;
+            background: #f7f9fb;
+            color: #556070;
+            cursor: pointer;
+            font: inherit;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 7px 6px;
+            line-height: 1.2;
+        }
+
+        .sheet-tab:hover {
+            border-color: #9bb8da;
+            color: #174a87;
+        }
+
+        .sheet-tab.active {
+            border-color: #285ea8;
+            background: #285ea8;
+            color: white;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .section-note {
+            color: #606a78;
+            font-size: 12px;
+            line-height: 1.45;
+        }
+
+        .tab-list {
+            flex: 1;
+            min-height: 0;
+            overflow-y: auto;
+            padding: 8px;
+            display: grid;
+            gap: 8px;
+            align-content: start;
+            scrollbar-gutter: stable;
+        }
+
+        .tab-row {
+            display: grid;
+            grid-template-columns: 1fr 82px;
+            align-items: stretch;
+            gap: 8px;
+        }
+
+        .tab-button {
+            width: 100%;
+            min-height: 54px;
+            padding: 8px 12px;
+            border: 1px solid #dfe5ec;
+            border-radius: 8px;
+            background: #f8fafc;
+            color: #172033;
+            text-align: left;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .tab-button:hover {
+            border-color: #9bb8da;
+            background: #f3f7fc;
+        }
+
+        .tab-button.active {
+            border-color: #285ea8;
+            background: #edf4fc;
+            box-shadow: inset 4px 0 0 #285ea8;
+        }
+
+        .tab-date {
+            display: block;
+            font-size: 12px;
+            color: #556070;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .tab-title {
+            display: block;
+            margin-top: 3px;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.35;
+            word-break: keep-all;
+            overflow-wrap: anywhere;
+        }
+
+        .tab-purpose {
+            display: block;
+            margin-top: 3px;
+            color: #606a78;
+            font-size: 12px;
+            line-height: 1.35;
+            word-break: keep-all;
+            overflow-wrap: anywhere;
+        }
+
+        .tab-count {
+            display: block;
+            margin-top: 3px;
+            color: #174a87;
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 1.35;
+        }
+
+        .html-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 54px;
+            padding: 8px 10px;
+            border-radius: 8px;
+            background: #124b91;
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            text-align: center;
+            line-height: 1.35;
+            white-space: normal;
+        }
+
+        .html-button:not(.disabled):hover {
+            background: #0b376d;
+        }
+
+        .html-button.disabled {
+            background: #d7e0ea;
+            color: #657487;
+            cursor: not-allowed;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 76px;
+            padding: 5px 9px;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .done {
+            color: #207a42;
+            background: #eaf7ef;
+            border: 1px solid #bde4ca;
+        }
+
+        .progress {
+            color: #a86700;
+            background: #fff6df;
+            border: 1px solid #f2d68a;
+        }
+
+        .planned {
+            color: #6c7480;
+            background: #f2f4f6;
+            border: 1px solid #d8dde3;
+        }
+
+        .not-applicable {
+            color: #5f6f82;
+            background: #edf1f5;
+            border: 1px solid #d4dce5;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        th {
+            text-align: left;
+            padding: 9px 10px;
+            background: #f7f9fb;
+            color: #556070;
+            font-weight: 600;
+            border-bottom: 1px solid #dfe5ec;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 9px 10px;
+            border-bottom: 1px solid #e8edf2;
+            vertical-align: middle;
+            line-height: 1.45;
+        }
+
+        tr:last-child td {
+            border-bottom: 0;
+        }
+
+        .status-table {
+            flex: 0 0 auto;
+            min-height: 0;
+            display: grid;
+            grid-template-rows: 34px auto;
+            table-layout: fixed;
+        }
+
+        .status-table thead {
+            display: block;
+            min-height: 0;
+        }
+
+        .status-table thead tr,
+        .status-table tbody tr {
+            display: grid;
+            grid-template-columns: 23% 19% 58%;
+            min-height: 0;
+        }
+
+        .status-table tbody tr.active td:first-child {
+            color: #0b3263;
+            font-weight: 800;
+        }
+
+        .status-table thead tr {
+            height: 34px;
+        }
+
+        .status-table tbody {
+            display: grid;
+            grid-template-rows: repeat(5, 34px);
+            min-height: 0;
+        }
+
+        .status-table th,
+        .status-table td {
+            min-width: 0;
+            padding: 0 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .status-table td {
+            overflow: hidden;
+        }
+
+        .status-table td:last-child {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .stage-status-button {
+            border: 0;
+            background: transparent;
+            padding: 0;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .stage-status-button .status-pill {
+            min-width: 68px;
+        }
+
+        .stage-status-button.active .status-pill {
+            box-shadow: 0 0 0 2px rgba(23, 74, 135, 0.18);
+        }
+
+        .stage-detail-card {
+            flex: 1;
+            min-height: 0;
+            border: 1px solid #dfe7f0;
+            border-radius: 8px;
+            background: #fbfdff;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .stage-detail-header {
+            flex: 0 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e3e8ef;
+        }
+
+        .stage-detail-kicker {
+            color: #657487;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0;
+        }
+
+        .stage-detail-title {
+            margin-top: 3px;
+            color: #0b3263;
+            font-size: 15px;
+            font-weight: 900;
+            line-height: 1.25;
+            word-break: keep-all;
+        }
+
+        .stage-detail-note {
+            margin-top: 3px;
+            color: #606a78;
+            font-size: 12px;
+            line-height: 1.35;
+            word-break: keep-all;
+        }
+
+        .progress-row {
+            display: grid;
+            grid-template-columns: minmax(108px, 1fr) 68px;
+            align-items: center;
+            gap: 6px 10px;
+            padding: 7px 0;
+            border-bottom: 1px solid #edf0f3;
+        }
+
+        .progress-row:last-child {
+            border-bottom: 0;
+        }
+
+        .progress-label {
+            font-weight: 600;
+            line-height: 1.35;
+            font-size: 13px;
+        }
+
+        .progress-count {
+            justify-self: end;
+            color: #606a78;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        .progress-track {
+            grid-column: 1;
+            height: 9px;
+            background: #e8edf3;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #285ea8;
+            border-radius: 10px;
+            width: 0;
+            transition: width 180ms ease;
+        }
+
+        .progress-percent {
+            grid-column: 2;
+            text-align: right;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        #stageDetailBody {
+            flex: 1;
+            min-height: 0;
+            overflow: hidden;
+            display: grid;
+            grid-auto-rows: minmax(0, auto);
+            gap: 6px;
+        }
+
+        .detail-task-row {
+            min-height: 0;
+            display: grid;
+            grid-template-columns: minmax(128px, 1fr) 72px;
+            align-items: center;
+            gap: 5px 10px;
+            padding: 7px 8px;
+            border: 1px solid #e3eaf2;
+            border-radius: 8px;
+            background: #ffffff;
+        }
+
+        .detail-task-row.has-progress {
+            grid-template-columns: minmax(128px, 1fr) 72px;
+        }
+
+        .detail-task-row.has-cycles {
+            align-items: start;
+        }
+
+        .detail-task-title {
+            min-width: 0;
+            color: #263241;
+            font-size: 12px;
+            font-weight: 800;
+            line-height: 1.3;
+            word-break: keep-all;
+            overflow-wrap: anywhere;
+        }
+
+        .detail-task-note {
+            margin-top: 2px;
+            color: #657487;
+            font-size: 11px;
+            font-weight: 600;
+            line-height: 1.25;
+            word-break: keep-all;
+        }
+
+        .detail-task-row .status-pill {
+            min-width: 64px;
+            justify-self: end;
+            padding: 4px 7px;
+            font-size: 11px;
+        }
+
+        .detail-progress-track {
+            grid-column: 1;
+            height: 7px;
+            border-radius: 10px;
+            background: #e8edf3;
+            overflow: hidden;
+        }
+
+        .detail-progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            background: #285ea8;
+        }
+
+        .detail-progress-percent {
+            grid-column: 2;
+            color: #606a78;
+            text-align: right;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .cycle-chip-list {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(48px, 1fr));
+            gap: 5px;
+            margin-top: 2px;
+        }
+
+        .cycle-chip {
+            min-width: 0;
+            padding: 5px 6px;
+            border-radius: 7px;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 800;
+            line-height: 1.15;
+        }
+
+        .cycle-chip span {
+            display: block;
+            margin-top: 2px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .schedule-list {
+            list-style: none;
+            min-height: 0;
+            overflow: hidden;
+            height: 100%;
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: repeat(4, minmax(0, 1fr));
+            gap: 8px;
+        }
+
+        .schedule-item {
+            display: grid;
+            grid-template-columns: 86px minmax(90px, 0.35fr) 1fr;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+            padding: 8px 10px;
+            border: 1px solid #dfe7f0;
+            border-radius: 8px;
+            background: #ffffff;
+            box-shadow: inset 4px 0 0 #285ea8;
+        }
+
+        .schedule-date {
+            color: #556070;
+            font-weight: 800;
+            font-size: 12px;
+            line-height: 1.25;
+        }
+
+        .schedule-type {
+            min-width: 0;
+            font-size: 17px;
+            font-weight: 800;
+            text-align: left;
+            color: #0b3263;
+            line-height: 1.2;
+            word-break: keep-all;
+            overflow-wrap: anywhere;
+        }
+
+        .schedule-text {
+            font-size: 12px;
+            color: #424b58;
+            line-height: 1.4;
+            word-break: keep-all;
+            overflow-wrap: anywhere;
+        }
+
+        .detail-layout {
+            flex: 1;
+            min-height: 0;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(220px, 0.85fr);
+            gap: 10px;
+        }
+
+        .mosaic-panel {
+            min-height: 0;
+            border: 1px solid #dfe7f0;
+            border-radius: 8px;
+            background: #fbfdff;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .mosaic-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex: 0 0 auto;
+        }
+
+        .mosaic-title {
+            color: #174a87;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .mosaic-state {
+            flex: 0 0 auto;
+            padding: 4px 8px;
+            border-radius: 20px;
+            background: #eef3f8;
+            color: #627083;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .mosaic-state.ready {
+            background: #e6f4ec;
+            color: #23724d;
+        }
+
+        .mosaic-frame {
+            position: relative;
+            flex: 1;
+            min-height: 0;
+            border: 1px solid #ccd8e6;
+            border-radius: 8px;
+            overflow: hidden;
+            background:
+                linear-gradient(90deg, rgba(23, 74, 135, 0.12) 1px, transparent 1px),
+                linear-gradient(0deg, rgba(23, 74, 135, 0.12) 1px, transparent 1px),
+                linear-gradient(135deg, #e8f0e8, #dce9ef 52%, #eef3e8);
+            background-size: 26px 26px, 26px 26px, auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mosaic-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .mosaic-placeholder {
+            padding: 12px;
+            text-align: center;
+            color: #536174;
+            font-size: 12px;
+            line-height: 1.45;
+        }
+
+        .mosaic-placeholder strong {
+            display: block;
+            margin-bottom: 4px;
+            color: #0b3263;
+            font-size: 14px;
+        }
+
+        .mosaic-meta {
+            color: #657487;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        footer {
+            display: none;
+            margin-top: 40px;
+            padding: 25px;
+            text-align: center;
+            color: #7b8491;
+            font-size: 13px;
+            border-top: 1px solid #e0e5ea;
+        }
+
+        @media (max-width: 980px) {
+            body {
+                height: auto;
+                min-height: 100vh;
+                overflow: auto;
+            }
+
+            .dashboard {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .card {
+                overflow: visible;
+            }
+
+            .main-card {
+                order: 1;
+            }
+
+            #schedule {
+                order: 2;
+            }
+
+            .process-group {
+                order: 3;
+            }
+
+            .schedule-list {
+                height: auto;
+                grid-template-rows: none;
+            }
+
+            .mosaic-frame {
+                min-height: 160px;
+            }
+
+            .status-table thead tr,
+            .status-table tbody tr {
+                grid-template-columns: 90px 88px minmax(0, 1fr);
+            }
+
+            .status-table tbody {
+                grid-template-rows: none;
+            }
+
+            .status-table tbody tr {
+                min-height: 44px;
+            }
+
+            .status-table td:last-child {
+                white-space: normal;
+                overflow-wrap: anywhere;
+            }
+
+        }
+
+        @media (max-width: 620px) {
+            .header-inner {
+                padding: 13px 12px;
+                flex-wrap: wrap;
+                align-items: flex-start;
+            }
+
+            .header-actions {
+                margin-left: auto;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+            }
+
+            .last-updated {
+                margin-left: 0;
+            }
+
+            main {
+                padding: 0 10px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .tab-row {
+                grid-template-columns: 1fr 64px;
+            }
+
+            .html-button {
+                min-height: 44px;
+                font-size: 12px;
+            }
+
+            .progress-row {
+                grid-template-columns: 1fr 70px;
+                gap: 9px 14px;
+            }
+
+            .progress-track {
+                grid-column: 1 / -1;
+            }
+
+            .schedule-item {
+                grid-template-columns: 1fr;
+                gap: 5px;
+                align-items: start;
+            }
+
+            .detail-layout {
+                grid-template-columns: 1fr;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-inner">
+        <div class="brand-lockup">
+            <div class="logo-badge">
+                <img src="assets/pnu_logo.webp" alt="부산대학교 로고">
+            </div>
+
+            <div>
+                <div class="brand-title">
+                    NBAR 현장관측 처리 현황 공유
+                </div>
+                <div class="brand-subtitle">
+                    관측 이력, 자료 처리 단계, HTML 보고서 산출물 통합 조회
+                </div>
+            </div>
+        </div>
+
+        <div class="header-actions">
+            <a class="header-link-button" href="index.html">1차년도 허브</a>
+            <a class="header-link-button" href="reports/field_data_processing_method.html">공통 처리 문서</a>
+
+            <div class="last-updated" aria-label="최신 업데이트 시간">
+                <span>최신 업데이트</span>
+                <strong id="lastUpdatedText"></strong>
+            </div>
+        </div>
+
+    </div>
+</header>
+
+<main>
+    <div class="dashboard">
+
+        <section class="card main-card" id="reports">
+            <div class="card-header">
+                <div>
+                    <div class="card-title">
+                        현장관측 인덱스
+                    </div>
+                    <div class="section-note">
+                        대상지 유형별 관측 이벤트와 HTML 산출물 바로가기
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-card-body">
+                <div class="inner-panel">
+                    <div class="inner-panel-title">대상지 시트</div>
+                    <div class="sheet-tabs" id="sheetTabs"></div>
+                    <div class="tab-list" id="tabList"></div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <section class="card process-group" id="processing-group">
+            <div class="process-group-header">
+                <div>
+                    <div class="process-title-row">
+                        <div class="card-title">
+                            처리·산출 현황
+                        </div>
+                        <span class="process-date-badge" id="processDateBadge"></span>
+                    </div>
+                    <div class="section-note">
+                        선택 관측 기준 업무 단계와 영상 처리 공정
+                    </div>
+                </div>
+                <span class="status-pill progress" id="processingStatus">진행 중</span>
+            </div>
+
+            <div class="process-block processing-part" id="processing">
+                <div class="block-title">업무 처리 단계</div>
+
+                <table class="status-table">
+                    <thead>
+                        <tr>
+                            <th>업무 단계</th>
+                            <th>상태</th>
+                            <th>단계 설명</th>
+                        </tr>
+                    </thead>
+                    <tbody id="processingTable"></tbody>
+                </table>
+            </div>
+
+            <div class="process-divider"></div>
+
+            <div class="process-block stage-detail-part" id="stage-detail">
+                <div class="stage-detail-card">
+                    <div class="stage-detail-header">
+                        <div>
+                            <div class="stage-detail-kicker">선택 업무 세부</div>
+                            <div class="stage-detail-title" id="stageDetailTitle">1. 자료 정리</div>
+                            <div class="stage-detail-note" id="stageDetailNote"></div>
+                        </div>
+                        <span class="status-pill done" id="stageDetailStatus">완료</span>
+                    </div>
+                    <div id="stageDetailBody"></div>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="card" id="schedule">
+            <div class="card-header">
+                <div>
+                    <div class="card-title">
+                        선택 관측 상세
+                    </div>
+                    <div class="section-note" id="detailSubtitle"></div>
+                </div>
+            </div>
+
+            <div class="detail-layout">
+                <ul class="schedule-list" id="scheduleList"></ul>
+                <div class="mosaic-panel" id="mosaicPanel"></div>
+            </div>
+        </section>
+
+    </div>
+</main>
+
+<footer>
+    © 2026 NBAR Field Observation Status Sharing
+</footer>
+
+<script src="data/nbar-data.js"></script>
+
+<script>
+    const observations = window.NBAR_OBSERVATIONS || [];
+
+
+    const sheetTabs = document.getElementById("sheetTabs");
+    const tabList = document.getElementById("tabList");
+    const processingStatus = document.getElementById("processingStatus");
+    const processDateBadge = document.getElementById("processDateBadge");
+    const processingTable = document.getElementById("processingTable");
+    const lastUpdatedText = document.getElementById("lastUpdatedText");
+    const stageDetailTitle = document.getElementById("stageDetailTitle");
+    const stageDetailNote = document.getElementById("stageDetailNote");
+    const stageDetailStatus = document.getElementById("stageDetailStatus");
+    const stageDetailBody = document.getElementById("stageDetailBody");
+    const scheduleList = document.getElementById("scheduleList");
+    const detailSubtitle = document.getElementById("detailSubtitle");
+    const mosaicPanel = document.getElementById("mosaicPanel");
+    const sheetNames = ["농지", "밭", "나지", "경사지"];
+    const defaultStageName = "자료 정리";
+    let activeStageName = defaultStageName;
+
+    if (lastUpdatedText) {
+        lastUpdatedText.textContent = window.NBAR_LAST_UPDATED || "-";
+    }
+
+    function sheetFor(item) {
+        return item.coverType;
+    }
+
+    function categoryLabel(item) {
+        return item.crop ? `${item.coverType}/${item.crop}` : item.coverType;
+    }
+
+    function sameSiteCount(item) {
+        return observations.filter((other) =>
+            other.site === item.site &&
+            other.coverType === item.coverType
+        ).length;
+    }
+
+    function sameCategorySiteCount(item) {
+        return observations.filter((other) =>
+            other.site === item.site &&
+            other.coverType === item.coverType &&
+            other.crop === item.crop
+        ).length;
+    }
+
+    function badgeClass(text) {
+        if (text === "완료") return "done";
+        if (text === "진행 중") return "progress";
+        if (text === "대상 아님") return "not-applicable";
+        return "planned";
+    }
+
+    function processingState(item, stageName) {
+        const row = item.processing.find(([stage]) => stage === stageName);
+        return row ? row[1] : "예정";
+    }
+
+    function reportButton(item) {
+        if (processingState(item, "보고서 작성") === "예정") {
+            return `
+                <span class="html-button disabled" aria-label="HTML 보고서 준비 중">
+                    HTML<br>준비 중
+                </span>
+            `;
+        }
+
+        return `
+            <a class="html-button" href="${item.html}" target="_blank" rel="noopener">
+                HTML<br>열기
+            </a>
+        `;
+    }
+
+        const stageDescriptions = {
+            "자료 정리": "관측 야장, 현장 사진, 원본 영상 목록 정리",
+            "영상 처리": "패널 기반 / ELC 기반 반사도 모자이크 생성",
+            "품질 검토": "자료 누락, 정합, 반사도 범위, 모자이크 품질 검수",
+            "BRDF 분석": "BRDF 모델 기반 관측 각도 효과 보정 및 반사도 정규화",
+            "보고서 작성": "관측 개요, 처리 결과, HTML 보고서 정리"
+        };
+
+    function sheetCount(sheet) {
+        return observations.filter((item) => sheetFor(item) === sheet).length;
+    }
+
+    function hasReflectanceTarp(item) {
+        const tarpRow = item.schedule.find(([label]) => label === "반사도 타프");
+        return Boolean(tarpRow && tarpRow[1] !== "미설치");
+    }
+
+    function scheduleValue(item, label) {
+        const row = item.schedule.find(([name]) => name === label);
+        return row ? row[1] : "-";
+    }
+
+    function displayDate(date) {
+        return date.split(".").join(". ");
+    }
+
+    function displayImageCount(item) {
+        if (Number.isFinite(Number(item.imageCount))) {
+            return `${Number(item.imageCount).toLocaleString("ko-KR")}장`;
+        }
+
+        const raw = scheduleValue(item, "영상 개수").replace("분광밴드별 ", "").trim();
+        const match = raw.match(/^(\d+)장$/);
+        return match ? `${Number(match[1]).toLocaleString("ko-KR")}장` : raw;
+    }
+
+    function displayObservationTime(item) {
+        return item.observationTime || scheduleValue(item, "관측 시간");
+    }
+
+    function tarpDetail(item) {
+        const tarp = scheduleValue(item, "반사도 타프");
+        if (tarp === "미설치") return ["미설치", "-"];
+
+        const tarpDetails = window.NBAR_TARP_DETAILS || {};
+        const byDate = tarpDetails.byDate || {};
+        return ["설치", byDate[item.date] || tarpDetails.defaultInstalled || "설치"];
+    }
+
+    function detailRows(item) {
+        const [tarpStatus, tarpText] = tarpDetail(item);
+        return [
+            ["관측 시기", item.purpose, displayDate(item.date)],
+            ["관측 사이클", item.cycle, `전체 관측 시간 ${displayObservationTime(item)}`],
+            ["반사도 타프", tarpStatus, tarpText],
+            ["영상 개수", displayImageCount(item), "분광밴드별 장수 (10개 밴드)"]
+        ];
+    }
+
+    function mosaicMarkup(item) {
+        const mosaic = item.mosaic || {};
+        const src = typeof mosaic === "string" ? mosaic : mosaic.src;
+        const alt = typeof mosaic === "object" && mosaic.alt ? mosaic.alt : `${item.date} RGB 모자이크`;
+
+        if (src) {
+            return `
+                <div class="mosaic-heading">
+                    <div class="mosaic-title">RGB 모자이크</div>
+                    <div class="mosaic-state ready">등록됨</div>
+                </div>
+                <div class="mosaic-frame">
+                    <img src="${src}" alt="${alt}">
+                </div>
+                <div class="mosaic-meta">${displayDate(item.date)} · ${item.site}</div>
+            `;
+        }
+
+        return `
+            <div class="mosaic-heading">
+                <div class="mosaic-title">RGB 모자이크</div>
+                <div class="mosaic-state">준비 중</div>
+            </div>
+            <div class="mosaic-frame">
+                <div class="mosaic-placeholder">
+                    <strong>대표 이미지 없음</strong>
+                    RGB 모자이크 생성 후 표시
+                </div>
+            </div>
+            <div class="mosaic-meta">${displayDate(item.date)} · ${item.site}</div>
+        `;
+    }
+
+    function normalizedCount(value, total) {
+        const number = Number(value);
+        if (!Number.isFinite(number)) return 0;
+        return Math.max(0, Math.min(total, Math.round(number)));
+    }
+
+    function mosaicProgressConfig(item) {
+        const config = window.NBAR_MOSAIC_CYCLE_PROGRESS || {};
+        const defaults = config.default || {};
+        const byDate = config.byDate || {};
+        return { ...defaults, ...(byDate[item.date] || {}) };
+    }
+
+    function qualityProgressConfig(item) {
+        const config = window.NBAR_QUALITY_CYCLE_PROGRESS || {};
+        const defaults = config.default || {};
+        const byDate = config.byDate || {};
+        return { ...defaults, ...(byDate[item.date] || {}) };
+    }
+
+    function cycleCount(item) {
+        const match = String(item.cycle).match(/\d+/);
+        return match ? Number(match[0]) : 0;
+    }
+
+    function cycleChips(totalCycles, completedCycles, notApplicable = false) {
+        if (notApplicable) {
+            return Array.from({ length: totalCycles }, (_, index) => ({
+                label: `${index + 1}회`,
+                status: "대상 아님"
+            }));
+        }
+
+        return Array.from({ length: totalCycles }, (_, index) => ({
+            label: `${index + 1}회`,
+            status: index < completedCycles ? "완료" : "예정"
+        }));
+    }
+
+    function cycleSummary(cycles) {
+        if (cycles.every((cycle) => cycle.status === "대상 아님")) return "대상 아님";
+        if (cycles.length > 0 && cycles.every((cycle) => cycle.status === "완료")) return "완료";
+        if (cycles.some((cycle) => cycle.status === "완료")) return "진행 중";
+        return "예정";
+    }
+
+    function stagedTasks(names, state) {
+        return names.map((label, index) => {
+            if (state === "완료") return { label, status: "완료", percent: 100 };
+            if (state === "진행 중") {
+                return { label, status: index === 0 ? "진행 중" : "예정", percent: index === 0 ? 50 : 0 };
+            }
+            return { label, status: "예정", percent: 0 };
+        });
+    }
+
+    function dataCleanupDetail(item) {
+        const state = processingState(item, "자료 정리");
+        const itemStatus = state === "완료" ? "완료" : "미완료";
+
+        return {
+            title: "1. 자료 정리",
+            note: "관측 자료 보존 및 목록화",
+            status: state,
+            rows: [
+                { label: "원본 다분광 영상 백업", status: itemStatus },
+                { label: "초분광 자료 백업", status: itemStatus },
+                { label: "관측 야장 문서화", status: itemStatus },
+                { label: "현장 사진 정리", status: itemStatus }
+            ]
+        };
+    }
+
+    function qualityDetail(item) {
+        const state = processingState(item, "품질 검토");
+        const totalCycles = cycleCount(item);
+        const config = qualityProgressConfig(item);
+        const panelCompletedCycles = normalizedCount(config.panelCompletedCycles, totalCycles);
+        const elcCompletedCycles = normalizedCount(config.elcCompletedCycles, totalCycles);
+        const panelCycles = cycleChips(totalCycles, panelCompletedCycles);
+        const elcCycles = cycleChips(totalCycles, elcCompletedCycles, !hasReflectanceTarp(item));
+
+        return {
+            title: "3. 품질 검토",
+            note: "반사도 모자이크 품질 검토 (패널 / ELC)",
+            status: state,
+            rows: [
+                { label: "1) 패널 기반", status: cycleSummary(panelCycles), cycles: panelCycles },
+                { label: "2) ELC 기반", status: cycleSummary(elcCycles), cycles: elcCycles }
+            ]
+        };
+    }
+
+    function brdfDetail(item) {
+        const state = processingState(item, "BRDF 분석");
+        return {
+            title: "4. BRDF 분석",
+            note: "피복별 BRDF 구축",
+            status: state,
+            rows: stagedTasks([
+                "태양·센서 기하 정보 정리",
+                "BRDF 입력 변수 구성",
+                "BRDF 모델 적합",
+                "NBAR 정규화 산출",
+                "정규화 전후 결과 비교"
+            ], state)
+        };
+    }
+
+    function reportDetail(item) {
+        const state = processingState(item, "보고서 작성");
+        return {
+            title: "5. 보고서 작성",
+            note: "관측 개요, 방법, 결과물을 HTML로 정리",
+            status: state,
+            rows: stagedTasks([
+                "관측 개요 정리",
+                "처리 결과 표 정리",
+                "RGB·반사도 모자이크 삽입",
+                "HTML 보고서 링크 연결"
+            ], state)
+        };
+    }
+
+    function stageDetail(item, stageName) {
+        if (stageName === "자료 정리") return dataCleanupDetail(item);
+        if (stageName === "영상 처리") {
+            const totalCycles = cycleCount(item);
+            const config = mosaicProgressConfig(item);
+            const panelCompletedCycles = normalizedCount(config.panelCompletedCycles, totalCycles);
+            const elcCompletedCycles = normalizedCount(config.elcCompletedCycles, totalCycles);
+            const panelCycles = cycleChips(totalCycles, panelCompletedCycles);
+            const elcCycles = cycleChips(totalCycles, elcCompletedCycles, !hasReflectanceTarp(item));
+
+            return {
+                title: "2. 영상 처리",
+                note: "반사도 모자이크 생성 (패널 / ELC)",
+                status: processingState(item, "영상 처리"),
+                rows: [
+                    { label: "1) 패널 기반", status: cycleSummary(panelCycles), cycles: panelCycles },
+                    { label: "2) ELC 기반", status: cycleSummary(elcCycles), cycles: elcCycles }
+                ]
+            };
+        }
+        if (stageName === "품질 검토") return qualityDetail(item);
+        if (stageName === "BRDF 분석") return brdfDetail(item);
+        return reportDetail(item);
+    }
+
+    function taskRowMarkup(row) {
+        const hasProgress = typeof row.percent === "number";
+        const hasCycles = Array.isArray(row.cycles) && row.cycles.length > 0;
+        return `
+            <div class="detail-task-row ${hasProgress ? "has-progress" : ""} ${hasCycles ? "has-cycles" : ""}">
+                <div>
+                    <div class="detail-task-title">${row.label}</div>
+                    ${row.note ? `<div class="detail-task-note">${row.note}</div>` : ""}
+                </div>
+                <span class="status-pill ${badgeClass(row.status)}">${row.status}</span>
+                ${hasCycles ? `
+                    <div class="cycle-chip-list">
+                        ${row.cycles.map((cycle) => `
+                            <div class="cycle-chip ${badgeClass(cycle.status)}">
+                                ${cycle.label}
+                                <span>${cycle.status}</span>
+                            </div>
+                        `).join("")}
+                    </div>
+                ` : ""}
+                ${hasProgress ? `
+                    <div class="detail-progress-track">
+                        <div class="detail-progress-fill" style="width: ${row.percent}%;"></div>
+                    </div>
+                    <div class="detail-progress-percent">${row.percentText || `${row.percent}%`}</div>
+                ` : ""}
+            </div>
+        `;
+    }
+
+    function renderStageDetail(item) {
+        const detail = stageDetail(item, activeStageName);
+        stageDetailTitle.textContent = detail.title;
+        stageDetailNote.textContent = detail.note;
+        stageDetailStatus.className = `status-pill ${badgeClass(detail.status)}`;
+        stageDetailStatus.textContent = detail.status;
+        stageDetailBody.innerHTML = detail.rows.map(taskRowMarkup).join("");
+    }
+
+    function renderProcessingTable(item) {
+        processingTable.innerHTML = item.processing.map(([stage, state], stageIndex) => `
+            <tr class="${stage === activeStageName ? "active" : ""}">
+                <td>${stageIndex + 1}. ${stage}</td>
+                <td>
+                    <button class="stage-status-button ${stage === activeStageName ? "active" : ""}" type="button" data-stage="${stage}">
+                        <span class="status-pill ${badgeClass(state)}">${state}</span>
+                    </button>
+                </td>
+                <td>${stageDescriptions[stage]}</td>
+            </tr>
+        `).join("");
+
+        processingTable.querySelectorAll(".stage-status-button").forEach((button) => {
+            button.addEventListener("click", () => {
+                activeStageName = button.dataset.stage;
+                renderProcessingTable(item);
+                renderStageDetail(item);
+            });
+        });
+    }
+
+    function renderSheetTabs(activeIndex) {
+        const activeSheet = sheetFor(observations[activeIndex]);
+        sheetTabs.innerHTML = sheetNames.map((sheet) => `
+            <button class="sheet-tab ${sheet === activeSheet ? "active" : ""}" type="button" data-sheet="${sheet}">
+                ${sheet} ${sheetCount(sheet)}회
+            </button>
+        `).join("");
+
+        sheetTabs.querySelectorAll(".sheet-tab").forEach((button) => {
+            button.addEventListener("click", () => {
+                const firstIndex = observations.findIndex((item) => sheetFor(item) === button.dataset.sheet);
+                if (firstIndex >= 0) render(firstIndex);
+            });
+        });
+    }
+
+    function renderTabs(activeIndex) {
+        const activeSheet = sheetFor(observations[activeIndex]);
+        const filtered = observations
+            .map((item, index) => ({ item, index }))
+            .filter(({ item }) => sheetFor(item) === activeSheet);
+
+        tabList.innerHTML = filtered.map(({ item, index }) => `
+            <div class="tab-row">
+                <button class="tab-button ${index === activeIndex ? "active" : ""}" type="button" data-index="${index}">
+                    <span class="tab-date">${item.date}</span>
+                    <span class="tab-title">${item.title}</span>
+                    <span class="tab-purpose">${item.purpose} · 사이클 ${item.cycle}</span>
+                    <span class="tab-count">대상지 관측 ${sameSiteCount(item)}회</span>
+                </button>
+                ${reportButton(item)}
+            </div>
+        `).join("");
+
+        tabList.querySelectorAll(".tab-button").forEach((button) => {
+            button.addEventListener("click", () => render(Number(button.dataset.index)));
+        });
+    }
+
+    function render(index) {
+        const item = observations[index];
+        activeStageName = defaultStageName;
+        renderSheetTabs(index);
+        renderTabs(index);
+        detailSubtitle.textContent = `${displayDate(item.date)} · ${item.title}`;
+
+        processingStatus.className = `status-pill ${item.statusClass}`;
+        processingStatus.textContent = item.status;
+        if (processDateBadge) {
+            processDateBadge.textContent = displayDate(item.date);
+        }
+
+        renderProcessingTable(item);
+        renderStageDetail(item);
+
+        scheduleList.innerHTML = detailRows(item).map(([date, type, text]) => `
+            <li class="schedule-item">
+                <div class="schedule-date">${date}</div>
+                <div class="schedule-type">${type}</div>
+                <div class="schedule-text">${text}</div>
+            </li>
+        `).join("");
+
+        mosaicPanel.innerHTML = mosaicMarkup(item);
+    }
+
+    if (observations.length > 0) render(0);
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+

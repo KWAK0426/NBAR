@@ -1,0 +1,44 @@
+{
+  "2026-06-10_field_result_report.html": {
+    "unicodeReplacementCharacters": 0,
+    "emptyModalImages": 2,
+    "embeddedSvg": [
+      {
+        "index": 47,
+        "alt": "1회차 PNU 타프 검증 스펙트럼 그래프",
+        "xml": "valid XML"
+      },
+      {
+        "index": 49,
+        "alt": "2회차 NIAS 타프 검증 스펙트럼 그래프",
+        "xml": "valid XML"
+      },
+      {
+        "index": 50,
+        "alt": "2회차 PNU 타프 추가 검증 스펙트럼 그래프",
+        "xml": "valid XML"
+      }
+    ]
+  },
+  "2026-06-10_joint_field_elc_mosaic_report.html": {
+    "unicodeReplacementCharacters": 0,
+    "emptyModalImages": 2,
+    "embeddedSvg": [
+      {
+        "index": 63,
+        "alt": "1회차 PNU 타프 검증 스펙트럼 그래프",
+        "xml": "valid XML"
+      },
+      {
+        "index": 65,
+        "alt": "2회차 NIAS 타프 검증 스펙트럼 그래프",
+        "xml": "valid XML"
+      },
+      {
+        "index": 66,
+        "alt": "2회차 PNU 타프 추가 검증 스펙트럼 그래프",
+        "xml": "valid XML"
+      }
+    ]
+  }
+}
