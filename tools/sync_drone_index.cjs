@@ -1,12 +1,14 @@
 // Sync the Gimhae rice observations in nbar-data.js with the drone status board.
-// Source: https://kwak0426.github.io/drone/summary.json (fixed_round_counts)
-// Usage: node tools/sync_drone_index.cjs [--data site/data/nbar-data.js] [--summary local.json]
-// Adds missing observation dates and updates cycle counts. Other fields are left as they are.
+// Sources: https://kwak0426.github.io/drone/summary.json (fixed_round_counts)
+//          https://kwak0426.github.io/drone/viewer/catalog.json (rounds with an RGB mosaic)
+// Usage: node tools/sync_drone_index.cjs [--data site/data/nbar-data.js] [--summary local.json] [--catalog local.json]
+// Adds missing observation dates, updates cycle counts and mosaicRounds. Other fields are left as they are.
 const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 
 const SUMMARY_URL = 'https://kwak0426.github.io/drone/summary.json';
+const CATALOG_URL = 'https://kwak0426.github.io/drone/viewer/catalog.json';
 const SITE = '김해 농지';
 
 function arg(name, fallback) {
@@ -37,6 +39,7 @@ function entryText(isoDate, cycles) {
         purpose: "${stage}",
         purposeDetail: "${stage} 벼 군락의 시간 변화 확인",
         cycle: "${cycles}회",
+        mosaicRounds: [],
         observationTime: "미확인",
         imageCount: null,
         title: "[논 벼] - ${SITE}",
@@ -81,11 +84,28 @@ function kstStamp() {
   return `${kst.slice(0, 10).replace(/-/g, '.')} ${kst.slice(11, 16)}`;
 }
 
+async function readJson(fileArg, url) {
+  const file = arg(fileArg);
+  if (file) return JSON.parse(fs.readFileSync(file, 'utf8'));
+  const response = await fetch(url, { cache: 'no-store' });
+  if (!response.ok) throw new Error(`${url}: HTTP ${response.status}`);
+  return response.json();
+}
+
+// date (YYYY.MM.DD) -> sorted rounds that have an RGB mosaic in the viewer
+function mosaicRoundsByDate(catalog) {
+  const byDate = {};
+  for (const o of catalog.observations || []) {
+    if (o.kind !== 'RGB' || !Number.isInteger(o.round)) continue;
+    const date = String(o.date).replace(/-/g, '.');
+    (byDate[date] ||= new Set()).add(o.round);
+  }
+  return Object.fromEntries(Object.entries(byDate).map(([date, set]) => [date, [...set].sort((a, b) => a - b)]));
+}
+
 async function main() {
-  const summaryFile = arg('--summary');
-  const summary = summaryFile
-    ? JSON.parse(fs.readFileSync(summaryFile, 'utf8'))
-    : await (await fetch(SUMMARY_URL, { cache: 'no-store' })).json();
+  const summary = await readJson('--summary', SUMMARY_URL);
+  const catalog = await readJson('--catalog', CATALOG_URL);
   const rounds = summary.fixed_round_counts;
   if (!rounds || typeof rounds !== 'object') throw new Error('summary.json has no fixed_round_counts');
 
@@ -115,6 +135,20 @@ async function main() {
     const [, end] = blockRange(text, before.date);
     text = `${text.slice(0, end)},\n${entryText(isoDate, count)}${text.slice(end)}`;
     changes.push(`${date} 추가 (${growthStage(isoDate)}, ${count}회)`);
+  }
+
+  const mosaics = mosaicRoundsByDate(catalog);
+  for (const item of loadObservations(text).filter((entry) => entry.site === SITE)) {
+    const rounds = mosaics[item.date] || [];
+    if (JSON.stringify(item.mosaicRounds) === JSON.stringify(rounds)) continue;
+    const [start, end] = blockRange(text, item.date);
+    const line = `mosaicRounds: [${rounds.join(', ')}],`;
+    let block = text.slice(start, end);
+    block = /mosaicRounds: \[[^\]]*\],/.test(block)
+      ? block.replace(/mosaicRounds: \[[^\]]*\],/, line)
+      : block.replace(/(\n(\s*)cycle: "[^"]*",)/, `$1\n$2${line}`);
+    text = text.slice(0, start) + block + text.slice(end);
+    changes.push(`${item.date} 모자이크 회차 [${(item.mosaicRounds || []).join(', ')}] → [${rounds.join(', ')}]`);
   }
 
   if (!changes.length) {

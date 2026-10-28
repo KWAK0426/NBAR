@@ -216,6 +216,79 @@
             background: #fff;
         }
 
+        /* 허브와 같은 칸 전체 링크: 마우스를 올리면 떠오르고 오른쪽 위 화살표가 채워짐 */
+        .method-card {
+            --accent: var(--blue);
+            position: relative;
+            min-height: 220px;
+            display: flex;
+            flex-direction: column;
+            padding: 24px 22px 22px;
+            color: inherit;
+            text-decoration: none;
+            border-top: 4px solid var(--accent);
+            box-shadow: 0 6px 18px rgba(15, 38, 64, 0.08);
+            transition: box-shadow 0.18s ease, transform 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
+        }
+
+        .method-card.protocol { --accent: var(--green); }
+        .method-card .section-kicker { color: var(--accent); }
+        .method-card h2 { padding-right: 44px; word-break: keep-all; }
+        .method-card p { word-break: keep-all; }
+
+        .method-card:hover,
+        .method-card:focus-visible {
+            border-color: var(--accent);
+            background: color-mix(in srgb, var(--accent) 5%, #ffffff);
+            box-shadow: 0 14px 30px rgba(15, 38, 64, 0.16);
+            transform: translateY(-4px);
+        }
+
+        a.method-card::after {
+            content: "→";
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: #eef2f6;
+            color: #0f172a;
+            font-size: 17px;
+            font-weight: 800;
+            transition: background-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+        }
+
+        a.method-card:hover::after,
+        a.method-card:focus-visible::after {
+            background: var(--accent);
+            color: #ffffff;
+            transform: translateX(3px);
+        }
+
+        a.method-card:active {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(15, 38, 64, 0.12);
+        }
+
+        a.method-card:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px;
+        }
+
+        .method-card .card-state {
+            margin-top: auto;
+            align-self: flex-start;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: #eef2f6;
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 800;
+        }
+
         .method-box ul { margin: 8px 0 0; padding-left: 20px; }
 
         .method-box li { margin: 5px 0; }
@@ -418,7 +491,7 @@
             <img src="../assets/pnu_logo.webp" alt="부산대학교 로고">
             <div>
                 <div class="brand-title">NBAR 공통 처리 문서</div>
-                <div class="brand-subtitle">관측 프로토콜과 전처리 방법을 독립된 문서로 관리</div>
+                <div class="brand-subtitle">드론 현장관측 프로토콜과 전처리 방법을 독립된 문서로 관리</div>
             </div>
         </div>
         <nav class="header-links" aria-label="관련 페이지">
@@ -430,24 +503,23 @@
 <main class="content" style="max-width:1100px;margin:0 auto;padding:28px 24px 48px">
     <div class="scope">
         <strong>공통 문서를 두 가지로 구분했습니다</strong>
-        현장 관측 절차를 정리한 관측 프로토콜과 원영상의 전처리 과정을 각각 선택해 확인할 수 있습니다.
+        드론 현장관측 절차를 정리한 프로토콜과 원영상의 전처리 과정을 각각 선택해 확인할 수 있습니다.
     </div>
     <div class="two-col">
-        <div class="method-box" aria-disabled="true" style="border-top:5px solid var(--green);border-style:dashed;border-top-style:solid;background:#f8fafc">
+        <div class="method-box method-card protocol" aria-disabled="true">
             <div class="section-kicker">01</div>
-            <h2>공용 관측 프로토콜</h2>
+            <h2>드론 현장관측 프로토콜</h2>
             <p>현장 관측 준비, 장비 구성, 비행·지상 측정 순서와 기록 방법</p>
-            <strong style="color:var(--muted)">문서 준비 중</strong>
+            <span class="card-state">문서 준비 중</span>
         </div>
-        <a class="method-box" href="field_data_preprocessing_method.html" style="text-decoration:none;border-top:5px solid var(--blue)">
+        <a class="method-box method-card" href="field_data_preprocessing_method.html">
             <div class="section-kicker">02</div>
             <h2>UAV 다분광 데이터 전처리</h2>
             <p>DN → Radiance, 밴드 정합, 센서 간 교정, Ed 정규화, ELC 반사도 변환, 정사투영 및 BRDF 입력자료 구성</p>
-            <strong style="color:var(--blue)">전처리 방법서 열기 →</strong>
         </a>
     </div>
 </main>
 
-<footer>NBAR 공통 처리 문서 · 관측 프로토콜과 전처리 방법서를 분리 관리</footer>
+<footer>NBAR 공통 처리 문서 · 드론 현장관측 프로토콜과 전처리 방법서를 분리 관리</footer>
 </body>
 </html>

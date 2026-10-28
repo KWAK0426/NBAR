@@ -1048,7 +1048,8 @@
         }
 
         .schedule-list {
-            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+            grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+            gap: 6px;
         }
 
         .stage-strip {
@@ -1090,6 +1091,71 @@
             word-break: keep-all;
         }
 
+        .round-cells-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 10px;
+        }
+
+        .round-cells-legend {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #606a78;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .round-cells-legend span {
+            width: 10px;
+            height: 10px;
+            border-radius: 3px;
+        }
+
+        .legend-done { background: #2f9e6b; }
+        .legend-none { background: #c9d1db; margin-left: 6px; }
+
+        .round-cells {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(var(--round-count, 6), minmax(0, 1fr));
+            gap: 6px;
+        }
+
+        .round-cell {
+            width: 100%;
+            min-height: 46px;
+            display: grid;
+            place-items: center;
+            border: 1px solid #d3dbe5;
+            border-radius: 8px;
+            background: #eef1f5;
+            color: #7a8594;
+            font: inherit;
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+        .round-cell.done {
+            border-color: #2f9e6b;
+            background: #e3f4e8;
+            color: #1d7a45;
+            cursor: pointer;
+        }
+
+        .round-cell.done:hover { background: #d3eedc; }
+
+        .round-cell.active {
+            background: #2f9e6b;
+            color: #ffffff;
+            box-shadow: 0 0 0 2px rgba(47, 158, 107, 0.25);
+        }
+
+        .round-cell.outside { opacity: 0.45; }
+
         .tab-button {
             min-height: 0 !important;
             display: grid;
@@ -1121,7 +1187,7 @@
 
         @media (max-width: 620px) {
             .schedule-list {
-                grid-template-columns: 1fr !important;
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
             }
 
             .stage-strip {
@@ -1170,9 +1236,11 @@
         .tab-cycle { font-size: 15px; font-weight: 800; color: #174a87; white-space: nowrap; }
         .tab-row .html-button { font-size: 13px; }
         .block-title { font-size: 15px; }
-        .schedule-item { padding: 10px 14px; }
-        .schedule-date { font-size: 13px; }
-        .schedule-type { font-size: 22px; font-weight: 900; }
+        /* 상세 정보: 인덱스에 없는 관측 정보만 작게 */
+        .schedule-item { padding: 8px 10px; gap: 2px; background: #f7f9fb; box-shadow: none; align-content: start; }
+        .schedule-date { font-size: 12px; font-weight: 700; color: #6a7585; }
+        .schedule-type { font-size: 15px; font-weight: 800; }
+        .schedule-text { font-size: 11.5px; color: #606a78; }
         .stage-step { padding: 12px 6px; gap: 10px; }
         .stage-step-name { font-size: 15px; }
         .status-pill { font-size: 13px; }
@@ -1305,9 +1373,11 @@
                 <ul class="schedule-list" id="scheduleList"></ul>
 
                 <div class="process-block processing-part" id="processing">
-                    <div class="block-title">업무 처리 단계</div>
-
-                    <ol class="stage-strip" id="processingTable"></ol>
+                    <div class="round-cells-head">
+                        <div class="block-title">처리 완료 회차</div>
+                        <div class="round-cells-legend"><span class="legend-done"></span>반사도 모자이크 생성 완료 <span class="legend-none"></span>미완료</div>
+                    </div>
+                    <ol class="round-cells" id="roundCells"></ol>
                 </div>
 
                 <div class="mosaic-panel" id="mosaicPanel"></div>
@@ -1323,7 +1393,7 @@
     © 2026 NBAR Field Observation Status Sharing
 </footer>
 
-<script src="data/nbar-data.js?v=20261027"></script>
+<script src="data/nbar-data.js?v=20261029b"></script>
 
 <script>
     const observations = window.NBAR_OBSERVATIONS || [];
@@ -1333,7 +1403,7 @@
     const tabList = document.getElementById("tabList");
     const processingStatus = document.getElementById("processingStatus");
     const processDateBadge = document.getElementById("processDateBadge");
-    const processingTable = document.getElementById("processingTable");
+    const roundCells = document.getElementById("roundCells");
     const lastUpdatedText = document.getElementById("lastUpdatedText");
     const scheduleList = document.getElementById("scheduleList");
     const detailSubtitle = document.getElementById("detailSubtitle");
@@ -1461,12 +1531,14 @@
         return ["설치", byDate[item.date] || tarpDetails.defaultInstalled || "설치"];
     }
 
+    // 인덱스 줄에 없는 정보: 관측 시간, 반사도 타프(설치 시 구성), 영상 수, 참여 기관
     function detailRows(item) {
-        const [tarpStatus] = tarpDetail(item);
+        const [tarpStatus, tarpSpec] = tarpDetail(item);
         return [
-            ["관측 시기", item.purpose],
-            ["관측 사이클", item.cycle],
-            ["반사도 타프", tarpStatus]
+            ["관측 시간", displayObservationTime(item) || "미확인", ""],
+            ["반사도 타프", tarpStatus, tarpSpec === "-" ? "" : tarpSpec],
+            ["영상 수", displayImageCount(item) || "미확인", ""],
+            ["참여 기관", item.agency || "-", ""]
         ];
     }
 
@@ -1526,15 +1598,10 @@
     }
 
     function renderDroneMosaic(item, round) {
-        const total = cycleCount(item);
-        const chips = Array.from({ length: total }, (_, i) => i + 1).map((n) => `
-            <button class="round-chip ${n === round ? "active" : ""}" type="button" data-round="${n}">${n}회차</button>
-        `).join("");
-
         mosaicPanel.innerHTML = `
             <div class="mosaic-heading">
                 <div class="mosaic-title">RGB 모자이크</div>
-                <div class="round-chips">${chips}</div>
+                <div class="mosaic-state ready">${round}회차</div>
             </div>
             <a class="mosaic-frame mosaic-link" href="${viewerUrl(item, round)}" target="_blank" rel="noopener" title="드론 뷰어에서 크게 보기">
                 <div class="mosaic-placeholder"><strong>불러오는 중</strong></div>
@@ -1544,9 +1611,6 @@
             <div class="mosaic-meta">${displayDate(item.date)} · ${round}회차 · 2–98% 스트레치</div>
         `;
 
-        mosaicPanel.querySelectorAll(".round-chip").forEach((button) => {
-            button.addEventListener("click", () => renderDroneMosaic(item, Number(button.dataset.round)));
-        });
 
         const link = mosaicPanel.querySelector(".mosaic-link");
         const canvas = mosaicPanel.querySelector(".mosaic-canvas");
@@ -1784,13 +1848,29 @@
         `;
     }
 
-    function renderProcessingTable(item) {
-        processingTable.innerHTML = item.processing.map(([stage, state], stageIndex) => `
-            <li class="stage-step ${badgeClass(state)}">
-                <span class="stage-step-name">${stageIndex + 1}. ${stage}</span>
-                <span class="status-pill ${badgeClass(state)}">${state}</span>
-            </li>
-        `).join("");
+    // 처리 완료 회차: 기본 6칸, 드론 뷰어에 RGB 모자이크가 있는 회차는 초록, 없으면 회색
+    function mosaicRounds(item) {
+        return Array.isArray(item.mosaicRounds) ? item.mosaicRounds : [];
+    }
+
+    function renderRoundCells(item, activeRound) {
+        const done = mosaicRounds(item);
+        const total = Math.max(6, cycleCount(item));
+        roundCells.style.setProperty("--round-count", total);
+        roundCells.innerHTML = Array.from({ length: total }, (_, i) => i + 1).map((n) => {
+            const isDone = done.includes(n);
+            const classes = ["round-cell", isDone ? "done" : "", n === activeRound ? "active" : "", n > cycleCount(item) ? "outside" : ""].join(" ");
+            const title = n > cycleCount(item) ? "관측 없음" : (isDone ? "반사도 모자이크 생성 완료 · 눌러서 보기" : "반사도 모자이크 미완료");
+            return `<li><button class="${classes}" type="button" data-round="${n}" title="${title}" ${isDone ? "" : "disabled"}>${n}회차</button></li>`;
+        }).join("");
+
+        roundCells.querySelectorAll(".round-cell.done").forEach((button) => {
+            button.addEventListener("click", () => {
+                const round = Number(button.dataset.round);
+                renderRoundCells(item, round);
+                renderDroneMosaic(item, round);
+            });
+        });
     }
 
     function renderSheetTabs(activeIndex) {
@@ -1845,16 +1925,19 @@
             processDateBadge.textContent = displayDate(item.date);
         }
 
-        renderProcessingTable(item);
+        const rounds = hasDroneViewer(item) ? mosaicRounds(item) : [];
+        const firstRound = rounds.includes(item.mosaicDefaultRound) ? item.mosaicDefaultRound : rounds[0];
+        renderRoundCells(item, firstRound);
 
-        scheduleList.innerHTML = detailRows(item).map(([label, value]) => `
+        scheduleList.innerHTML = detailRows(item).map(([label, value, note]) => `
             <li class="schedule-item">
                 <div class="schedule-date">${label}</div>
                 <div class="schedule-type">${value}</div>
+                ${note ? `<div class="schedule-text">${note}</div>` : ""}
             </li>
         `).join("");
 
-        if (hasDroneViewer(item)) renderDroneMosaic(item, 1);
+        if (firstRound) renderDroneMosaic(item, firstRound);
         else mosaicPanel.innerHTML = mosaicMarkup(item);
     }
 

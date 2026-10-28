@@ -1,5 +1,5 @@
 // 대시보드 오른쪽 상단에 표시되는 최신 업데이트 시간입니다.
-window.NBAR_LAST_UPDATED = "2026.10.27 14:51";
+window.NBAR_LAST_UPDATED = "2026.10.29 01:31";
 
 // 반사도 모자이크 생성 완료 회차 수는 여기 숫자만 수정하면 됩니다.
 // panelCompletedCycles: 패널 기반 처리 완료 회차 수
@@ -83,6 +83,7 @@ window.NBAR_OBSERVATIONS = [
         purpose: "이앙기",
         purposeDetail: "필지별 이앙 시기 차이에 따른 이앙 전·후 상태 혼재",
         cycle: "5회",
+        mosaicRounds: [3, 4, 5],
         observationTime: "10:50~13:30",
         imageCount: 5320,
         title: "[논 벼] - 김해 농지",
@@ -113,6 +114,7 @@ window.NBAR_OBSERVATIONS = [
         purpose: "이앙기",
         purposeDetail: "모내기 후 벼 군락이 빠르게 성장하는 시기",
         cycle: "4회",
+        mosaicRounds: [1],
         observationTime: "10:01~14:18",
         imageCount: 4580,
         title: "[논 벼] - 김해 농지",
@@ -143,6 +145,7 @@ window.NBAR_OBSERVATIONS = [
         purpose: "유수형성기",
         purposeDetail: "유수형성기 벼 군락의 시간 변화 확인",
         cycle: "6회",
+        mosaicRounds: [1, 2],
         observationTime: "10:00~15:28",
         imageCount: 6130,
         title: "[논 벼] - 김해 농지",
@@ -173,6 +176,7 @@ window.NBAR_OBSERVATIONS = [
         purpose: "유수형성기",
         purposeDetail: "유수형성기 벼 군락의 시간 변화 확인",
         cycle: "5회",
+        mosaicRounds: [1, 2, 3, 4, 5],
         observationTime: "09:55~14:42",
         imageCount: 5834,
         title: "[논 벼] - 김해 농지",
@@ -203,6 +207,7 @@ window.NBAR_OBSERVATIONS = [
         purpose: "출수기",
         purposeDetail: "출수기 벼 군락의 시간 변화 확인",
         cycle: "6회",
+        mosaicRounds: [],
         observationTime: "미확인",
         imageCount: null,
         title: "[논 벼] - 김해 농지",
@@ -233,6 +238,7 @@ window.NBAR_OBSERVATIONS = [
         purpose: "출수기",
         purposeDetail: "출수기 벼 군락의 시간 변화 확인",
         cycle: "4회",
+        mosaicRounds: [1, 2, 3, 4],
         observationTime: "11:21~14:42",
         imageCount: null,
         title: "[논 벼] - 김해 농지",
@@ -263,6 +269,7 @@ window.NBAR_OBSERVATIONS = [
         purpose: "등숙기",
         purposeDetail: "등숙기 벼 군락의 시간 변화 확인",
         cycle: "4회",
+        mosaicRounds: [],
         observationTime: "미확인",
         imageCount: null,
         title: "[논 벼] - 김해 농지",
@@ -293,6 +300,8 @@ window.NBAR_OBSERVATIONS = [
         purpose: "등숙기",
         purposeDetail: "등숙기 벼 군락의 시간 변화 확인",
         cycle: "4회",
+        mosaicRounds: [1, 2, 3],
+        mosaicDefaultRound: 2, // 대표 RGB 회차 지정(없으면 가장 빠른 회차)
         observationTime: "미확인",
         imageCount: null,
         title: "[논 벼] - 김해 농지",
@@ -323,6 +332,7 @@ window.NBAR_OBSERVATIONS = [
         purpose: "등숙기",
         purposeDetail: "등숙기 벼 군락의 시간 변화 확인",
         cycle: "6회",
+        mosaicRounds: [1],
         observationTime: "미확인",
         imageCount: null,
         title: "[논 벼] - 김해 농지",
