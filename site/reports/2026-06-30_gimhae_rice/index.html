@@ -137,6 +137,16 @@ if(matchedObservation){
   const date=String(matchedObservation.date||'').replace(/\./g,'-');
   if(!report.meta.date && /^\d{4}-\d{2}-\d{2}$/.test(date))report.meta.date=date;
   if(!report.meta.site && typeof matchedObservation.site==='string')report.meta.site=matchedObservation.site;
+  const type=typeof matchedObservation.coverType==='string'?matchedObservation.coverType.trim():'';
+  const crop=typeof matchedObservation.crop==='string'?matchedObservation.crop.trim():'';
+  if(!report.meta.observationTarget && (type||crop))report.meta.observationTarget=type?(crop?type+' ('+crop+')':type):crop;
+  const flightMatch=String(matchedObservation.cycle||'').trim().match(/^(\d+)회$/);
+  if(report.meta.flightCount==null && flightMatch)report.meta.flightCount=Number(flightMatch[1]);
+  const sameSite=(window.NBAR_OBSERVATIONS||[]).filter(item=>item.site===matchedObservation.site && typeof item.date==='string' && item.date.slice(0,4)===date.slice(0,4) && /^\d{4}\.\d{2}\.\d{2}$/.test(item.date)).sort((a,b)=>a.date.localeCompare(b.date));
+  if(sameSite.filter(item=>item.date===matchedObservation.date).length===1){
+    if(report.meta.fieldSession==null)report.meta.fieldSession=sameSite.findIndex(item=>item===matchedObservation)+1;
+    if(report.meta.totalFieldSessions==null)report.meta.totalFieldSessions=sameSite.length;
+  }
 }
 const specs=[["mosaic", "반사도 모자이크 영상 생성", "회차별 처리 현황"], ["multi", "다중관측 구성과 분석 가능 영역", "유효 관측과 기하 분포"], ["brdf", "화소별 BRDF 분석 결과", "밴드별 계수와 방향에 따른 반사도"], ["nbar", "NBAR·관측각별 모의영상", "기준화 영상과 관측각별 결과"], ["parcel", "필지별 반사도와 NDVI", "필지별 스펙트럼과 식생지수"]];
 const rawLabels={unknown:'미확인',acquired:'확보',partial:'일부 확보',missing:'미확보'};
@@ -165,7 +175,7 @@ document.getElementById('meta-date').textContent=koreanDate(meta.date);
 document.getElementById('meta-site').textContent=text(meta.observationTarget);
 document.getElementById('meta-session').textContent=`${meta.fieldSession==null?'미확인':text(meta.fieldSession)+'차'} / ${meta.totalFieldSessions==null?'미확인':text(meta.totalFieldSessions)+'차'}`;
 document.getElementById('meta-flight').textContent=meta.flightCount==null?'미확인':'총 '+text(meta.flightCount)+'회차';
-if(meta.date){document.title=`${text(meta.date)} 현장관측 보고서`;document.getElementById('data-notice').textContent='공통 양식 · 관측일과 관측지는 현황판에서 연결됩니다. 상세 보고서는 작성 전입니다.';}
+if(meta.date){document.title=`${text(meta.date)} 현장관측 보고서`;document.getElementById('data-notice').textContent='공통 양식 · 관측 기본정보는 현황판에서 연결됩니다. 상세 보고서는 작성 전입니다.';}
 const sd=meta.scopeDetails||{};const ge=sd.gpsExtent;const base=sd.landType||sd.parcelCount!=null?`${text(sd.landType)} 필지 : ${sd.parcelCount==null?'수 미확인':text(sd.parcelCount)+'개'}`:text(meta.scope);const hasExtent=ge&&Number.isFinite(ge.widthM)&&ge.widthM>0&&Number.isFinite(ge.heightM)&&ge.heightM>0;const extent=hasExtent?`약 ${text(ge.widthM)} × ${text(ge.heightM)} (m)`:'미확인';const scope=`${base} · 관측 영역: ${extent}`;
 document.getElementById('overview-intro').innerHTML=`<div><h4>관측 목적</h4><p>${purposeHtml}</p></div><div><h4>관측 범위</h4><p>관측 대상 : ${esc(meta.observationTarget)}</p><p>대상 필지 : ${esc(sd.parcelCount)}</p><p>비행 영역 : ${esc(extent)}</p></div><div><h4>관측 구성</h4><div class="observation-groups"><section class="observation-group"><h5>UAV 관측</h5><p>기체 : ${esc(meta.instrumentUav)}</p><p>카메라 : ${esc(meta.instrumentCamera)}</p><p>방식 : ${esc(meta.flightMethod)}</p></section><section class="observation-group"><h5>지상 관측</h5><p>장비 : ${esc(meta.instrumentGround)}</p><p>방식 : ${esc(meta.groundMethod)}</p></section></div></div>`;
 function overviewFigure(key,label,description){const im=report.overviewImages?.[key];const ready=im?.approved===true&&safeImage(im.src);return `<figure class="overview-figure"><figcaption><strong>${esc(label)}</strong><span>${esc(description)}</span></figcaption>${ready?`<button type="button" class="image-btn" data-src="${esc(im.src)}" data-caption="${esc(im.caption||label)}" aria-label="${esc(im.caption||label)} 확대"><img src="${esc(im.src)}" alt="${esc(im.caption||label)}" loading="lazy"></button><p class="image-caption">${esc(im.caption||label)}</p>`:`<div class="overview-placeholder"><span aria-hidden="true">▧</span><strong>자료 미연결</strong><p>${esc(label)} 미연결 · 실제 현황 미확인</p></div>`}</figure>`;}
