@@ -39,6 +39,8 @@ for (const item of observations) {
   const reportTarget = path.resolve(site, item.html || '');
   const reportExists = Boolean(item.html && fs.existsSync(reportTarget) && fs.statSync(reportTarget).isFile());
   if (reportState !== '예정' && !reportExists) problems.push(`${item.date}: enabled report is missing`);
+  // 보고서는 관측별 폴더(reports/<날짜_대상지>/index.html)에 올린다. 업로드 전에도 폴더는 있어야 한다.
+  if (item.html && !fs.existsSync(path.dirname(reportTarget))) problems.push(`${item.date}: report folder is missing (${path.dirname(item.html)})`);
   for (const key of ['NBAR_MOSAIC_CYCLE_PROGRESS', 'NBAR_QUALITY_CYCLE_PROGRESS']) {
     const config = data[key] || {};
     const progress = { ...config.default, ...(config.byDate?.[`${item.date} ${item.site}`] ?? config.byDate?.[item.date]) };

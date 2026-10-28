@@ -12,6 +12,7 @@
 - 편집 대상은 `site/`이다. 루트 `index.html`은 `site/`로 연결하는 진입 파일이다.
 - 연구 현황 홈페이지이며 별도 드론 관리 현황판이나 영상 처리 실행기가 아니다.
 - 기존 루트 `report_0630_joint_campaign.html` 및 `01_htmls/`는 보존한다.
+- 관측별 HTML 보고서는 `site/reports/<날짜_대상지>/index.html`에 올린다. 절차는 `docs/REPORT_UPLOAD_GUIDE.md`.
 - 관측 수치·회차·처리 실적을 추정으로 바꾸지 않는다. 배포일을 `NBAR_LAST_UPDATED`에 대입하지 않는다.
 - 현재는 사용자 GitHub에서 시험한다. 교수님 저장소 `wonk19/NBAR`는 별도 요청 전 수정·배포하지 않는다.
 - 원본 Photos, GPS 목록, DEM/GeoTIFF, 인증정보, 개인 PC 절대경로는 커밋하지 않는다.

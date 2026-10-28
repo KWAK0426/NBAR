@@ -32,6 +32,11 @@ function growthStage(isoDate) {
   return '등숙기 + 수확기';
 }
 
+// Report folder for a new observation. The folder is created with a .gitkeep so the report can be uploaded later.
+function reportFolder(isoDate) {
+  return `${isoDate}_gimhae_rice`;
+}
+
 function entryText(isoDate, cycles) {
   const date = isoDate.replace(/-/g, '.');
   const stage = growthStage(isoDate);
@@ -48,7 +53,7 @@ function entryText(isoDate, cycles) {
         imageCount: null,
         title: "[논 벼] - ${SITE}",
         agency: "부산대",
-        html: "reports/${isoDate}_gimhae_rice.html",
+        html: "reports/${reportFolder(isoDate)}/index.html",
         status: "전처리 진행 중",
         statusClass: "progress",
         processing: [
@@ -165,6 +170,15 @@ async function main() {
   text = text.replace(/window\.NBAR_LAST_UPDATED = "[^"]*";/, `window.NBAR_LAST_UPDATED = "${kstStamp()}";`);
   loadObservations(text); // fail before writing if the result is not valid JavaScript
   fs.writeFileSync(dataPath, text);
+  // Every Gimhae entry gets its report folder. html paths are relative to the site root (data/.. in both A and B).
+  const siteRoot = path.join(path.dirname(dataPath), '..');
+  for (const item of loadObservations(text).filter((entry) => entry.site === SITE)) {
+    const folder = path.join(siteRoot, path.dirname(item.html || ''));
+    if (!item.html || fs.existsSync(folder)) continue;
+    fs.mkdirSync(folder, { recursive: true });
+    fs.writeFileSync(path.join(folder, '.gitkeep'), '');
+    changes.push(`${item.date} 보고서 폴더 생성 (${path.dirname(item.html)})`);
+  }
   console.log(changes.join('\n'));
 }
 
