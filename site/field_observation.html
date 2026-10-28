@@ -1135,28 +1135,28 @@
             }
         }
 
-        /* 큰 글씨: 한눈에 읽히도록 전체 크기 상향 */
-        .brand-title { font-size: 28px; }
-        .brand-subtitle { font-size: 16px; }
-        .header-link-button { font-size: 15px; }
-        .last-updated { font-size: 13px; }
-        .last-updated strong { font-size: 15px; }
-        .card-title { font-size: 28px; }
-        .section-note { font-size: 15px; }
+        /* 글씨 크기: 한눈에 읽히되 과하지 않게 (2026-10-29 조정) */
+        .brand-title { font-size: 24px; }
+        .brand-subtitle { font-size: 14px; }
+        .header-link-button { font-size: 13px; }
+        .last-updated { font-size: 12px; }
+        .last-updated strong { font-size: 14px; }
+        .card-title { font-size: 22px; }
+        .section-note { font-size: 13px; }
         .inner-panel-title { display: none; }
-        .sheet-tab { font-size: 19px; font-weight: 800; min-height: 50px; }
-        .tab-row { grid-template-columns: 1fr 96px; }
+        .sheet-tab { font-size: 16px; font-weight: 800; min-height: 42px; }
+        .tab-row { grid-template-columns: 1fr 84px; }
         .tab-button {
-            padding: 14px 20px !important;
-            gap: 18px;
-            grid-template-columns: 82px 140px 96px minmax(0, 1fr) auto;
+            padding: 10px 16px !important;
+            gap: 14px;
+            grid-template-columns: 64px 116px 72px minmax(0, 1fr) auto;
         }
-        .tab-date { font-size: 24px !important; font-weight: 900 !important; color: #0b3263 !important; letter-spacing: -0.5px; }
+        .tab-date { font-size: 19px !important; font-weight: 900 !important; color: #0b3263 !important; letter-spacing: -0.5px; }
         .tab-stage {
             justify-self: start;
-            padding: 5px 12px;
+            padding: 4px 10px;
             border-radius: 999px;
-            font-size: 18px;
+            font-size: 15px;
             font-weight: 900;
             white-space: nowrap;
         }
@@ -1164,30 +1164,30 @@
         .stage-panicle { background: #e0f0f4; color: #136b80; }
         .stage-heading { background: #fdf0d8; color: #9a5d00; }
         .stage-ripening { background: #f6e7d6; color: #8a4b12; }
-        .stage-other { background: #eef2f6; color: #4a5a6e; font-size: 15px; white-space: normal; word-break: keep-all; line-height: 1.2; border-radius: 10px; max-width: 100%; }
-        .tab-object { font-size: 20px; font-weight: 800; color: #172033; white-space: nowrap; }
-        .tab-site { font-size: 20px; font-weight: 600; color: #3a4658; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .tab-cycle { font-size: 18px; font-weight: 800; color: #174a87; white-space: nowrap; }
-        .tab-row .html-button { font-size: 15px; }
-        .block-title { font-size: 18px; }
-        .schedule-item { padding: 14px 16px; }
-        .schedule-date { font-size: 15px; }
-        .schedule-type { font-size: 28px; font-weight: 900; }
-        .stage-step { padding: 16px 6px; gap: 12px; }
-        .stage-step-name { font-size: 18px; }
-        .status-pill { font-size: 15px; }
-        .mosaic-title { font-size: 18px; }
-        .mosaic-state { font-size: 14px; }
-        .mosaic-placeholder { font-size: 15px; }
-        .mosaic-placeholder strong { font-size: 20px; }
-        .mosaic-meta { font-size: 14px; }
+        .stage-other { background: #eef2f6; color: #4a5a6e; font-size: 13px; white-space: normal; word-break: keep-all; line-height: 1.2; border-radius: 10px; max-width: 100%; }
+        .tab-object { font-size: 16px; font-weight: 800; color: #172033; white-space: nowrap; }
+        .tab-site { font-size: 16px; font-weight: 600; color: #3a4658; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .tab-cycle { font-size: 15px; font-weight: 800; color: #174a87; white-space: nowrap; }
+        .tab-row .html-button { font-size: 13px; }
+        .block-title { font-size: 15px; }
+        .schedule-item { padding: 10px 14px; }
+        .schedule-date { font-size: 13px; }
+        .schedule-type { font-size: 22px; font-weight: 900; }
+        .stage-step { padding: 12px 6px; gap: 10px; }
+        .stage-step-name { font-size: 15px; }
+        .status-pill { font-size: 13px; }
+        .mosaic-title { font-size: 15px; }
+        .mosaic-state { font-size: 13px; }
+        .mosaic-placeholder { font-size: 13px; }
+        .mosaic-placeholder strong { font-size: 17px; }
+        .mosaic-meta { font-size: 12px; }
 
         @media (max-width: 760px) {
             .tab-button { grid-template-columns: auto auto 1fr; row-gap: 6px; }
             .tab-site { grid-column: 1 / 3; }
             .tab-cycle { justify-self: end; }
-            .tab-date { font-size: 20px !important; }
-            .tab-object, .tab-site, .tab-cycle { font-size: 16px; }
+            .tab-date { font-size: 18px !important; }
+            .tab-object, .tab-site, .tab-cycle { font-size: 15px; }
             .tab-row { grid-template-columns: minmax(0, 1fr) 64px; }
             .tab-button { min-width: 0; padding: 12px 14px !important; gap: 10px; }
             .tab-stage { font-size: 15px; padding: 4px 10px; }
