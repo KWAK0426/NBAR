@@ -141,67 +141,164 @@
 
         main {
             flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
             padding: 30px 28px 44px;
         }
 
+        /* A(개인 작업본) 전용 표시와 내부 자료 바로가기 */
+        .version-badge {
+            display: inline-block;
+            margin-left: 8px;
+            padding: 3px 8px;
+            border-radius: 999px;
+            background: #f2c94c;
+            color: #3d2a00;
+            font-size: 12px;
+            font-weight: 800;
+            vertical-align: middle;
+        }
+
+        .internal-panel {
+            width: min(1180px, 100%);
+            margin: 0 auto;
+            padding: 16px 18px;
+            background: #fffbea;
+            border: 1px dashed #d9b44a;
+            border-radius: var(--radius);
+        }
+
+        .internal-panel h2 {
+            margin: 0 0 10px;
+            color: #6b4e00;
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .internal-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .internal-links a {
+            padding: 7px 11px;
+            border: 1px solid #e6d4a0;
+            border-radius: 6px;
+            background: #ffffff;
+            color: #3d2a00;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .internal-links a:hover {
+            border-color: #b8901f;
+            background: #fff4cc;
+        }
+
         .task-grid {
+            flex: 1 1 auto;
             width: min(1180px, 100%);
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-rows: auto auto 1fr auto auto 1fr;
             gap: 16px;
         }
 
+        /* 칸 전체가 링크. 번호·제목·설명 박스 위치를 칸끼리 맞추기 위해 subgrid 사용 */
         .task-card {
-            min-height: 142px;
+            --accent: var(--steel);
+            position: relative;
+            min-height: 240px;
+            color: inherit;
+            text-decoration: none;
+            grid-row: span 3;
             display: grid;
-            grid-template-columns: 54px minmax(0, 1fr) auto;
-            align-items: center;
-            gap: 22px;
-            padding: 24px 24px 24px 20px;
+            grid-template-rows: subgrid;
+            row-gap: 14px;
+            padding: 24px 22px 22px;
             background: var(--paper);
             border: 1px solid var(--line);
-            border-left: 4px solid var(--steel);
+            border-top: 4px solid var(--accent);
             border-radius: var(--radius);
-            box-shadow: 0 4px 14px rgba(15, 38, 64, 0.05);
+            box-shadow: 0 6px 18px rgba(15, 38, 64, 0.08);
+            cursor: pointer;
+            transition: box-shadow 0.18s ease, transform 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
         }
 
-        .task-card.field {
-            border-left-color: var(--green);
+        .task-card.field { --accent: var(--green); }
+        .task-card.dataset { --accent: var(--amber); }
+        .task-card.prototype { --accent: var(--violet); }
+        .task-card.leop { --accent: var(--steel); }
+
+        /* 오른쪽 위 화살표: 칸 자체가 이동 버튼임을 표시 */
+        .task-card::after {
+            content: "→";
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: #eef2f6;
+            color: var(--navy);
+            font-size: 17px;
+            font-weight: 800;
+            transition: background-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
         }
 
-        .task-card.dataset {
-            border-left-color: var(--amber);
+        .task-card:hover,
+        .task-card:focus-visible {
+            border-color: var(--accent);
+            background: color-mix(in srgb, var(--accent) 5%, #ffffff);
+            box-shadow: 0 14px 30px rgba(15, 38, 64, 0.16);
+            transform: translateY(-4px);
         }
 
-        .task-card.prototype {
-            border-left-color: var(--violet);
+        .task-card:hover::after,
+        .task-card:focus-visible::after {
+            background: var(--accent);
+            color: #ffffff;
+            transform: translateX(3px);
         }
 
-        .task-card.leop {
-            border-left-color: var(--steel);
+        .task-card:active {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(15, 38, 64, 0.12);
         }
+
+        .task-card:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px;
+        }
+
 
         .task-number {
             color: #8695a8;
             font-size: 15px;
             font-weight: 900;
-            text-align: center;
         }
 
         .task-content {
-            min-width: 0;
+            display: contents;
         }
 
         .task-title-row {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
         }
 
         .task-title {
             margin: 0;
+            text-align: center;
+            word-break: keep-all;
             font-size: 19px;
             line-height: 1.35;
             font-weight: 800;
@@ -228,8 +325,16 @@
             color: #8a5b13;
         }
 
+        .task-body {
+            align-self: start;
+            padding: 14px 14px 13px;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            background: #f7f9fc;
+        }
+
         .task-summary {
-            margin-top: 9px;
+            word-break: keep-all;
             color: #2c3a4d;
             font-size: 14px;
             line-height: 1.55;
@@ -243,33 +348,26 @@
             line-height: 1.35;
         }
 
-        .task-link {
-            flex: 0 0 auto;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 36px;
-            padding: 0 13px;
-            border-radius: 6px;
-            background: var(--navy);
-            color: #ffffff;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 800;
-            white-space: nowrap;
-        }
+        @media (max-width: 1024px) {
+            main {
+                padding: 24px 16px 36px;
+            }
 
-        .task-link:hover {
-            background: #123f74;
-        }
+            .task-grid {
+                gap: 12px;
+            }
 
-        .task-link.secondary {
-            background: #e8edf3;
-            color: #1f3148;
-        }
+            .task-card {
+                padding: 20px 14px 16px;
+            }
 
-        .task-link.secondary:hover {
-            background: #dce5ee;
+            .task-title {
+                font-size: 17px;
+            }
+
+            .task-body {
+                padding: 11px 10px 10px;
+            }
         }
 
         @media (max-width: 760px) {
@@ -292,16 +390,19 @@
                 padding: 20px 12px 32px;
             }
 
-            .task-card {
-                min-height: 0;
-                grid-template-columns: 38px minmax(0, 1fr);
-                gap: 12px;
-                padding: 19px 16px 18px 10px;
+            .task-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: none;
+                row-gap: 16px;
             }
 
-            .task-link {
-                grid-column: 2;
-                justify-self: start;
+            .task-card {
+                min-height: 0;
+                grid-row: auto;
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+                padding: 19px 16px 18px;
             }
         }
     </style>
@@ -314,7 +415,7 @@
                 <img src="assets/pnu_logo.webp" alt="부산대학교 로고">
             </div>
             <div>
-                <div class="brand-title">NBAR 1차년도 연구 현황 허브</div>
+                <div class="brand-title">NBAR 1차년도 연구 현황 허브<span class="version-badge">A · 개인 작업본</span></div>
                 <div class="brand-subtitle">현장관측, 위성 기반 데이터셋, BRDF 보정 알고리즘 개발 및 적용 현황 통합 공유</div>
             </div>
         </div>
@@ -330,57 +431,74 @@
 
 <main>
     <section class="task-grid" aria-label="1차년도 과업별 페이지">
-        <article class="task-card field">
+        <a class="task-card field" href="field_observation.html">
             <div class="task-number">01</div>
             <div class="task-content">
                 <div class="task-title-row">
                     <h2 class="task-title">현장관측</h2>
                     <div class="status-pill">운영 중</div>
                 </div>
-                <div class="task-summary">현장관측 결과와 자료 처리, 산출물 공유 현황을 확인하는 세부 대시보드입니다.</div>
-                <div class="task-note">현장관측 세부 대시보드 운영</div>
+                <div class="task-body">
+                    <div class="task-summary">현장관측 결과와 자료 처리, 산출물 공유 현황을 확인하는 세부 대시보드입니다.</div>
+                    <div class="task-note">현장관측 세부 대시보드 운영</div>
+                </div>
             </div>
-            <a class="task-link" href="field_observation.html">대시보드 열기</a>
-        </article>
+        </a>
 
-        <article class="task-card dataset">
+        <a class="task-card dataset" href="satellite_anisotropy_dataset.html">
             <div class="task-number">02</div>
             <div class="task-content">
                 <div class="task-title-row">
                     <h2 class="task-title">위성 기반 반사이방성 데이터셋 구축</h2>
                     <div class="status-pill pending">준비 중</div>
                 </div>
-                <div class="task-summary">위성 기반 반사이방성 데이터셋 구축 현황을 정리하는 페이지입니다.</div>
-                <div class="task-note">자료 구조 확정 후 연결</div>
+                <div class="task-body">
+                    <div class="task-summary">위성 기반 반사이방성 데이터셋 구축 현황을 정리하는 페이지입니다.</div>
+                    <div class="task-note">자료 구조 확정 후 연결</div>
+                </div>
             </div>
-            <a class="task-link secondary" href="satellite_anisotropy_dataset.html">페이지 보기</a>
-        </article>
+        </a>
 
-        <article class="task-card prototype">
+        <a class="task-card prototype" href="brdf_algorithm_prototype.html">
             <div class="task-number">03</div>
             <div class="task-content">
                 <div class="task-title-row">
                     <h2 class="task-title">BRDF 보정 알고리즘 프로토타입</h2>
                     <div class="status-pill pending">준비 중</div>
                 </div>
-                <div class="task-summary">BRDF 보정 알고리즘의 프로토타입 구성과 검증 흐름을 정리하는 페이지입니다.</div>
-                <div class="task-note">프로토타입 산출물 추가 예정</div>
+                <div class="task-body">
+                    <div class="task-summary">BRDF 보정 알고리즘의 프로토타입 구성과 검증 흐름을 정리하는 페이지입니다.</div>
+                    <div class="task-note">프로토타입 산출물 추가 예정</div>
+                </div>
             </div>
-            <a class="task-link secondary" href="brdf_algorithm_prototype.html">페이지 보기</a>
-        </article>
+        </a>
 
-        <article class="task-card leop">
+        <a class="task-card leop" href="leop_brdf_test_application.html">
             <div class="task-number">04</div>
             <div class="task-content">
                 <div class="task-title-row">
                     <h2 class="task-title">LEOP 기반 BRDF 보정 알고리즘 테스트 및 적용</h2>
                     <div class="status-pill pending">준비 중</div>
                 </div>
-                <div class="task-summary">LEOP 기반 BRDF 보정 알고리즘 테스트와 적용 결과를 정리하는 페이지입니다.</div>
-                <div class="task-note">적용 결과 생성 후 연결</div>
+                <div class="task-body">
+                    <div class="task-summary">LEOP 기반 BRDF 보정 알고리즘 테스트와 적용 결과를 정리하는 페이지입니다.</div>
+                    <div class="task-note">적용 결과 생성 후 연결</div>
+                </div>
             </div>
-            <a class="task-link secondary" href="leop_brdf_test_application.html">페이지 보기</a>
-        </article>
+        </a>
+    </section>
+
+    <section class="internal-panel" aria-label="A 전용 내부 자료">
+        <h2>내부 자료 (A 전용 · B 배포본에는 없음)</h2>
+        <div class="internal-links">
+            <a href="https://kwak0426.github.io/PNU_QUREOS_NBAR_B/" target="_blank" rel="noopener">B 배포본 미리보기</a>
+            <a href="image_inventory.html" target="_blank">이미지 후보 목록</a>
+            <a href="reports/2026-06-10_joint_field_elc_mosaic_report.html" target="_blank">6/10 분리 전 합본 보고서</a>
+            <a href="../report_0630_joint_campaign.html" target="_blank">기존 공동 캠페인 보고서</a>
+            <a href="../docs/WEBSITE_HANDOFF.md" target="_blank">인수인계 문서</a>
+            <a href="../docs/DATA_EDITING_GUIDE.md" target="_blank">데이터 수정 안내</a>
+            <a href="../docs/COORDINATION.md" target="_blank">공동 작업 현황</a>
+        </div>
     </section>
 </main>
 
