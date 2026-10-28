@@ -1,5 +1,5 @@
 // 대시보드 오른쪽 상단에 표시되는 최신 업데이트 시간입니다.
-window.NBAR_LAST_UPDATED = "2026.09.20 15:51";
+window.NBAR_LAST_UPDATED = "2026.10.27 14:51";
 
 // 반사도 모자이크 생성 완료 회차 수는 여기 숫자만 수정하면 됩니다.
 // panelCompletedCycles: 패널 기반 처리 완료 회차 수
@@ -80,12 +80,12 @@ window.NBAR_OBSERVATIONS = [
         coverType: "농지",
         crop: "벼",
         site: "김해 농지",
-        purpose: "이앙 전후",
+        purpose: "이앙기",
         purposeDetail: "필지별 이앙 시기 차이에 따른 이앙 전·후 상태 혼재",
         cycle: "5회",
         observationTime: "10:50~13:30",
         imageCount: 5320,
-        title: "[벼] - 김해 농지",
+        title: "[논 벼] - 김해 농지",
         agency: "부산대",
         html: "reports/2026-05-10_gimhae_rice.html",
         status: "전처리 진행 중",
@@ -98,7 +98,7 @@ window.NBAR_OBSERVATIONS = [
             ["보고서 작성", "예정"]
         ],
         schedule: [
-            ["날짜", "2026.05.10", "이앙 전후 관측"],
+            ["날짜", "2026.05.10", "이앙기 관측"],
             ["관측 시간", "10:50~13:30", "전체 관측 시간"],
             ["관측 사이클", "5회", "관측 사이클 수"],
             ["반사도 타프", "미설치", "해당 관측일은 반사도 타프 미설치"],
@@ -110,12 +110,12 @@ window.NBAR_OBSERVATIONS = [
         coverType: "농지",
         crop: "벼",
         site: "김해 농지",
-        purpose: "급성장기 - 초기",
+        purpose: "이앙기",
         purposeDetail: "모내기 후 벼 군락이 빠르게 성장하는 시기",
         cycle: "4회",
         observationTime: "10:01~14:18",
         imageCount: 4580,
-        title: "[벼] - 김해 농지",
+        title: "[논 벼] - 김해 농지",
         agency: "농과원 · 부산대",
         html: "reports/2026-06-30_gimhae_rice.html",
         status: "전처리 진행 중",
@@ -128,7 +128,7 @@ window.NBAR_OBSERVATIONS = [
             ["보고서 작성", "예정"]
         ],
         schedule: [
-            ["날짜", "2026.06.30", "급성장기 - 초기 관측"],
+            ["날짜", "2026.06.30", "이앙기 관측"],
             ["관측 시간", "10:01~14:18", "전체 관측 시간"],
             ["관측 사이클", "4회", "관측 사이클 수"],
             ["반사도 타프", "미설치", "해당 관측일은 반사도 타프 미설치"],
@@ -140,12 +140,12 @@ window.NBAR_OBSERVATIONS = [
         coverType: "농지",
         crop: "벼",
         site: "김해 농지",
-        purpose: "급성장기 - 중기",
-        purposeDetail: "모내기 후 급성장기의 시간 변화 확인",
+        purpose: "유수형성기",
+        purposeDetail: "유수형성기 벼 군락의 시간 변화 확인",
         cycle: "6회",
         observationTime: "10:00~15:28",
         imageCount: 6130,
-        title: "[벼] - 김해 농지",
+        title: "[논 벼] - 김해 농지",
         agency: "부산대",
         html: "reports/2026-07-16_gimhae_rice.html",
         status: "전처리 진행 중",
@@ -158,7 +158,7 @@ window.NBAR_OBSERVATIONS = [
             ["보고서 작성", "예정"]
         ],
         schedule: [
-            ["날짜", "2026.07.16", "급성장기 - 중기 관측"],
+            ["날짜", "2026.07.16", "유수형성기 관측"],
             ["관측 시간", "10:00~15:28", "전체 관측 시간"],
             ["관측 사이클", "6회", "관측 사이클 수"],
             ["반사도 타프", "3%, 36%, 56%", "PNU 3종 반사도 타프 설치"],
@@ -170,12 +170,12 @@ window.NBAR_OBSERVATIONS = [
         coverType: "농지",
         crop: "벼",
         site: "김해 농지",
-        purpose: "급성장기 - 후기",
-        purposeDetail: "모내기 후 급성장기의 시간 변화 확인",
+        purpose: "유수형성기",
+        purposeDetail: "유수형성기 벼 군락의 시간 변화 확인",
         cycle: "5회",
         observationTime: "09:55~14:42",
         imageCount: 5834,
-        title: "[벼] - 김해 농지",
+        title: "[논 벼] - 김해 농지",
         agency: "농과원 · 부산대",
         html: "reports/2026-07-31_gimhae_rice.html",
         status: "전처리 진행 중",
@@ -188,11 +188,161 @@ window.NBAR_OBSERVATIONS = [
             ["보고서 작성", "예정"]
         ],
         schedule: [
-            ["날짜", "2026.07.31", "급성장기 - 후기 관측"],
+            ["날짜", "2026.07.31", "유수형성기 관측"],
             ["관측 시간", "09:55~14:42", "전체 관측 시간"],
             ["관측 사이클", "5회", "관측 사이클 수"],
             ["반사도 타프", "3%, 36%, 56%", "PNU 3종 반사도 타프 설치"],
             ["영상 개수", "분광밴드별 5834장", "밴드별 개별 영상 장수"]
+        ]
+    },
+    {
+        date: "2026.08.24",
+        coverType: "농지",
+        crop: "벼",
+        site: "김해 농지",
+        purpose: "출수기",
+        purposeDetail: "출수기 벼 군락의 시간 변화 확인",
+        cycle: "6회",
+        observationTime: "미확인",
+        imageCount: null,
+        title: "[논 벼] - 김해 농지",
+        agency: "농과원 · 부산대",
+        html: "reports/2026-08-24_gimhae_rice.html",
+        status: "전처리 진행 중",
+        statusClass: "progress",
+        processing: [
+            ["자료 정리", "완료"],
+            ["영상 처리", "진행 중"],
+            ["품질 검토", "예정"],
+            ["BRDF 분석", "예정"],
+            ["보고서 작성", "예정"]
+        ],
+        schedule: [
+            ["날짜", "2026.08.24", "출수기 관측"],
+            ["관측 시간", "미확인", "전체 관측 시간"],
+            ["관측 사이클", "6회", "관측 사이클 수"],
+            ["반사도 타프", "미확인", "타프 설치 기록 미확인"],
+            ["영상 개수", "미확인", "영상 장수 미집계"]
+        ]
+    },
+    {
+        date: "2026.09.08",
+        coverType: "농지",
+        crop: "벼",
+        site: "김해 농지",
+        purpose: "출수기",
+        purposeDetail: "출수기 벼 군락의 시간 변화 확인",
+        cycle: "4회",
+        observationTime: "11:21~14:42",
+        imageCount: null,
+        title: "[논 벼] - 김해 농지",
+        agency: "농과원 · 부산대",
+        html: "reports/2026-09-08_gimhae_rice.html",
+        status: "전처리 진행 중",
+        statusClass: "progress",
+        processing: [
+            ["자료 정리", "완료"],
+            ["영상 처리", "진행 중"],
+            ["품질 검토", "예정"],
+            ["BRDF 분석", "예정"],
+            ["보고서 작성", "예정"]
+        ],
+        schedule: [
+            ["날짜", "2026.09.08", "출수기 관측"],
+            ["관측 시간", "11:21~14:42", "전체 관측 시간"],
+            ["관측 사이클", "4회", "관측 사이클 수"],
+            ["반사도 타프", "미확인", "타프 설치 기록 미확인"],
+            ["영상 개수", "미확인", "영상 장수 미집계"]
+        ]
+    },
+    {
+        date: "2026.09.21",
+        coverType: "농지",
+        crop: "벼",
+        site: "김해 농지",
+        purpose: "등숙기",
+        purposeDetail: "등숙기 벼 군락의 시간 변화 확인",
+        cycle: "4회",
+        observationTime: "미확인",
+        imageCount: null,
+        title: "[논 벼] - 김해 농지",
+        agency: "농과원 · 부산대",
+        html: "reports/2026-09-21_gimhae_rice.html",
+        status: "전처리 진행 중",
+        statusClass: "progress",
+        processing: [
+            ["자료 정리", "완료"],
+            ["영상 처리", "진행 중"],
+            ["품질 검토", "예정"],
+            ["BRDF 분석", "예정"],
+            ["보고서 작성", "예정"]
+        ],
+        schedule: [
+            ["날짜", "2026.09.21", "등숙기 관측"],
+            ["관측 시간", "미확인", "전체 관측 시간"],
+            ["관측 사이클", "4회", "관측 사이클 수"],
+            ["반사도 타프", "미확인", "타프 설치 기록 미확인"],
+            ["영상 개수", "미확인", "영상 장수 미집계"]
+        ]
+    },
+    {
+        date: "2026.09.23",
+        coverType: "농지",
+        crop: "벼",
+        site: "김해 농지",
+        purpose: "등숙기",
+        purposeDetail: "등숙기 벼 군락의 시간 변화 확인",
+        cycle: "4회",
+        observationTime: "미확인",
+        imageCount: null,
+        title: "[논 벼] - 김해 농지",
+        agency: "농과원 · 부산대",
+        html: "reports/2026-09-23_gimhae_rice.html",
+        status: "전처리 진행 중",
+        statusClass: "progress",
+        processing: [
+            ["자료 정리", "완료"],
+            ["영상 처리", "진행 중"],
+            ["품질 검토", "예정"],
+            ["BRDF 분석", "예정"],
+            ["보고서 작성", "예정"]
+        ],
+        schedule: [
+            ["날짜", "2026.09.23", "등숙기 관측"],
+            ["관측 시간", "미확인", "전체 관측 시간"],
+            ["관측 사이클", "4회", "관측 사이클 수"],
+            ["반사도 타프", "미확인", "타프 설치 기록 미확인"],
+            ["영상 개수", "미확인", "영상 장수 미집계"]
+        ]
+    },
+    {
+        date: "2026.10.07",
+        coverType: "농지",
+        crop: "벼",
+        site: "김해 농지",
+        purpose: "등숙기",
+        purposeDetail: "등숙기 벼 군락의 시간 변화 확인",
+        cycle: "6회",
+        observationTime: "미확인",
+        imageCount: null,
+        title: "[논 벼] - 김해 농지",
+        agency: "농과원 · 부산대",
+        html: "reports/2026-10-07_gimhae_rice.html",
+        status: "전처리 진행 중",
+        statusClass: "progress",
+        processing: [
+            ["자료 정리", "완료"],
+            ["영상 처리", "진행 중"],
+            ["품질 검토", "예정"],
+            ["BRDF 분석", "예정"],
+            ["보고서 작성", "예정"]
+        ],
+        schedule: [
+            ["날짜", "2026.10.07", "등숙기 관측"],
+            ["관측 시간", "미확인", "전체 관측 시간"],
+            ["관측 사이클", "6회", "관측 사이클 수"],
+            ["반사도 타프", "미확인", "타프 설치 기록 미확인"],
+            ["영상 개수", "미확인", "영상 장수 미집계"]
         ]
     },
     {

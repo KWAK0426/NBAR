@@ -27,7 +27,7 @@ for (const item of observations) {
   }
   dates.add(item.date);
   if (!Number.isInteger(cycles) || cycles < 1) problems.push(`${item.date}: invalid cycle count`);
-  if (!Number.isInteger(item.imageCount) || item.imageCount < 1) problems.push(`${item.date}: invalid image count`);
+  if (item.imageCount !== null && (!Number.isInteger(item.imageCount) || item.imageCount < 1)) problems.push(`${item.date}: invalid image count`);
   if (JSON.stringify(item.processing.map(row => row[0])) !== JSON.stringify(expectedStages)) {
     problems.push(`${item.date}: unexpected processing stage names/order`);
   }
@@ -52,7 +52,7 @@ for (const item of observations) {
   records.push({
     date: item.date, coverType: item.coverType, crop: item.crop, site: item.site,
     cycles, observationTime: item.observationTime, imageCount: item.imageCount,
-    tarpInstalled: Boolean(tarp && tarp[1] !== '미설치'),
+    tarpInstalled: tarp && tarp[1] === '미확인' ? null : Boolean(tarp && tarp[1] !== '미설치'),
     report: item.html, reportState, reportExists, mosaic: mosaic || null,
   });
 }
