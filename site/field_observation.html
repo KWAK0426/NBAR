@@ -1552,7 +1552,7 @@
 
         return `
             <a class="html-button" href="${item.html}" target="_blank" rel="noopener">
-                HTML<br>열기
+                HTML<br>열기${item.reportComplete === false ? '<br><small>미완성</small>' : ''}
             </a>
         `;
     }

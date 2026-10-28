@@ -59,6 +59,7 @@ window.NBAR_OBSERVATIONS = [
         title: "[농지] - 밀양 부속농장",
         agency: "부산대",
         html: "reports/2026-05-07_miryang_field/index.html",
+        reportComplete: false,
         status: "전처리 진행 중",
         statusClass: "progress",
         processing: [
@@ -90,6 +91,7 @@ window.NBAR_OBSERVATIONS = [
         title: "[논 벼] - 김해 농지",
         agency: "부산대",
         html: "reports/2026-05-10_gimhae_rice/index.html",
+        reportComplete: false,
         status: "전처리 진행 중",
         statusClass: "progress",
         processing: [
@@ -121,6 +123,7 @@ window.NBAR_OBSERVATIONS = [
         title: "[논 벼] - 김해 농지",
         agency: "부산대",
         html: "reports/2026-06-30_gimhae_rice/index.html",
+        reportComplete: false,
         status: "전처리 진행 중",
         statusClass: "progress",
         processing: [
@@ -152,6 +155,7 @@ window.NBAR_OBSERVATIONS = [
         title: "[논 벼] - 김해 농지",
         agency: "부산대",
         html: "reports/2026-07-16_gimhae_rice/index.html",
+        reportComplete: false,
         status: "전처리 진행 중",
         statusClass: "progress",
         processing: [
@@ -183,6 +187,7 @@ window.NBAR_OBSERVATIONS = [
         title: "[논 벼] - 김해 농지",
         agency: "부산대",
         html: "reports/2026-07-31_gimhae_rice/index.html",
+        reportComplete: false,
         status: "전처리 진행 중",
         statusClass: "progress",
         processing: [
@@ -214,6 +219,7 @@ window.NBAR_OBSERVATIONS = [
         title: "[논 벼] - 김해 농지",
         agency: "부산대",
         html: "reports/2026-08-24_gimhae_rice/index.html",
+        reportComplete: false,
         status: "전처리 진행 중",
         statusClass: "progress",
         processing: [
@@ -245,6 +251,7 @@ window.NBAR_OBSERVATIONS = [
         title: "[논 벼] - 김해 농지",
         agency: "부산대",
         html: "reports/2026-09-08_gimhae_rice/index.html",
+        reportComplete: false,
         status: "전처리 진행 중",
         statusClass: "progress",
         processing: [
@@ -276,6 +283,7 @@ window.NBAR_OBSERVATIONS = [
         title: "[논 벼] - 김해 농지",
         agency: "부산대",
         html: "reports/2026-09-21_gimhae_rice/index.html",
+        reportComplete: false,
         status: "전처리 진행 중",
         statusClass: "progress",
         processing: [
@@ -308,6 +316,7 @@ window.NBAR_OBSERVATIONS = [
         title: "[논 벼] - 김해 농지",
         agency: "부산대",
         html: "reports/2026-09-23_gimhae_rice/index.html",
+        reportComplete: false,
         status: "전처리 진행 중",
         statusClass: "progress",
         processing: [
@@ -339,6 +348,7 @@ window.NBAR_OBSERVATIONS = [
         title: "[논 벼] - 김해 농지",
         agency: "부산대",
         html: "reports/2026-10-07_gimhae_rice/index.html",
+        reportComplete: false,
         status: "전처리 진행 중",
         statusClass: "progress",
         processing: [
@@ -369,6 +379,7 @@ window.NBAR_OBSERVATIONS = [
         title: "[양배추] - 김해 밭",
         agency: "부산대",
         html: "reports/2026-05-15_gimhae_cabbage/index.html",
+        reportComplete: false,
         status: "전처리 진행 중",
         statusClass: "progress",
         processing: [
@@ -429,6 +440,7 @@ window.NBAR_OBSERVATIONS = [
         title: "[경사지] - 금정산 북문",
         agency: "부산대",
         html: "reports/2026-06-12_geumjeongsan_slope/index.html",
+        reportComplete: false,
         status: "전처리 진행 중",
         statusClass: "progress",
         processing: [
