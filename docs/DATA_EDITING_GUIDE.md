@@ -54,13 +54,15 @@ window.NBAR_LAST_UPDATED = "2026.09.20 15:51";
 | `observationTime` | 문자열 `09:55~14:42` | 전체 관측 시간 |
 | `imageCount` | 숫자 `5834` | 영상 개수. 쉼표·장 단위를 값에 넣지 않음 |
 | `title` | 문자열 `[논 벼] - 김해 농지` | 관측 목록 제목 |
-| `agency` | 문자열 | 기존 기관 기록. 표시 위치에 따라 직접 사용하지 않을 수 있음 |
+| `agency` | 문자열 | 촬영 기관. 현장관측 상세 "참여 기관" 칸에 표시. 2026-10-29 사용자 확인: 현재 목록은 모두 부산대 촬영 |
 | `html` | `reports/파일명.html` | 개별 보고서 상대 경로 |
 | `status` | `전처리 진행 중` 등 | 관측 전체 상태 표시 |
 | `statusClass` | `progress`, `done`, `planned` 등 | 상태 배지의 CSS 클래스 |
 | `processing` | 단계명·상태의 2열 배열 | 업무 5단계 표 |
 | `schedule` | 항목명·값·설명의 3열 배열 | 타프 적용 여부, 상세정보 fallback |
 | `mosaic` | 선택 문자열 또는 `{src, alt}` 객체 | RGB 모자이크. 현재 원본 데이터에는 없음 |
+
+같은 날짜에 다른 대상지에서 찍은 관측이 있을 수 있습니다. 관측은 날짜+대상지(`site`)로 구분하고, `byDate` 설정 키도 `"2026.06.10 농업위성센터"`처럼 날짜 뒤에 대상지를 붙입니다. 날짜만 쓴 키는 그 날짜 관측이 하나일 때만 허용되며, `tools/check_data.cjs`가 검사합니다.
 
 날짜, 사이클, 시간, 영상 수는 `schedule`에도 들어 있습니다. 현재 구조에서는 상위 값과 `schedule`을 함께 맞춰 수정합니다.
 
@@ -102,7 +104,7 @@ window.NBAR_MOSAIC_CYCLE_PROGRESS = {
         elcCompletedCycles: 0
     },
     byDate: {
-        "2026.06.10": {
+        "2026.06.10 농업위성센터": {
             panelCompletedCycles: 2,
             elcCompletedCycles: 1
         }
@@ -127,7 +129,7 @@ window.NBAR_MOSAIC_CYCLE_PROGRESS = {
 window.NBAR_TARP_DETAILS = {
     defaultInstalled: "PNU 3% / 36% / 56%",
     byDate: {
-        "2026.06.10": "PNU 3% / 36% / 56%, NIAS 2.5% / 20% / 30% / 50%"
+        "2026.06.10 농업위성센터": "PNU 3% / 36% / 56%, NIAS 2.5% / 20% / 30% / 50%"
     }
 };
 ```

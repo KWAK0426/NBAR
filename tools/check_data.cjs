@@ -22,10 +22,12 @@ const expectedStages = ['자료 정리', '영상 처리', '품질 검토', 'BRDF
 
 for (const item of observations) {
   const cycles = Number(String(item.cycle).match(/^([0-9]+)회$/)?.[1]);
-  if (!/^\d{4}\.\d{2}\.\d{2}$/.test(item.date) || dates.has(item.date)) {
-    problems.push(`${item.date}: invalid or duplicate date key`);
+  // 같은 날짜라도 대상지가 다르면 다른 관측이다. 날짜+대상지가 겹치면 오류.
+  const observationKey = `${item.date} ${item.site}`;
+  if (!/^\d{4}\.\d{2}\.\d{2}$/.test(item.date) || dates.has(observationKey)) {
+    problems.push(`${observationKey}: invalid or duplicate date+site key`);
   }
-  dates.add(item.date);
+  dates.add(observationKey);
   if (!Number.isInteger(cycles) || cycles < 1) problems.push(`${item.date}: invalid cycle count`);
   if (item.imageCount !== null && (!Number.isInteger(item.imageCount) || item.imageCount < 1)) problems.push(`${item.date}: invalid image count`);
   if (JSON.stringify(item.processing.map(row => row[0])) !== JSON.stringify(expectedStages)) {
@@ -39,7 +41,7 @@ for (const item of observations) {
   if (reportState !== '예정' && !reportExists) problems.push(`${item.date}: enabled report is missing`);
   for (const key of ['NBAR_MOSAIC_CYCLE_PROGRESS', 'NBAR_QUALITY_CYCLE_PROGRESS']) {
     const config = data[key] || {};
-    const progress = { ...config.default, ...config.byDate?.[item.date] };
+    const progress = { ...config.default, ...(config.byDate?.[`${item.date} ${item.site}`] ?? config.byDate?.[item.date]) };
     for (const field of ['panelCompletedCycles', 'elcCompletedCycles']) {
       if (!Number.isInteger(progress[field]) || progress[field] < 0 || progress[field] > cycles) {
         problems.push(`${item.date}: ${key}.${field} is outside 0..${cycles}`);
@@ -55,6 +57,15 @@ for (const item of observations) {
     tarpInstalled: tarp && tarp[1] === '미확인' ? null : Boolean(tarp && tarp[1] !== '미설치'),
     report: item.html, reportState, reportExists, mosaic: mosaic || null,
   });
+}
+
+// 여러 대상지가 같은 날짜를 쓰면 날짜만 적은 byDate 키는 어느 관측인지 알 수 없다.
+const sharedDates = new Set(observations.map(item => item.date)
+  .filter((date, index, all) => all.indexOf(date) !== index));
+for (const key of ['NBAR_MOSAIC_CYCLE_PROGRESS', 'NBAR_QUALITY_CYCLE_PROGRESS', 'NBAR_TARP_DETAILS']) {
+  for (const settingKey of Object.keys(data[key]?.byDate || {})) {
+    if (sharedDates.has(settingKey)) problems.push(`${key}.byDate["${settingKey}"]: 같은 날짜 관측이 여러 개라 "날짜 대상지"로 적어야 함`);
+  }
 }
 
 const report = {

@@ -43,7 +43,7 @@ function entryText(isoDate, cycles) {
         observationTime: "미확인",
         imageCount: null,
         title: "[논 벼] - ${SITE}",
-        agency: "농과원 · 부산대",
+        agency: "부산대",
         html: "reports/${isoDate}_gimhae_rice.html",
         status: "전처리 진행 중",
         statusClass: "progress",
@@ -70,13 +70,15 @@ function loadObservations(text) {
   return context.window.NBAR_OBSERVATIONS;
 }
 
-// [start, end) of the object literal whose date line is `date: "<date>"`.
-function blockRange(text, date) {
-  const at = text.indexOf(`date: "${date}"`);
-  if (at < 0) return null;
-  const start = text.lastIndexOf('\n    {', at) + 1;
-  const end = text.indexOf('\n    }', at) + '\n    }'.length;
-  return [start, end];
+// [start, end) of the object literal with `date: "<date>"` and `site: "<site>"`.
+// The same date can belong to observations at different sites, so both must match.
+function blockRange(text, date, site) {
+  for (let at = text.indexOf(`date: "${date}"`); at >= 0; at = text.indexOf(`date: "${date}"`, at + 1)) {
+    const start = text.lastIndexOf('\n    {', at) + 1;
+    const end = text.indexOf('\n    }', at) + '\n    }'.length;
+    if (text.slice(start, end).includes(`site: "${site}"`)) return [start, end];
+  }
+  throw new Error(`no entry for ${date} ${site}`);
 }
 
 function kstStamp() {
@@ -116,11 +118,12 @@ async function main() {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(isoDate) || !Number.isInteger(count) || count < 1) continue;
     const date = isoDate.replace(/-/g, '.');
     const observations = loadObservations(text);
-    const existing = observations.find((item) => item.date === date);
+    // The drone board covers the Gimhae paddy only; other sites on the same date are separate entries.
+    const existing = observations.find((item) => item.date === date && item.site === SITE);
 
     if (existing) {
-      if (existing.site !== SITE || existing.cycle === `${count}회`) continue;
-      const [start, end] = blockRange(text, date);
+      if (existing.cycle === `${count}회`) continue;
+      const [start, end] = blockRange(text, date, SITE);
       const block = text.slice(start, end)
         .replace(/cycle: "\d+회"/, `cycle: "${count}회"`)
         .replace(/\["관측 사이클", "\d+회"/, `["관측 사이클", "${count}회"`);
@@ -132,7 +135,7 @@ async function main() {
     // Insert after the last Gimhae entry that is earlier than this date, else after the last Gimhae entry.
     const gimhae = observations.filter((item) => item.site === SITE);
     const before = gimhae.filter((item) => item.date < date).pop() || gimhae[gimhae.length - 1];
-    const [, end] = blockRange(text, before.date);
+    const [, end] = blockRange(text, before.date, SITE);
     text = `${text.slice(0, end)},\n${entryText(isoDate, count)}${text.slice(end)}`;
     changes.push(`${date} 추가 (${growthStage(isoDate)}, ${count}회)`);
   }
@@ -141,7 +144,7 @@ async function main() {
   for (const item of loadObservations(text).filter((entry) => entry.site === SITE)) {
     const rounds = mosaics[item.date] || [];
     if (JSON.stringify(item.mosaicRounds) === JSON.stringify(rounds)) continue;
-    const [start, end] = blockRange(text, item.date);
+    const [start, end] = blockRange(text, item.date, SITE);
     const line = `mosaicRounds: [${rounds.join(', ')}],`;
     let block = text.slice(start, end);
     block = /mosaicRounds: \[[^\]]*\],/.test(block)

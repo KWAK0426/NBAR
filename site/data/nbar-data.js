@@ -12,8 +12,8 @@ window.NBAR_MOSAIC_CYCLE_PROGRESS = {
         elcCompletedCycles: 0
     },
     byDate: {
-        // 특정 날짜만 다르게 설정하려면 아래처럼 추가합니다.
-        // "2026.06.10": {
+        // 특정 관측만 다르게 설정하려면 "날짜 대상지"로 추가합니다.
+        // "2026.06.10 농업위성센터": {
         //     panelCompletedCycles: 2,
         //     elcCompletedCycles: 1
         // }
@@ -28,7 +28,7 @@ window.NBAR_QUALITY_CYCLE_PROGRESS = {
         elcCompletedCycles: 0
     },
     byDate: {
-        // "2026.06.10": {
+        // "2026.06.10 농업위성센터": {
         //     panelCompletedCycles: 1,
         //     elcCompletedCycles: 1
         // }
@@ -36,11 +36,12 @@ window.NBAR_QUALITY_CYCLE_PROGRESS = {
 };
 
 // 설치 타프의 세부값은 여기에서 관리합니다.
-// 기본 설치일은 PNU 3종 타프를 적용하고, 날짜별로 다른 구성이 있으면 byDate에 적습니다.
+// 기본 설치일은 PNU 3종 타프를 적용하고, 다른 구성이 있으면 byDate에 "날짜 대상지"로 적습니다.
+// 같은 날짜에 다른 대상지 관측이 있을 수 있으므로 날짜만 쓰지 말고 대상지까지 붙입니다.
 window.NBAR_TARP_DETAILS = {
     defaultInstalled: "PNU 3% / 36% / 56%",
     byDate: {
-        "2026.06.10": "PNU 3% / 36% / 56%, NIAS 2.5% / 20% / 30% / 50%"
+        "2026.06.10 농업위성센터": "PNU 3% / 36% / 56%, NIAS 2.5% / 20% / 30% / 50%"
     }
 };
 
@@ -118,7 +119,7 @@ window.NBAR_OBSERVATIONS = [
         observationTime: "10:01~14:18",
         imageCount: 4580,
         title: "[논 벼] - 김해 농지",
-        agency: "농과원 · 부산대",
+        agency: "부산대",
         html: "reports/2026-06-30_gimhae_rice.html",
         status: "전처리 진행 중",
         statusClass: "progress",
@@ -180,7 +181,7 @@ window.NBAR_OBSERVATIONS = [
         observationTime: "09:55~14:42",
         imageCount: 5834,
         title: "[논 벼] - 김해 농지",
-        agency: "농과원 · 부산대",
+        agency: "부산대",
         html: "reports/2026-07-31_gimhae_rice.html",
         status: "전처리 진행 중",
         statusClass: "progress",
@@ -211,7 +212,7 @@ window.NBAR_OBSERVATIONS = [
         observationTime: "미확인",
         imageCount: null,
         title: "[논 벼] - 김해 농지",
-        agency: "농과원 · 부산대",
+        agency: "부산대",
         html: "reports/2026-08-24_gimhae_rice.html",
         status: "전처리 진행 중",
         statusClass: "progress",
@@ -242,7 +243,7 @@ window.NBAR_OBSERVATIONS = [
         observationTime: "11:21~14:42",
         imageCount: null,
         title: "[논 벼] - 김해 농지",
-        agency: "농과원 · 부산대",
+        agency: "부산대",
         html: "reports/2026-09-08_gimhae_rice.html",
         status: "전처리 진행 중",
         statusClass: "progress",
@@ -273,7 +274,7 @@ window.NBAR_OBSERVATIONS = [
         observationTime: "미확인",
         imageCount: null,
         title: "[논 벼] - 김해 농지",
-        agency: "농과원 · 부산대",
+        agency: "부산대",
         html: "reports/2026-09-21_gimhae_rice.html",
         status: "전처리 진행 중",
         statusClass: "progress",
@@ -305,7 +306,7 @@ window.NBAR_OBSERVATIONS = [
         observationTime: "미확인",
         imageCount: null,
         title: "[논 벼] - 김해 농지",
-        agency: "농과원 · 부산대",
+        agency: "부산대",
         html: "reports/2026-09-23_gimhae_rice.html",
         status: "전처리 진행 중",
         statusClass: "progress",
@@ -336,7 +337,7 @@ window.NBAR_OBSERVATIONS = [
         observationTime: "미확인",
         imageCount: null,
         title: "[논 벼] - 김해 농지",
-        agency: "농과원 · 부산대",
+        agency: "부산대",
         html: "reports/2026-10-07_gimhae_rice.html",
         status: "전처리 진행 중",
         statusClass: "progress",
@@ -396,7 +397,7 @@ window.NBAR_OBSERVATIONS = [
         observationTime: "09:55~15:12",
         imageCount: 7679,
         title: "[나지] - 농업위성센터",
-        agency: "농과원 · 부산대",
+        agency: "부산대",
         html: "reports/2026-06-10_field_result_report.html",
         status: "보고서 작성 중",
         statusClass: "progress",

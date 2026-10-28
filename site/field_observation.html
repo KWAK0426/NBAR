@@ -1393,7 +1393,7 @@
     © 2026 NBAR Field Observation Status Sharing
 </footer>
 
-<script src="data/nbar-data.js?v=20261029b"></script>
+<script src="data/nbar-data.js?v=20261029c"></script>
 
 <script>
     const observations = window.NBAR_OBSERVATIONS || [];
@@ -1528,7 +1528,7 @@
 
         const tarpDetails = window.NBAR_TARP_DETAILS || {};
         const byDate = tarpDetails.byDate || {};
-        return ["설치", byDate[item.date] || tarpDetails.defaultInstalled || "설치"];
+        return ["설치", observationSetting(byDate, item) || tarpDetails.defaultInstalled || "설치"];
     }
 
     // 인덱스 줄에 없는 정보: 관측 시간, 반사도 타프(설치 시 구성), 영상 수, 참여 기관
@@ -1675,18 +1675,24 @@
         return Math.max(0, Math.min(total, Math.round(number)));
     }
 
+    // 날짜별 설정은 "날짜 대상지" 키를 먼저 찾는다(같은 날 다른 대상지 관측 구분). 날짜만 쓴 키는 예전 형식.
+    function observationSetting(map, item) {
+        const settings = map || {};
+        return settings[`${item.date} ${item.site}`] ?? settings[item.date];
+    }
+
     function mosaicProgressConfig(item) {
         const config = window.NBAR_MOSAIC_CYCLE_PROGRESS || {};
         const defaults = config.default || {};
         const byDate = config.byDate || {};
-        return { ...defaults, ...(byDate[item.date] || {}) };
+        return { ...defaults, ...(observationSetting(byDate, item) || {}) };
     }
 
     function qualityProgressConfig(item) {
         const config = window.NBAR_QUALITY_CYCLE_PROGRESS || {};
         const defaults = config.default || {};
         const byDate = config.byDate || {};
-        return { ...defaults, ...(byDate[item.date] || {}) };
+        return { ...defaults, ...(observationSetting(byDate, item) || {}) };
     }
 
     function cycleCount(item) {
