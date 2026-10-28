@@ -18,14 +18,18 @@ function arg(name, fallback) {
 
 const dataPath = path.resolve(arg('--data', path.join(__dirname, '..', 'site/data/nbar-data.js')));
 
-// Rice growth stage by observation date (agreed 2026-10-27).
+// Rice growth stage for a newly added date. Fixed by the user per date (2026-10-27, 10-29):
+// 5/10 이앙기, 6/30 분얼기, 7/16·7/31 유수형성기, 8/24·9/8 출수기, 9/21 등숙기, 9/23·10/7 등숙기 + 수확기.
+// Boundaries between those dates are a guess; existing entries are never re-staged.
 function growthStage(isoDate) {
   const [, m, d] = isoDate.split('-').map(Number);
   const md = m * 100 + d;
-  if (md <= 630) return '이앙기';
+  if (md <= 531) return '이앙기';
+  if (md <= 715) return '분얼기';
   if (md <= 731) return '유수형성기';
   if (md <= 915) return '출수기';
-  return '등숙기';
+  if (md <= 921) return '등숙기';
+  return '등숙기 + 수확기';
 }
 
 function entryText(isoDate, cycles) {

@@ -112,8 +112,8 @@ window.NBAR_OBSERVATIONS = [
         coverType: "농지",
         crop: "벼",
         site: "김해 농지",
-        purpose: "이앙기",
-        purposeDetail: "모내기 후 벼 군락이 빠르게 성장하는 시기",
+        purpose: "분얼기",
+        purposeDetail: "모내기 후 새끼치기로 벼 군락이 빠르게 성장하는 시기",
         cycle: "4회",
         mosaicRounds: [1],
         observationTime: "10:01~14:18",
@@ -131,7 +131,7 @@ window.NBAR_OBSERVATIONS = [
             ["보고서 작성", "예정"]
         ],
         schedule: [
-            ["날짜", "2026.06.30", "이앙기 관측"],
+            ["날짜", "2026.06.30", "분얼기 관측"],
             ["관측 시간", "10:01~14:18", "전체 관측 시간"],
             ["관측 사이클", "4회", "관측 사이클 수"],
             ["반사도 타프", "미설치", "해당 관측일은 반사도 타프 미설치"],
@@ -298,8 +298,8 @@ window.NBAR_OBSERVATIONS = [
         coverType: "농지",
         crop: "벼",
         site: "김해 농지",
-        purpose: "등숙기",
-        purposeDetail: "등숙기 벼 군락의 시간 변화 확인",
+        purpose: "등숙기 + 수확기",
+        purposeDetail: "등숙 후반·수확기 벼 군락의 시간 변화 확인",
         cycle: "4회",
         mosaicRounds: [1, 2, 3],
         mosaicDefaultRound: 2, // 대표 RGB 회차 지정(없으면 가장 빠른 회차)
@@ -318,7 +318,7 @@ window.NBAR_OBSERVATIONS = [
             ["보고서 작성", "예정"]
         ],
         schedule: [
-            ["날짜", "2026.09.23", "등숙기 관측"],
+            ["날짜", "2026.09.23", "등숙기 + 수확기 관측"],
             ["관측 시간", "미확인", "전체 관측 시간"],
             ["관측 사이클", "4회", "관측 사이클 수"],
             ["반사도 타프", "미확인", "타프 설치 기록 미확인"],
@@ -330,8 +330,8 @@ window.NBAR_OBSERVATIONS = [
         coverType: "농지",
         crop: "벼",
         site: "김해 농지",
-        purpose: "등숙기",
-        purposeDetail: "등숙기 벼 군락의 시간 변화 확인",
+        purpose: "등숙기 + 수확기",
+        purposeDetail: "등숙 후반·수확기 벼 군락의 시간 변화 확인",
         cycle: "6회",
         mosaicRounds: [1],
         observationTime: "미확인",
@@ -349,7 +349,7 @@ window.NBAR_OBSERVATIONS = [
             ["보고서 작성", "예정"]
         ],
         schedule: [
-            ["날짜", "2026.10.07", "등숙기 관측"],
+            ["날짜", "2026.10.07", "등숙기 + 수확기 관측"],
             ["관측 시간", "미확인", "전체 관측 시간"],
             ["관측 사이클", "6회", "관측 사이클 수"],
             ["반사도 타프", "미확인", "타프 설치 기록 미확인"],

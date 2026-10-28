@@ -1227,9 +1227,11 @@
             white-space: nowrap;
         }
         .stage-transplant { background: #e3f4e8; color: #1d7a45; }
+        .stage-tillering { background: #eef5d9; color: #4d7a12; }
         .stage-panicle { background: #e0f0f4; color: #136b80; }
         .stage-heading { background: #fdf0d8; color: #9a5d00; }
         .stage-ripening { background: #f6e7d6; color: #8a4b12; }
+        .stage-harvest { background: #ecdcc8; color: #6b3608; font-size: 13px; padding: 6px 10px !important; white-space: normal; word-break: keep-all; line-height: 1.2; border-radius: 10px; max-width: 100%; }
         .stage-other { background: #eef2f6; color: #4a5a6e; font-size: 13px; white-space: normal; word-break: keep-all; line-height: 1.2; border-radius: 10px; max-width: 100%; }
         .tab-object { font-size: 16px; font-weight: 800; color: #172033; white-space: nowrap; }
         .tab-site { font-size: 16px; font-weight: 600; color: #3a4658; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -1393,7 +1395,7 @@
     © 2026 NBAR Field Observation Status Sharing
 </footer>
 
-<script src="data/nbar-data.js?v=20261029c"></script>
+<script src="data/nbar-data.js?v=20261029d"></script>
 
 <script>
     const observations = window.NBAR_OBSERVATIONS || [];
@@ -1428,9 +1430,11 @@
     function stageClass(purpose) {
         return {
             "이앙기": "stage-transplant",
+            "분얼기": "stage-tillering",
             "유수형성기": "stage-panicle",
             "출수기": "stage-heading",
-            "등숙기": "stage-ripening"
+            "등숙기": "stage-ripening",
+            "등숙기 + 수확기": "stage-harvest"
         }[purpose] || "stage-other";
     }
 
