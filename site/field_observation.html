@@ -1451,7 +1451,7 @@
     © 2026 NBAR Field Observation Status Sharing
 </footer>
 
-<script src="data/nbar-data.js?v=20261029e"></script>
+<script src="data/nbar-data.js?v=20261029-report-status-1"></script>
 
 <script>
     const observations = window.NBAR_OBSERVATIONS || [];
@@ -1557,7 +1557,7 @@
         return `
             <a class="html-button html-report-action" href="${item.html}" target="_blank" rel="noopener">
                 <span>HTML 열기</span>
-                ${item.reportComplete === false ? '<span class="html-report-status">준비중</span>' : ''}
+                ${item.reportComplete !== true && /\/index\.html$/.test(item.html || '') ? '<span class="html-report-status">준비중</span>' : ''}
             </a>
         `;
     }
