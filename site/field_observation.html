@@ -1555,7 +1555,7 @@
         }
 
         return `
-            <a class="html-button html-report-action" href="${item.html}" target="_blank" rel="noopener">
+            <a class="html-button html-report-action" href="${item.html === 'reports/2026-06-30_gimhae_rice/index.html' ? 'https://kwak0426.github.io/PNU_QUREOS_NBAR_B/reports/2026-06-30_gimhae_rice/index.html' : item.html}" target="_blank" rel="noopener">
                 <span>HTML 열기</span>
                 ${item.reportComplete !== true && /\/index\.html$/.test(item.html || '') ? '<span class="html-report-status">준비중</span>' : ''}
             </a>
