@@ -288,38 +288,13 @@
             font-weight: 700;
         }
 
-        .obs-summary {
+        .filter-bar {
             flex: 0 0 auto;
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 8px;
+            gap: 6px;
             padding: 8px;
             border-bottom: 1px solid #e8edf2;
             background: white;
-        }
-
-        .obs-metric {
-            display: grid;
-            justify-items: center;
-            align-content: center;
-            gap: 2px;
-            padding: 8px 6px;
-            border-radius: 8px;
-            background: #f3f6fa;
-            text-align: center;
-            line-height: 1.2;
-            word-break: keep-all;
-        }
-
-        .obs-metric-label { color: #556070; font-size: 16px; font-weight: 700; }
-        .obs-metric-value { color: #0b3263; font-size: 27px; font-weight: 900; }
-        .obs-metric-note { color: #6a7a90; font-size: 14px; }
-
-        .filter-bar {
-            flex: 1 1 auto;
-            min-width: 0;
-            display: grid;
-            gap: 6px;
         }
 
         .filter-row {
@@ -372,14 +347,6 @@
             text-align: center;
         }
 
-        @media (max-width: 620px) {
-            .obs-summary { grid-template-columns: minmax(0, 0.8fr) minmax(0, 0.9fr) minmax(0, 1.3fr); gap: 6px; }
-            .obs-metric { padding: 8px 4px; }
-            .obs-metric-label { font-size: 13px; }
-            .obs-metric-value { font-size: 19px; white-space: nowrap; }
-            .obs-metric-note { font-size: 12px; }
-        }
-
         .sort-bar {
             flex: 0 0 auto;
             display: flex;
@@ -392,8 +359,15 @@
             background: white;
         }
 
+        .list-summary {
+            margin-right: auto;
+            white-space: nowrap;
+            color: #0b3263;
+            font-size: 25px;
+            font-weight: 800;
+        }
+
         .sort-label {
-            margin-left: auto;
             white-space: nowrap;
             color: #556070;
             font-size: 18px;
@@ -459,16 +433,6 @@
             display: block;
             scrollbar-gutter: stable;
             container-type: inline-size;
-        }
-
-        .obs-month {
-            padding: 5px 8px;
-            border-bottom: 1px solid #e8edf2;
-            background: #f3f6fa;
-            color: #285ea8;
-            font-size: 17px;
-            font-weight: 800;
-            text-align: center;
         }
 
         /* 머리글과 관측 줄이 같은 칸 너비를 쓴다. 보고서 칸은 줄 오른쪽에 따로 둔다. */
@@ -1399,15 +1363,15 @@
             <div class="main-card-body">
                 <div class="inner-panel">
                     <div class="inner-panel-title">관측 목록</div>
-                    <div class="obs-summary" id="obsSummary"></div>
                     <div class="sort-bar">
-                        <div class="filter-bar" id="filterBar"></div>
+                        <span class="list-summary" id="listSummary"></span>
                         <span class="sort-label">날짜 정렬</span>
                         <div class="sort-toggle" id="sortToggle">
                             <button type="button" data-order="asc">오름차순 ↑</button>
                             <button type="button" data-order="desc">내림차순 ↓</button>
                         </div>
                     </div>
+                    <div class="filter-bar" id="filterBar"></div>
                     <div class="tab-list" id="tabList"></div>
                 </div>
 
@@ -1457,7 +1421,7 @@
 
 
     const filterBar = document.getElementById("filterBar");
-    const obsSummary = document.getElementById("obsSummary");
+    const listSummary = document.getElementById("listSummary");
     const tabList = document.getElementById("tabList");
     const processingStatus = document.getElementById("processingStatus");
     const processDateBadge = document.getElementById("processDateBadge");
@@ -2005,36 +1969,13 @@
         });
     });
 
-    // 필터와 관계없이 전체 관측의 합계를 보여 준다. 영상 수가 미집계인 관측은 합계에서 빠진다.
-    function renderSummary() {
-        const repeats = observations.reduce((sum, item) => sum + (parseInt(item.cycle, 10) || 0), 0);
-        const counted = observations.filter((item) => Number.isFinite(item.imageCount));
-        const images = counted.reduce((sum, item) => sum + item.imageCount, 0);
-        const partial = counted.length < observations.length;
-        const metric = (label, value, note) => `
-            <div class="obs-metric">
-                <span class="obs-metric-label">${label}</span>
-                <span class="obs-metric-value">${value}</span>
-                ${note ? `<span class="obs-metric-note">${note}</span>` : ""}
-            </div>
-        `;
-        obsSummary.innerHTML = metric("현장관측", `${observations.length}회`)
-            + metric("당일 반복관측 합계", `${repeats}회`)
-            + metric("수집한 다분광 영상", `${images.toLocaleString("ko-KR")}장${partial ? "+" : ""}`, partial ? `${counted.length}회 집계 기준` : "");
-    }
-
-    // 목록 순서에서 달이 바뀌는 줄 앞에 그 달의 구분선을 넣는다.
-    function monthHeader(entries, position) {
-        const monthOf = ({ item }) => item.date.slice(5, 7);
-        const month = monthOf(entries[position]);
-        if (position > 0 && monthOf(entries[position - 1]) === month) return "";
-        const count = entries.filter((entry) => monthOf(entry) === month).length;
-        return `<div class="obs-month">${Number(month)}월 · ${count}회</div>`;
-    }
-
     function renderTabs(activeIndex) {
         const filtered = filteredEntries();
         const showAgency = agencyNames.length > 1;
+
+        listSummary.textContent = filtered.length === observations.length
+            ? `전체 관측 ${observations.length}회`
+            : `전체 관측 ${observations.length}회 중 ${filtered.length}회`;
 
         const head = `
             <div class="obs-row obs-head">
@@ -2045,8 +1986,7 @@
 
         tabList.innerHTML = !filtered.length
             ? `<div class="tab-empty">조건에 맞는 관측이 없습니다.</div>`
-            : head + filtered.map(({ item, index }, position) => `
-            ${monthHeader(filtered, position)}
+            : head + filtered.map(({ item, index }) => `
             <div class="obs-row ${index === activeIndex ? "active" : ""}">
                 <button class="obs-select obs-cols" type="button" data-index="${index}">
                     <span class="obs-date">${item.date.slice(5).replace(".", "/")}</span>
@@ -2094,7 +2034,6 @@
     }
 
     renderSortToggle();
-    renderSummary();
     if (observations.length > 0) {
         render(defaultIndex(filteredEntries()));
         checkReports().then(() => renderTabs(currentIndex));
