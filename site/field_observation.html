@@ -73,7 +73,7 @@
         }
 
         .brand-title {
-            font-size: 24px;
+            font-size: 31px;
             font-weight: 800;
             line-height: 1.2;
             letter-spacing: 0;
@@ -81,7 +81,7 @@
 
         .brand-subtitle {
             margin-top: 5px;
-            font-size: 14px;
+            font-size: 18px;
             font-weight: 500;
             color: #dbe6f2;
             line-height: 1.45;
@@ -104,7 +104,7 @@
             border-radius: 6px;
             background: rgba(255,255,255,0.08);
             color: #ffffff;
-            font-size: 12px;
+            font-size: 16px;
             font-weight: 700;
             text-decoration: none;
             white-space: nowrap;
@@ -121,7 +121,7 @@
             border-radius: 6px;
             background: rgba(255,255,255,0.08);
             color: #d8e3f0;
-            font-size: 11px;
+            font-size: 14px;
             line-height: 1.25;
             text-align: right;
             white-space: nowrap;
@@ -137,7 +137,7 @@
             display: block;
             margin-top: 2px;
             color: #ffffff;
-            font-size: 12px;
+            font-size: 16px;
             font-weight: 800;
         }
 
@@ -211,7 +211,7 @@
             border-radius: 6px;
             background: #f5f8fb;
             color: #536172;
-            font-size: 11px;
+            font-size: 14px;
             font-weight: 800;
             line-height: 1;
             white-space: nowrap;
@@ -245,7 +245,7 @@
             flex: 0 0 auto;
             margin-bottom: 8px;
             color: #174a87;
-            font-size: 13px;
+            font-size: 17px;
             font-weight: 800;
         }
 
@@ -284,17 +284,42 @@
             border-bottom: 1px solid #e8edf2;
             background: #f7f9fb;
             color: #556070;
-            font-size: 12px;
+            font-size: 16px;
             font-weight: 700;
         }
 
-        .filter-bar {
+        .obs-summary {
             flex: 0 0 auto;
             display: grid;
-            gap: 6px;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 8px;
             padding: 8px;
             border-bottom: 1px solid #e8edf2;
             background: white;
+        }
+
+        .obs-metric {
+            display: grid;
+            justify-items: center;
+            align-content: center;
+            gap: 2px;
+            padding: 8px 6px;
+            border-radius: 8px;
+            background: #f3f6fa;
+            text-align: center;
+            line-height: 1.2;
+            word-break: keep-all;
+        }
+
+        .obs-metric-label { color: #556070; font-size: 16px; font-weight: 700; }
+        .obs-metric-value { color: #0b3263; font-size: 27px; font-weight: 900; }
+        .obs-metric-note { color: #6a7a90; font-size: 14px; }
+
+        .filter-bar {
+            flex: 1 1 auto;
+            min-width: 0;
+            display: grid;
+            gap: 6px;
         }
 
         .filter-row {
@@ -306,7 +331,7 @@
         .filter-label {
             flex: 0 0 auto;
             color: #556070;
-            font-size: 15px;
+            font-size: 20px;
             font-weight: 700;
         }
 
@@ -323,7 +348,7 @@
             color: #556070;
             cursor: pointer;
             font: inherit;
-            font-size: 16px;
+            font-size: 21px;
             font-weight: 700;
             padding: 5px 14px;
             line-height: 1.3;
@@ -343,8 +368,16 @@
         .tab-empty {
             padding: 20px 8px;
             color: #606a78;
-            font-size: 13px;
+            font-size: 17px;
             text-align: center;
+        }
+
+        @media (max-width: 620px) {
+            .obs-summary { grid-template-columns: minmax(0, 0.8fr) minmax(0, 0.9fr) minmax(0, 1.3fr); gap: 6px; }
+            .obs-metric { padding: 8px 4px; }
+            .obs-metric-label { font-size: 13px; }
+            .obs-metric-value { font-size: 19px; white-space: nowrap; }
+            .obs-metric-note { font-size: 12px; }
         }
 
         .sort-bar {
@@ -359,18 +392,11 @@
             background: white;
         }
 
-        .list-summary {
-            margin-right: auto;
-            white-space: nowrap;
-            color: #0b3263;
-            font-size: 19px;
-            font-weight: 800;
-        }
-
         .sort-label {
+            margin-left: auto;
             white-space: nowrap;
             color: #556070;
-            font-size: 14px;
+            font-size: 18px;
             font-weight: 700;
         }
 
@@ -388,7 +414,7 @@
             color: #556070;
             cursor: pointer;
             font: inherit;
-            font-size: 14px;
+            font-size: 18px;
             font-weight: 700;
             padding: 5px 10px;
         }
@@ -414,14 +440,14 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 18px;
+            font-size: 23px;
             font-weight: 700;
             line-height: 1.3;
         }
 
         .section-note {
             color: #606a78;
-            font-size: 12px;
+            font-size: 16px;
             line-height: 1.45;
         }
 
@@ -435,10 +461,20 @@
             container-type: inline-size;
         }
 
+        .obs-month {
+            padding: 5px 8px;
+            border-bottom: 1px solid #e8edf2;
+            background: #f3f6fa;
+            color: #285ea8;
+            font-size: 17px;
+            font-weight: 800;
+            text-align: center;
+        }
+
         /* 머리글과 관측 줄이 같은 칸 너비를 쓴다. 보고서 칸은 줄 오른쪽에 따로 둔다. */
         .obs-row {
             display: grid;
-            grid-template-columns: minmax(0, 1fr) 94px;
+            grid-template-columns: minmax(0, 1fr) 112px;
             align-items: center;
             border-bottom: 1px solid #e8edf2;
         }
@@ -456,19 +492,20 @@
             z-index: 1;
             background: white;
             color: #6a7a90;
-            font-size: 15px;
+            font-size: 20px;
             font-weight: 700;
         }
 
         .obs-head:hover { background: white; }
-        .obs-head .obs-cols > span { text-align: center; }
+        .obs-cols > span { text-align: center; }
+        .obs-head .obs-cycle { white-space: normal; word-break: keep-all; line-height: 1.2; }
 
         .obs-cols {
             display: grid;
-            grid-template-columns: minmax(68px, 0.7fr) minmax(78px, 0.8fr) minmax(0, 1.3fr) minmax(0, 1.5fr) minmax(134px, 1.2fr);
+            grid-template-columns: minmax(70px, 0.6fr) minmax(74px, 0.6fr) minmax(0, 1.35fr) minmax(0, 1.6fr) minmax(126px, 1fr);
             align-items: center;
-            gap: 10px;
-            padding: 10px 8px 10px 12px;
+            gap: 8px;
+            padding: 10px 6px 10px 8px;
         }
 
         .obs-select {
@@ -479,13 +516,13 @@
             text-align: left;
             cursor: pointer;
             font: inherit;
-            font-size: 18px;
+            font-size: 23px;
             line-height: 1.3;
         }
 
-        .obs-date { font-size: 19px; font-weight: 800; color: #0b3263; text-align: center; }
+        .obs-date { font-size: 25px; font-weight: 800; color: #0b3263; text-align: center; }
         .obs-site { font-weight: 700; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .obs-agency { display: block; font-size: 14px; font-weight: 500; color: #6a7a90; overflow: hidden; text-overflow: ellipsis; }
+        .obs-agency { display: block; font-size: 18px; font-weight: 500; color: #6a7a90; overflow: hidden; text-overflow: ellipsis; }
         .obs-object { white-space: nowrap; }
         .obs-stage { color: #4a5a6e; word-break: keep-all; }
         .obs-cycle { text-align: center; font-weight: 700; white-space: nowrap; }
@@ -504,7 +541,7 @@
             border-radius: 6px;
             background: #124b91;
             color: white;
-            font-size: 15px;
+            font-size: 20px;
             font-weight: 800;
             line-height: 1.2;
             text-align: center;
@@ -517,22 +554,23 @@
         a.obs-report-button.pending:hover { background: #ccd3db; }
 
         /* 좁은 목록에서는 대상지 아래에 대상·생육시기를 둔다. */
-        @container (max-width: 640px) {
+        @container (max-width: 760px) {
             .obs-head { display: none; }
-            .obs-row { grid-template-columns: minmax(0, 1fr) 80px; }
+            .obs-row { grid-template-columns: minmax(0, 1fr) 106px; }
+            .obs-cols > span { text-align: left; }
             .obs-cols {
                 grid-template-columns: auto minmax(0, 1fr);
                 grid-template-areas: "date cycle" "site site" "object stage";
                 gap: 2px 8px;
                 padding: 10px 6px 10px 10px;
             }
-            .obs-report-button { font-size: 13px; }
+            .obs-report-button { font-size: 17px; }
             .obs-date { grid-area: date; text-align: left; }
             .obs-site { grid-area: site; }
-            .obs-object { grid-area: object; font-size: 16px; }
-            .obs-stage { grid-area: stage; font-size: 16px; }
+            .obs-object { grid-area: object; font-size: 21px; }
+            .obs-stage { grid-area: stage; font-size: 21px; }
             .obs-cycle { grid-area: cycle; text-align: right; }
-            .obs-cycle-label { display: inline; margin-right: 4px; font-size: 13px; font-weight: 500; color: #6a7a90; }
+            .obs-cycle-label { display: inline; margin-right: 4px; font-size: 17px; font-weight: 500; color: #6a7a90; }
         }
 
         .status-pill {
@@ -543,7 +581,7 @@
             padding: 5px 9px;
             border-radius: 20px;
             text-align: center;
-            font-size: 12px;
+            font-size: 16px;
             font-weight: 700;
             white-space: nowrap;
         }
@@ -575,7 +613,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 13px;
+            font-size: 17px;
         }
 
         th {
@@ -692,7 +730,7 @@
 
         .stage-detail-kicker {
             color: #657487;
-            font-size: 11px;
+            font-size: 14px;
             font-weight: 800;
             letter-spacing: 0;
         }
@@ -700,7 +738,7 @@
         .stage-detail-title {
             margin-top: 3px;
             color: #0b3263;
-            font-size: 15px;
+            font-size: 20px;
             font-weight: 900;
             line-height: 1.25;
             word-break: keep-all;
@@ -709,7 +747,7 @@
         .stage-detail-note {
             margin-top: 3px;
             color: #606a78;
-            font-size: 12px;
+            font-size: 16px;
             line-height: 1.35;
             word-break: keep-all;
         }
@@ -730,13 +768,13 @@
         .progress-label {
             font-weight: 600;
             line-height: 1.35;
-            font-size: 13px;
+            font-size: 17px;
         }
 
         .progress-count {
             justify-self: end;
             color: #606a78;
-            font-size: 13px;
+            font-size: 17px;
             white-space: nowrap;
         }
 
@@ -760,7 +798,7 @@
             grid-column: 2;
             text-align: right;
             font-weight: 600;
-            font-size: 13px;
+            font-size: 17px;
         }
 
         #stageDetailBody {
@@ -795,7 +833,7 @@
         .detail-task-title {
             min-width: 0;
             color: #263241;
-            font-size: 12px;
+            font-size: 16px;
             font-weight: 800;
             line-height: 1.3;
             word-break: keep-all;
@@ -805,7 +843,7 @@
         .detail-task-note {
             margin-top: 2px;
             color: #657487;
-            font-size: 11px;
+            font-size: 14px;
             font-weight: 600;
             line-height: 1.25;
             word-break: keep-all;
@@ -815,7 +853,7 @@
             min-width: 64px;
             justify-self: end;
             padding: 4px 7px;
-            font-size: 11px;
+            font-size: 14px;
         }
 
         .detail-progress-track {
@@ -836,7 +874,7 @@
             grid-column: 2;
             color: #606a78;
             text-align: right;
-            font-size: 11px;
+            font-size: 14px;
             font-weight: 800;
         }
 
@@ -853,7 +891,7 @@
             padding: 5px 6px;
             border-radius: 7px;
             text-align: center;
-            font-size: 11px;
+            font-size: 14px;
             font-weight: 800;
             line-height: 1.15;
         }
@@ -861,7 +899,7 @@
         .cycle-chip span {
             display: block;
             margin-top: 2px;
-            font-size: 10px;
+            font-size: 13px;
             font-weight: 700;
         }
 
@@ -890,13 +928,13 @@
         .schedule-date {
             color: #556070;
             font-weight: 800;
-            font-size: 12px;
+            font-size: 16px;
             line-height: 1.25;
         }
 
         .schedule-type {
             min-width: 0;
-            font-size: 17px;
+            font-size: 22px;
             font-weight: 800;
             text-align: left;
             color: #0b3263;
@@ -906,7 +944,7 @@
         }
 
         .schedule-text {
-            font-size: 12px;
+            font-size: 16px;
             color: #424b58;
             line-height: 1.4;
             word-break: keep-all;
@@ -943,7 +981,7 @@
 
         .mosaic-title {
             color: #174a87;
-            font-size: 13px;
+            font-size: 17px;
             font-weight: 800;
         }
 
@@ -953,7 +991,7 @@
             border-radius: 20px;
             background: #eef3f8;
             color: #627083;
-            font-size: 11px;
+            font-size: 14px;
             font-weight: 800;
         }
 
@@ -990,7 +1028,7 @@
             padding: 12px;
             text-align: center;
             color: #536174;
-            font-size: 12px;
+            font-size: 16px;
             line-height: 1.45;
         }
 
@@ -998,12 +1036,12 @@
             display: block;
             margin-bottom: 4px;
             color: #0b3263;
-            font-size: 14px;
+            font-size: 18px;
         }
 
         .mosaic-meta {
             color: #657487;
-            font-size: 11px;
+            font-size: 14px;
             font-weight: 700;
         }
 
@@ -1013,7 +1051,7 @@
             padding: 25px;
             text-align: center;
             color: #7b8491;
-            font-size: 13px;
+            font-size: 17px;
             border-top: 1px solid #e0e5ea;
         }
 
@@ -1122,7 +1160,7 @@
         }
 
         .schedule-list {
-            grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+            grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.9fr) minmax(0, 1.25fr) minmax(0, 0.8fr) !important;
             gap: 6px;
         }
 
@@ -1159,7 +1197,7 @@
 
         .stage-step-name {
             color: #0b3263;
-            font-size: 13px;
+            font-size: 17px;
             font-weight: 800;
             line-height: 1.3;
             word-break: keep-all;
@@ -1177,7 +1215,7 @@
             align-items: center;
             gap: 5px;
             color: #606a78;
-            font-size: 12px;
+            font-size: 16px;
             white-space: nowrap;
         }
 
@@ -1209,7 +1247,7 @@
             background: #eef1f5;
             color: #7a8594;
             font: inherit;
-            font-size: 15px;
+            font-size: 20px;
             font-weight: 800;
         }
 
@@ -1247,33 +1285,33 @@
         }
 
         /* 글씨 크기: 한눈에 읽히되 과하지 않게 (2026-10-29 조정) */
-        .brand-title { font-size: 24px; }
-        .brand-subtitle { font-size: 14px; }
-        .header-link-button { font-size: 13px; }
-        .last-updated { font-size: 12px; }
-        .last-updated strong { font-size: 14px; }
-        .card-title { font-size: 22px; }
-        .section-note { font-size: 13px; }
+        .brand-title { font-size: 31px; }
+        .brand-subtitle { font-size: 18px; }
+        .header-link-button { font-size: 17px; }
+        .last-updated { font-size: 16px; }
+        .last-updated strong { font-size: 18px; }
+        .card-title { font-size: 29px; }
+        .section-note { font-size: 17px; }
         .inner-panel-title { display: none; }
-        .block-title { font-size: 15px; }
+        .block-title { font-size: 20px; }
         /* 상세 정보: 인덱스에 없는 관측 정보만 작게 */
         .schedule-item { padding: 8px 10px; gap: 2px; background: #f7f9fb; box-shadow: none; align-content: start; }
-        .schedule-date { font-size: 12px; font-weight: 700; color: #6a7585; }
-        .schedule-type { font-size: 15px; font-weight: 800; }
-        .schedule-text { font-size: 11.5px; color: #606a78; }
+        .schedule-date { font-size: 16px; font-weight: 700; color: #6a7585; word-break: keep-all; }
+        .schedule-type { font-size: 20px; font-weight: 800; }
+        .schedule-text { font-size: 15px; color: #606a78; }
         .stage-step { padding: 12px 6px; gap: 10px; }
-        .stage-step-name { font-size: 15px; }
-        .status-pill { font-size: 13px; }
-        .mosaic-title { font-size: 15px; }
-        .mosaic-state { font-size: 13px; }
-        .mosaic-placeholder { font-size: 13px; }
-        .mosaic-placeholder strong { font-size: 17px; }
-        .mosaic-meta { font-size: 12px; }
+        .stage-step-name { font-size: 20px; }
+        .status-pill { font-size: 17px; }
+        .mosaic-title { font-size: 20px; }
+        .mosaic-state { font-size: 17px; }
+        .mosaic-placeholder { font-size: 17px; }
+        .mosaic-placeholder strong { font-size: 22px; }
+        .mosaic-meta { font-size: 16px; }
 
         @media (max-width: 760px) {
-            .card-title { font-size: 22px; }
+            .card-title { font-size: 29px; }
             .header-actions { flex-wrap: wrap; max-width: 100%; }
-            .header-link-button { font-size: 13px; }
+            .header-link-button { font-size: 17px; }
         }
 
         .round-chips { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
@@ -1284,7 +1322,7 @@
             background: #ffffff;
             color: #3a4a5e;
             font: inherit;
-            font-size: 14px;
+            font-size: 18px;
             font-weight: 800;
             cursor: pointer;
         }
@@ -1302,7 +1340,7 @@
             border-radius: 8px;
             background: rgba(11, 50, 99, 0.88);
             color: #ffffff;
-            font-size: 14px;
+            font-size: 18px;
             font-weight: 800;
             opacity: 0.85;
             transition: opacity 0.2s ease, transform 0.2s ease;
@@ -1361,15 +1399,15 @@
             <div class="main-card-body">
                 <div class="inner-panel">
                     <div class="inner-panel-title">관측 목록</div>
+                    <div class="obs-summary" id="obsSummary"></div>
                     <div class="sort-bar">
-                        <span class="list-summary" id="listSummary"></span>
+                        <div class="filter-bar" id="filterBar"></div>
                         <span class="sort-label">날짜 정렬</span>
                         <div class="sort-toggle" id="sortToggle">
                             <button type="button" data-order="asc">오름차순 ↑</button>
                             <button type="button" data-order="desc">내림차순 ↓</button>
                         </div>
                     </div>
-                    <div class="filter-bar" id="filterBar"></div>
                     <div class="tab-list" id="tabList"></div>
                 </div>
 
@@ -1393,7 +1431,7 @@
 
                 <div class="process-block processing-part" id="processing">
                     <div class="round-cells-head">
-                        <div class="block-title">처리 완료 회차</div>
+                        <div class="block-title">데이터 처리 완료 회차</div>
                         <div class="round-cells-legend"><span class="legend-done"></span>반사도 모자이크 생성 완료 <span class="legend-none"></span>미완료</div>
                     </div>
                     <ol class="round-cells" id="roundCells"></ol>
@@ -1419,7 +1457,7 @@
 
 
     const filterBar = document.getElementById("filterBar");
-    const listSummary = document.getElementById("listSummary");
+    const obsSummary = document.getElementById("obsSummary");
     const tabList = document.getElementById("tabList");
     const processingStatus = document.getElementById("processingStatus");
     const processDateBadge = document.getElementById("processDateBadge");
@@ -1554,13 +1592,13 @@
         return ["설치", observationSetting(byDate, item) || tarpDetails.defaultInstalled || "설치"];
     }
 
-    // 인덱스 줄에 없는 정보: 관측 시간, 반사도 타프(설치 시 구성), 영상 수, 참여 기관
+    // 인덱스 줄에 없는 정보: 관측 시간, 반사도 타프(설치 시 구성), 수집한 다분광 영상 수, 참여 기관
     function detailRows(item) {
         const [tarpStatus, tarpSpec] = tarpDetail(item);
         return [
             ["관측 시간", displayObservationTime(item) || "미확인", ""],
             ["반사도 타프", tarpStatus, tarpSpec === "-" ? "" : tarpSpec],
-            ["영상 수", displayImageCount(item) || "미확인", ""],
+            ["수집한 다분광 영상 수", displayImageCount(item) || "미확인", ""],
             ["참여 기관", item.agency || "-", ""]
         ];
     }
@@ -1877,7 +1915,7 @@
         `;
     }
 
-    // 처리 완료 회차: 기본 6칸, 드론 뷰어에 RGB 모자이크가 있는 회차는 초록, 없으면 회색
+    // 데이터 처리 완료 회차: 기본 6칸, 드론 뷰어에 RGB 모자이크가 있는 회차는 초록, 없으면 회색
     function mosaicRounds(item) {
         return Array.isArray(item.mosaicRounds) ? item.mosaicRounds : [];
     }
@@ -1967,13 +2005,36 @@
         });
     });
 
+    // 필터와 관계없이 전체 관측의 합계를 보여 준다. 영상 수가 미집계인 관측은 합계에서 빠진다.
+    function renderSummary() {
+        const repeats = observations.reduce((sum, item) => sum + (parseInt(item.cycle, 10) || 0), 0);
+        const counted = observations.filter((item) => Number.isFinite(item.imageCount));
+        const images = counted.reduce((sum, item) => sum + item.imageCount, 0);
+        const partial = counted.length < observations.length;
+        const metric = (label, value, note) => `
+            <div class="obs-metric">
+                <span class="obs-metric-label">${label}</span>
+                <span class="obs-metric-value">${value}</span>
+                ${note ? `<span class="obs-metric-note">${note}</span>` : ""}
+            </div>
+        `;
+        obsSummary.innerHTML = metric("현장관측", `${observations.length}회`)
+            + metric("당일 반복관측 합계", `${repeats}회`)
+            + metric("수집한 다분광 영상", `${images.toLocaleString("ko-KR")}장${partial ? "+" : ""}`, partial ? `${counted.length}회 집계 기준` : "");
+    }
+
+    // 목록 순서에서 달이 바뀌는 줄 앞에 그 달의 구분선을 넣는다.
+    function monthHeader(entries, position) {
+        const monthOf = ({ item }) => item.date.slice(5, 7);
+        const month = monthOf(entries[position]);
+        if (position > 0 && monthOf(entries[position - 1]) === month) return "";
+        const count = entries.filter((entry) => monthOf(entry) === month).length;
+        return `<div class="obs-month">${Number(month)}월 · ${count}회</div>`;
+    }
+
     function renderTabs(activeIndex) {
         const filtered = filteredEntries();
         const showAgency = agencyNames.length > 1;
-
-        listSummary.textContent = filtered.length === observations.length
-            ? `전체 관측 ${observations.length}회`
-            : `전체 관측 ${observations.length}회 중 ${filtered.length}회`;
 
         const head = `
             <div class="obs-row obs-head">
@@ -1984,7 +2045,8 @@
 
         tabList.innerHTML = !filtered.length
             ? `<div class="tab-empty">조건에 맞는 관측이 없습니다.</div>`
-            : head + filtered.map(({ item, index }) => `
+            : head + filtered.map(({ item, index }, position) => `
+            ${monthHeader(filtered, position)}
             <div class="obs-row ${index === activeIndex ? "active" : ""}">
                 <button class="obs-select obs-cols" type="button" data-index="${index}">
                     <span class="obs-date">${item.date.slice(5).replace(".", "/")}</span>
@@ -2032,6 +2094,7 @@
     }
 
     renderSortToggle();
+    renderSummary();
     if (observations.length > 0) {
         render(defaultIndex(filteredEntries()));
         checkReports().then(() => renderTabs(currentIndex));
