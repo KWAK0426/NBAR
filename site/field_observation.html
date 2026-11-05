@@ -288,53 +288,87 @@
             font-weight: 700;
         }
 
-        .sheet-tabs {
+        .filter-bar {
             flex: 0 0 auto;
             display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 6px;
             padding: 8px;
             border-bottom: 1px solid #e8edf2;
             background: white;
         }
 
-        .sheet-tab {
-            min-width: 0;
+        .filter-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-label {
+            flex: 0 0 auto;
+            color: #556070;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .filter-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .filter-chip {
             border: 1px solid #d8dde3;
-            border-radius: 7px;
+            border-radius: 999px;
             background: #f7f9fb;
             color: #556070;
             cursor: pointer;
             font: inherit;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 700;
-            padding: 7px 6px;
-            line-height: 1.2;
+            padding: 4px 12px;
+            line-height: 1.3;
         }
 
-        .sheet-tab:hover {
+        .filter-chip:hover {
             border-color: #9bb8da;
             color: #174a87;
         }
 
-        .sheet-tab.active {
+        .filter-chip.active {
             border-color: #285ea8;
             background: #285ea8;
             color: white;
         }
 
+        .tab-empty {
+            padding: 20px 8px;
+            color: #606a78;
+            font-size: 13px;
+            text-align: center;
+        }
+
         .sort-bar {
             flex: 0 0 auto;
             display: flex;
+            flex-wrap: wrap;
             justify-content: flex-end;
             align-items: center;
             gap: 8px;
-            padding: 6px 8px;
+            padding: 8px;
             border-bottom: 1px solid #e8edf2;
             background: white;
         }
 
+        .list-summary {
+            margin-right: auto;
+            white-space: nowrap;
+            color: #0b3263;
+            font-size: 16px;
+            font-weight: 800;
+        }
+
         .sort-label {
+            white-space: nowrap;
             color: #556070;
             font-size: 12px;
             font-weight: 700;
@@ -348,6 +382,7 @@
         }
 
         .sort-toggle button {
+            white-space: nowrap;
             border: 0;
             background: #f7f9fb;
             color: #556070;
@@ -394,110 +429,94 @@
             flex: 1;
             min-height: 0;
             overflow-y: auto;
-            padding: 8px;
-            display: grid;
-            gap: 8px;
-            align-content: start;
+            padding: 0 8px 8px;
+            display: block;
             scrollbar-gutter: stable;
+            container-type: inline-size;
         }
 
-        .tab-row {
+        /* 머리글과 관측 줄이 같은 칸 너비를 쓴다. 보고서 칸은 줄 오른쪽에 따로 둔다. */
+        .obs-row {
             display: grid;
-            grid-template-columns: 1fr 82px;
-            align-items: stretch;
-            gap: 8px;
+            grid-template-columns: minmax(0, 1fr) 62px;
+            align-items: center;
+            border-bottom: 1px solid #e8edf2;
         }
 
-        .tab-button {
+        .obs-row:hover { background: #f3f7fc; }
+
+        .obs-row.active {
+            background: #edf4fc;
+            box-shadow: inset 3px 0 0 #285ea8;
+        }
+
+        .obs-head {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            background: white;
+            color: #6a7a90;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .obs-head:hover { background: white; }
+
+        .obs-cols {
+            display: grid;
+            grid-template-columns: 54px minmax(0, 1.15fr) 62px minmax(0, 1.3fr) 44px;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 8px 8px 10px;
+        }
+
+        .obs-select {
             width: 100%;
-            min-height: 54px;
-            padding: 8px 12px;
-            border: 1px solid #dfe5ec;
-            border-radius: 8px;
-            background: #f8fafc;
+            border: 0;
+            background: transparent;
             color: #172033;
             text-align: left;
             cursor: pointer;
             font: inherit;
-        }
-
-        .tab-button:hover {
-            border-color: #9bb8da;
-            background: #f3f7fc;
-        }
-
-        .tab-button.active {
-            border-color: #285ea8;
-            background: #edf4fc;
-            box-shadow: inset 4px 0 0 #285ea8;
-        }
-
-        .tab-date {
-            display: block;
-            font-size: 12px;
-            color: #556070;
-            font-weight: 600;
+            font-size: 14px;
             line-height: 1.3;
         }
 
-        .tab-title {
-            display: block;
-            margin-top: 3px;
-            font-size: 14px;
-            font-weight: 700;
-            line-height: 1.35;
-            word-break: keep-all;
-            overflow-wrap: anywhere;
-        }
+        .obs-date { font-size: 15px; font-weight: 800; color: #0b3263; }
+        .obs-site { font-weight: 700; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .obs-agency { display: block; font-size: 12px; font-weight: 500; color: #6a7a90; overflow: hidden; text-overflow: ellipsis; }
+        .obs-object { white-space: nowrap; }
+        .obs-stage { color: #4a5a6e; word-break: keep-all; }
+        .obs-cycle { text-align: right; font-weight: 700; white-space: nowrap; }
+        .obs-cycle-label { display: none; }
 
-        .tab-purpose {
-            display: block;
-            margin-top: 3px;
-            color: #606a78;
-            font-size: 12px;
-            line-height: 1.35;
-            word-break: keep-all;
-            overflow-wrap: anywhere;
-        }
-
-        .tab-count {
-            display: block;
-            margin-top: 3px;
-            color: #174a87;
-            font-size: 12px;
-            font-weight: 700;
-            line-height: 1.35;
-        }
-
-        .html-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 54px;
-            padding: 8px 10px;
-            border-radius: 8px;
-            background: #124b91;
-            color: white;
-            text-decoration: none;
+        .obs-report {
+            padding-right: 8px;
+            text-align: right;
             font-size: 13px;
-            font-weight: 700;
-            text-align: center;
-            line-height: 1.35;
-            white-space: normal;
+            white-space: nowrap;
         }
 
-        .html-report-action { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-width: 0; text-align: center; }
-        .html-report-action span { white-space: nowrap; }
-        .html-report-status { color: #dce8f6; font-size: 11px; font-weight: 500; line-height: 1.2; }
+        a.obs-report { font-weight: 800; text-decoration: none; }
+        a.obs-report:hover { text-decoration: underline; }
+        .obs-report-ready { color: #124b91; }
+        .obs-report-draft { color: #9a5d00; }
+        .obs-report-none { color: #8a96a6; }
 
-        .html-button:not(.disabled):hover {
-            background: #0b376d;
-        }
-
-        .html-button.disabled {
-            background: #d7e0ea;
-            color: #657487;
-            cursor: not-allowed;
+        /* 좁은 목록에서는 대상지 아래에 대상·생육시기를 둔다. */
+        @container (max-width: 520px) {
+            .obs-head { display: none; }
+            .obs-cols {
+                grid-template-columns: 50px auto minmax(0, 1fr) auto;
+                grid-template-areas: "date site site cycle" "date object stage cycle";
+                gap: 2px 8px;
+            }
+            .obs-date { grid-area: date; }
+            .obs-site { grid-area: site; }
+            .obs-object { grid-area: object; font-size: 13px; }
+            .obs-stage { grid-area: stage; font-size: 13px; }
+            .obs-cycle { grid-area: cycle; }
+            .obs-cycle-label { display: block; font-size: 11px; font-weight: 500; color: #6a7a90; }
         }
 
         .status-pill {
@@ -1065,15 +1084,6 @@
                 padding: 20px;
             }
 
-            .tab-row {
-                grid-template-columns: 1fr 64px;
-            }
-
-            .html-button {
-                min-height: 44px;
-                font-size: 12px;
-            }
-
             .progress-row {
                 grid-template-columns: 1fr 70px;
                 gap: 9px 14px;
@@ -1204,35 +1214,6 @@
 
         .round-cell.outside { opacity: 0.45; }
 
-        .tab-button {
-            min-height: 0 !important;
-            display: grid;
-            grid-template-columns: 92px minmax(0, 1fr) auto;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 14px !important;
-        }
-
-        .tab-button > span {
-            margin: 0 !important;
-        }
-
-        .tab-button .tab-purpose {
-            justify-self: end;
-            white-space: nowrap;
-        }
-
-        .tab-row .html-button {
-            min-height: 0;
-            padding: 6px 4px;
-            font-size: 11px;
-            line-height: 1.25;
-        }
-
-        .tab-list {
-            gap: 6px !important;
-        }
-
         @media (max-width: 620px) {
             .schedule-list {
                 grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
@@ -1258,34 +1239,6 @@
         .card-title { font-size: 22px; }
         .section-note { font-size: 13px; }
         .inner-panel-title { display: none; }
-        .sheet-tab { font-size: 16px; font-weight: 800; min-height: 42px; }
-        .tab-row { grid-template-columns: 1fr 84px; }
-        .tab-button {
-            padding: 10px 16px !important;
-            gap: 14px;
-            grid-template-columns: 64px 116px 72px minmax(0, 1fr) auto;
-        }
-        .tab-date { font-size: 19px !important; font-weight: 900 !important; color: #0b3263 !important; letter-spacing: -0.5px; }
-        .tab-stage {
-            justify-self: start;
-            padding: 4px 10px;
-            border-radius: 999px;
-            font-size: 15px;
-            font-weight: 900;
-            white-space: nowrap;
-        }
-        .stage-transplant { background: #e3f4e8; color: #1d7a45; }
-        .stage-tillering { background: #eef5d9; color: #4d7a12; }
-        .stage-panicle { background: #e0f0f4; color: #136b80; }
-        .stage-heading { background: #fdf0d8; color: #9a5d00; }
-        .stage-ripening { background: #f6e7d6; color: #8a4b12; }
-        .stage-harvest { background: #ecdcc8; color: #6b3608; font-size: 13px; padding: 6px 10px !important; white-space: normal; word-break: keep-all; line-height: 1.2; border-radius: 10px; max-width: 100%; }
-        .stage-other { background: #eef2f6; color: #4a5a6e; font-size: 13px; white-space: normal; word-break: keep-all; line-height: 1.2; border-radius: 10px; max-width: 100%; }
-        .tab-object { font-size: 16px; font-weight: 800; color: #172033; white-space: nowrap; }
-        .tab-site { font-size: 16px; font-weight: 600; color: #3a4658; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .tab-cycle { display: grid; justify-items: end; font-size: 15px; font-weight: 800; color: #174a87; white-space: nowrap; line-height: 1.15; }
-        .tab-cycle-label { font-size: 11px; font-weight: 700; color: #6a7a90; }
-        .tab-row .html-button { font-size: 13px; }
         .block-title { font-size: 15px; }
         /* 상세 정보: 인덱스에 없는 관측 정보만 작게 */
         .schedule-item { padding: 8px 10px; gap: 2px; background: #f7f9fb; box-shadow: none; align-content: start; }
@@ -1302,18 +1255,9 @@
         .mosaic-meta { font-size: 12px; }
 
         @media (max-width: 760px) {
-            .tab-button { grid-template-columns: auto auto 1fr; row-gap: 6px; }
-            .tab-site { grid-column: 1 / 3; }
-            .tab-cycle { justify-self: end; }
-            .tab-date { font-size: 18px !important; }
-            .tab-object, .tab-site, .tab-cycle { font-size: 15px; }
-            .tab-row { grid-template-columns: minmax(0, 1fr) 64px; }
-            .tab-button { min-width: 0; padding: 12px 14px !important; gap: 10px; }
-            .tab-stage { font-size: 15px; padding: 4px 10px; }
             .card-title { font-size: 22px; }
             .header-actions { flex-wrap: wrap; max-width: 100%; }
             .header-link-button { font-size: 13px; }
-            .sheet-tab { font-size: 14px; min-height: 42px; padding: 6px 2px; }
         }
 
         .round-chips { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
@@ -1393,22 +1337,23 @@
                         현장관측 인덱스
                     </div>
                     <div class="section-note">
-                        대상지 유형별 관측 이벤트와 HTML 산출물 바로가기
+                        관측 이벤트와 HTML 산출물 바로가기
                     </div>
                 </div>
             </div>
 
             <div class="main-card-body">
                 <div class="inner-panel">
-                    <div class="inner-panel-title">대상지 시트</div>
-                    <div class="sheet-tabs" id="sheetTabs"></div>
+                    <div class="inner-panel-title">관측 목록</div>
                     <div class="sort-bar">
+                        <span class="list-summary" id="listSummary"></span>
                         <span class="sort-label">날짜 정렬</span>
                         <div class="sort-toggle" id="sortToggle">
                             <button type="button" data-order="asc">오름차순 ↑</button>
                             <button type="button" data-order="desc">내림차순 ↓</button>
                         </div>
                     </div>
+                    <div class="filter-bar" id="filterBar"></div>
                     <div class="tab-list" id="tabList"></div>
                 </div>
 
@@ -1451,13 +1396,14 @@
     © 2026 NBAR Field Observation Status Sharing
 </footer>
 
-<script src="data/nbar-data.js?v=20261029-report-status-1"></script>
+<script src="data/nbar-data.js?v=20261105a"></script>
 
 <script>
     const observations = window.NBAR_OBSERVATIONS || [];
 
 
-    const sheetTabs = document.getElementById("sheetTabs");
+    const filterBar = document.getElementById("filterBar");
+    const listSummary = document.getElementById("listSummary");
     const tabList = document.getElementById("tabList");
     const processingStatus = document.getElementById("processingStatus");
     const processDateBadge = document.getElementById("processDateBadge");
@@ -1467,9 +1413,14 @@
     const detailSubtitle = document.getElementById("detailSubtitle");
     const mosaicPanel = document.getElementById("mosaicPanel");
     const sortToggle = document.getElementById("sortToggle");
-    const sheetNames = ["농지", "밭", "나지", "경사지"];
-    // 시트를 열 때 먼저 선택할 관측(날짜 + 대상지). 없으면 정렬 순서의 첫 관측.
-    const sheetDefaults = { "농지": { date: "2026.05.10", site: "김해 농지" } };
+    const ALL_FILTER = "전체";
+    const coverNames = ["농지", "밭", "나지", "경사지"];
+    // 기관 필터는 데이터에 기관이 둘 이상 있을 때만 보인다.
+    const agencyNames = [...new Set(observations.map((item) => item.agency).filter(Boolean))];
+    // 처음 또는 필터 변경으로 선택 관측이 빠질 때 먼저 고를 관측(날짜 + 대상지). 없으면 정렬 순서의 첫 관측.
+    const defaultObservation = { date: "2026.05.10", site: "김해 농지" };
+    let coverFilter = ALL_FILTER;
+    let agencyFilter = ALL_FILTER;
     let dateOrder = "asc";
     let currentIndex = 0;
     try {
@@ -1482,24 +1433,9 @@
         lastUpdatedText.textContent = window.NBAR_LAST_UPDATED || "-";
     }
 
-    function sheetFor(item) {
-        return item.coverType;
-    }
-
     function targetObject(item) {
         const match = String(item.title || "").match(/^\[(.+?)\]/);
         return match ? match[1] : (item.crop || item.coverType);
-    }
-
-    function stageClass(purpose) {
-        return {
-            "이앙기": "stage-transplant",
-            "분얼기": "stage-tillering",
-            "유수형성기": "stage-panicle",
-            "출수기": "stage-heading",
-            "등숙기": "stage-ripening",
-            "등숙기 + 수확기": "stage-harvest"
-        }[purpose] || "stage-other";
     }
 
     function categoryLabel(item) {
@@ -1545,21 +1481,18 @@
         ));
     }
 
-    function reportButton(item) {
-        if (!reportExists[item.html]) {
-            return `
-                <span class="html-button disabled" aria-label="HTML 보고서 준비 중">
-                    HTML<br>준비 중
-                </span>
-            `;
-        }
+    // 보기: 완성 보고서, 초안: 작성 중인 보고서(reportDraft), 미작성: 공통 양식뿐이라 목록에서 열지 않는다.
+    function reportState(item) {
+        if (!item.html || !reportExists[item.html]) return "none";
+        if (item.reportDraft === true) return "draft";
+        return item.reportComplete === true || !/\/index\.html$/.test(item.html) ? "ready" : "none";
+    }
 
-        return `
-            <a class="html-button html-report-action" href="${item.html === 'reports/2026-06-30_gimhae_rice/index.html' ? 'https://kwak0426.github.io/PNU_QUREOS_NBAR_B/reports/2026-06-30_gimhae_rice/index.html' : item.html}" target="_blank" rel="noopener">
-                <span>HTML 열기</span>
-                ${item.reportComplete !== true && /\/index\.html$/.test(item.html || '') ? '<span class="html-report-status">준비중</span>' : ''}
-            </a>
-        `;
+    function reportCell(item) {
+        const state = reportState(item);
+        if (state === "none") return `<span class="obs-report obs-report-none">미작성</span>`;
+        const href = item.html === 'reports/2026-06-30_gimhae_rice/index.html' ? 'https://kwak0426.github.io/PNU_QUREOS_NBAR_B/reports/2026-06-30_gimhae_rice/index.html' : item.html;
+        return `<a class="obs-report obs-report-${state}" href="${href}" target="_blank" rel="noopener">${state === "draft" ? "초안" : "보기"} ↗</a>`;
     }
 
         const stageDescriptions = {
@@ -1569,10 +1502,6 @@
             "BRDF 분석": "BRDF 모델 기반 관측 각도 효과 보정 및 반사도 정규화",
             "보고서 작성": "관측 개요, 처리 결과, HTML 보고서 정리"
         };
-
-    function sheetCount(sheet) {
-        return observations.filter((item) => sheetFor(item) === sheet).length;
-    }
 
     function hasReflectanceTarp(item) {
         const tarpRow = item.schedule.find(([label]) => label === "반사도 타프");
@@ -1960,39 +1889,51 @@
         });
     }
 
-    function renderSheetTabs(activeIndex) {
-        const activeSheet = sheetFor(observations[activeIndex]);
-        sheetTabs.innerHTML = sheetNames.map((sheet) => `
-            <button class="sheet-tab ${sheet === activeSheet ? "active" : ""}" type="button" data-sheet="${sheet}">
-                ${sheet} ${sheetCount(sheet)}회
-            </button>
+    function filterRow(label, kind, names, active) {
+        const chips = [ALL_FILTER, ...names].map((name) => `
+            <button class="filter-chip ${name === active ? "active" : ""}" type="button" data-kind="${kind}" data-name="${name}">${name}</button>
         `).join("");
+        return `<div class="filter-row"><span class="filter-label">${label}</span><div class="filter-chips">${chips}</div></div>`;
+    }
 
-        sheetTabs.querySelectorAll(".sheet-tab").forEach((button) => {
+    function renderFilters() {
+        filterBar.innerHTML = filterRow("피복", "cover", coverNames, coverFilter)
+            + (agencyNames.length > 1 ? filterRow("기관", "agency", agencyNames, agencyFilter) : "");
+
+        filterBar.querySelectorAll(".filter-chip").forEach((button) => {
             button.addEventListener("click", () => {
-                const index = defaultIndexFor(button.dataset.sheet);
-                if (index >= 0) render(index);
+                if (button.dataset.kind === "cover") coverFilter = button.dataset.name;
+                else agencyFilter = button.dataset.name;
+                applyFilters();
             });
         });
     }
 
-    // 시트 안 관측을 날짜(같은 날이면 대상지) 순으로 정렬한다.
-    function sheetEntries(sheet) {
+    // 필터에 맞는 관측을 날짜(같은 날이면 대상지) 순으로 정렬한다.
+    function filteredEntries() {
         const entries = observations
             .map((item, index) => ({ item, index }))
-            .filter(({ item }) => sheetFor(item) === sheet)
+            .filter(({ item }) => coverFilter === ALL_FILTER || item.coverType === coverFilter)
+            .filter(({ item }) => agencyFilter === ALL_FILTER || item.agency === agencyFilter)
             .sort((a, b) => `${a.item.date} ${a.item.site}`.localeCompare(`${b.item.date} ${b.item.site}`));
         return dateOrder === "desc" ? entries.reverse() : entries;
     }
 
-    function defaultIndexFor(sheet) {
-        const preferred = sheetDefaults[sheet];
-        const index = preferred
-            ? observations.findIndex((item) => sheetFor(item) === sheet && item.date === preferred.date && item.site === preferred.site)
-            : -1;
-        if (index >= 0) return index;
-        const entries = sheetEntries(sheet);
-        return entries.length ? entries[0].index : -1;
+    function defaultIndex(entries) {
+        const preferred = entries.find(({ item }) => item.date === defaultObservation.date && item.site === defaultObservation.site);
+        return (preferred || entries[0]).index;
+    }
+
+    // 선택 중인 관측이 필터에 남아 있으면 유지하고, 빠지면 기본 관측으로 옮긴다.
+    function applyFilters() {
+        const entries = filteredEntries();
+        tabList.scrollTop = 0;
+        if (!entries.length) {
+            renderFilters();
+            renderTabs(currentIndex);
+            return;
+        }
+        render(entries.some(({ index }) => index === currentIndex) ? currentIndex : defaultIndex(entries));
     }
 
     function renderSortToggle() {
@@ -2014,22 +1955,36 @@
     });
 
     function renderTabs(activeIndex) {
-        const filtered = sheetEntries(sheetFor(observations[activeIndex]));
+        const filtered = filteredEntries();
+        const showAgency = agencyNames.length > 1;
 
-        tabList.innerHTML = filtered.map(({ item, index }) => `
-            <div class="tab-row">
-                <button class="tab-button ${index === activeIndex ? "active" : ""}" type="button" data-index="${index}">
-                    <span class="tab-date">${item.date.slice(5).replace(".", "/")}</span>
-                    <span class="tab-stage ${stageClass(item.purpose)}">${item.purpose}</span>
-                    <span class="tab-object">${targetObject(item)}</span>
-                    <span class="tab-site">${item.site}</span>
-                    <span class="tab-cycle"><span class="tab-cycle-label">당일 반복관측</span>${item.cycle}</span>
+        listSummary.textContent = filtered.length === observations.length
+            ? `전체 관측 ${observations.length}회`
+            : `전체 관측 ${observations.length}회 중 ${filtered.length}회`;
+
+        const head = `
+            <div class="obs-row obs-head">
+                <div class="obs-cols"><span>날짜</span><span>대상지</span><span>대상</span><span>생육시기</span><span class="obs-cycle">반복</span></div>
+                <span class="obs-report">보고서</span>
+            </div>
+        `;
+
+        tabList.innerHTML = !filtered.length
+            ? `<div class="tab-empty">조건에 맞는 관측이 없습니다.</div>`
+            : head + filtered.map(({ item, index }) => `
+            <div class="obs-row ${index === activeIndex ? "active" : ""}">
+                <button class="obs-select obs-cols" type="button" data-index="${index}">
+                    <span class="obs-date">${item.date.slice(5).replace(".", "/")}</span>
+                    <span class="obs-site">${item.site}${showAgency ? `<span class="obs-agency">${item.agency || "-"}</span>` : ""}</span>
+                    <span class="obs-object">${targetObject(item)}</span>
+                    <span class="obs-stage">${item.purpose}</span>
+                    <span class="obs-cycle"><span class="obs-cycle-label">반복</span>${item.cycle}</span>
                 </button>
-                ${reportButton(item)}
+                ${reportCell(item)}
             </div>
         `).join("");
 
-        tabList.querySelectorAll(".tab-button").forEach((button) => {
+        tabList.querySelectorAll(".obs-select").forEach((button) => {
             button.addEventListener("click", () => render(Number(button.dataset.index)));
         });
     }
@@ -2037,7 +1992,7 @@
     function render(index) {
         const item = observations[index];
         currentIndex = index;
-        renderSheetTabs(index);
+        renderFilters();
         renderTabs(index);
         detailSubtitle.textContent = `${displayDate(item.date)} · ${item.title}`;
 
@@ -2065,7 +2020,7 @@
 
     renderSortToggle();
     if (observations.length > 0) {
-        render(defaultIndexFor(sheetFor(observations[0])));
+        render(defaultIndex(filteredEntries()));
         checkReports().then(() => renderTabs(currentIndex));
     }
 </script>

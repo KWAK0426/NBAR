@@ -124,6 +124,7 @@ window.NBAR_OBSERVATIONS = [
         agency: "부산대",
         html: "reports/2026-06-30_gimhae_rice/index.html",
         reportComplete: false,
+        reportDraft: true,
         status: "전처리 진행 중",
         statusClass: "progress",
         processing: [

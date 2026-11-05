@@ -156,7 +156,7 @@ window.NBAR_TARP_DETAILS = {
 
 1. 보고서를 해당 관측 폴더에 `index.html`로 넣습니다. 이미지·CSS·JS도 같은 폴더에 상대경로로 둡니다.
 2. 관측의 `html` 값은 이미 `reports/<폴더>/index.html`로 되어 있어 고치지 않습니다.
-3. 페이지가 열릴 때 파일이 있는지 확인(HEAD 요청)해서 버튼을 `HTML / 열기`로 바꿉니다. 파일이 없으면 `HTML / 준비 중`입니다.
+3. 인덱스 보고서 칸은 파일이 있고(HEAD 요청) 관측에 `reportComplete: true`가 있으면 `보기`, `reportDraft: true`가 있으면 `초안`으로 열립니다. 그 외에는 `미작성`이며 열리지 않습니다. 공통 양식만 있는 관측도 `미작성`입니다.
 4. `processing`의 `보고서 작성` 상태는 버튼과 별개입니다. 실제 상황에 맞게 따로 고칩니다(완료인데 파일이 없으면 `tools/check_data.cjs`가 오류로 표시).
 
 6월 10일은 이미 공개된 주소를 유지합니다.
@@ -165,7 +165,7 @@ window.NBAR_TARP_DETAILS = {
 html: "reports/2026-06-10_field_result_report.html"
 ```
 
-파일 존재 확인은 웹 서버에서만 됩니다. 파일을 브라우저로 직접 열면(`file://`) 버튼이 모두 `준비 중`으로 보입니다.
+파일 존재 확인은 웹 서버에서만 됩니다. 파일을 브라우저로 직접 열면(`file://`) 보고서 칸이 모두 `미작성`으로 보입니다.
 
 과거 안내에 있던 `report_0630_joint_campaign.html`을 현재 연결로 되돌리지 않습니다. 분리 전 합본은 `2026-06-10_joint_field_elc_mosaic_report.html`로 별도 보존되어 있습니다.
 
