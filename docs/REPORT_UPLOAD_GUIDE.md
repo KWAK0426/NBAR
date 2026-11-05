@@ -1,11 +1,10 @@
 # 관측별 HTML 보고서 업로드 안내
 
-현장관측 페이지의 각 관측 줄 오른쪽 보고서 칸은 그 관측의 보고서 폴더를 가리킨다.
-폴더에 `index.html`을 올린 뒤 `site/data/nbar-data.js`의 해당 관측에 상태를 적는다.
+현장관측 페이지의 각 관측 줄 오른쪽 HTML 버튼은 그 관측의 보고서 폴더를 가리킨다.
+폴더에 `index.html`이 있으면 버튼이 자동으로 "HTML 열기"가 된다. 버튼 색은 `site/data/nbar-data.js`의 해당 관측 값으로 정한다.
 
-- 작성 중인 보고서: `reportDraft: true` → 칸에 "초안"
-- 완성된 보고서: `reportComplete: true` (`reportDraft`는 지운다) → 칸에 "보기"
-- 둘 다 없으면(공통 양식만 있는 경우 포함) "미작성"이고 목록에서 열리지 않는다.
+- 완성 전(공통 양식, 작성 중 포함): `reportComplete: false` → 회색빛 버튼
+- 완성된 보고서: `reportComplete: true` → 파란 버튼
 
 값을 바꾼 뒤 `field_observation.html`의 `nbar-data.js?v=` 값을 올린다.
 
@@ -29,7 +28,7 @@ A 저장소(`KWAK0426/NBAR`) 기준 경로:
 | 2026.09.23 | 김해 농지 | `site/reports/2026-09-23_gimhae_rice/index.html` |
 | 2026.10.07 | 김해 농지 | `site/reports/2026-10-07_gimhae_rice/index.html` |
 
-- 파일 이름은 반드시 `index.html`이다. 다른 이름이면 보고서 칸이 켜지지 않는다.
+- 파일 이름은 반드시 `index.html`이다. 다른 이름이면 버튼이 켜지지 않는다.
 - 폴더 안의 `.gitkeep`은 빈 폴더를 GitHub에 남기기 위한 빈 파일이다. 지우지 않아도 된다.
 - 위 표에 없는 관측의 폴더는 `site/data/nbar-data.js`의 해당 항목 `html` 값을 보면 된다.
 - 드론 현황판 자동 갱신으로 새 김해 관측이 추가되면 `site/reports/YYYY-MM-DD_gimhae_rice/` 폴더도 같이 만들어진다.
@@ -52,7 +51,7 @@ A 저장소(`KWAK0426/NBAR`) 기준 경로:
 ## 4. 확인
 
 1. `node tools/check_data.cjs`: `problems`가 비어 있어야 한다(보고서 폴더가 없으면 오류).
-2. 로컬 확인: `python -m http.server 8000 --bind 127.0.0.1 --directory site` 후 `http://127.0.0.1:8000/field_observation.html`에서 해당 관측 보고서 칸이 "초안"이나 "보기"인지, 새 탭으로 열리는지 본다.
-   파일을 브라우저로 직접 열면(`file://`) 존재 확인이 안 되어 보고서 칸이 계속 "미작성"이다. 반드시 서버로 연다.
+2. 로컬 확인: `python -m http.server 8000 --bind 127.0.0.1 --directory site` 후 `http://127.0.0.1:8000/field_observation.html`에서 해당 관측 버튼이 "HTML 열기"인지, 새 탭으로 열리는지 본다.
+   파일을 브라우저로 직접 열면(`file://`) 존재 확인이 안 되어 버튼이 열리지 않는 회색빛 "HTML"로 보인다. 반드시 서버로 연다.
 3. push 후 공개 주소(A: https://kwak0426.github.io/NBAR/site/field_observation.html, B: https://kwak0426.github.io/PNU_QUREOS_NBAR_B/field_observation.html)에서 같은 확인을 한다.
 4. `docs/updates/`에 올린 보고서와 확인 결과를 기록한다.

@@ -306,7 +306,7 @@
         .filter-label {
             flex: 0 0 auto;
             color: #556070;
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 700;
         }
 
@@ -323,9 +323,9 @@
             color: #556070;
             cursor: pointer;
             font: inherit;
-            font-size: 13px;
+            font-size: 15px;
             font-weight: 700;
-            padding: 4px 12px;
+            padding: 5px 14px;
             line-height: 1.3;
         }
 
@@ -363,7 +363,7 @@
             margin-right: auto;
             white-space: nowrap;
             color: #0b3263;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 800;
         }
 
@@ -438,7 +438,7 @@
         /* 머리글과 관측 줄이 같은 칸 너비를 쓴다. 보고서 칸은 줄 오른쪽에 따로 둔다. */
         .obs-row {
             display: grid;
-            grid-template-columns: minmax(0, 1fr) 62px;
+            grid-template-columns: minmax(0, 1fr) 88px;
             align-items: center;
             border-bottom: 1px solid #e8edf2;
         }
@@ -456,7 +456,7 @@
             z-index: 1;
             background: white;
             color: #6a7a90;
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 700;
         }
 
@@ -464,10 +464,10 @@
 
         .obs-cols {
             display: grid;
-            grid-template-columns: 54px minmax(0, 1.15fr) 62px minmax(0, 1.3fr) 44px;
+            grid-template-columns: 64px 72px minmax(0, 1.15fr) minmax(0, 1.3fr) 124px;
             align-items: center;
-            gap: 8px;
-            padding: 8px 8px 8px 10px;
+            gap: 10px;
+            padding: 10px 8px 10px 12px;
         }
 
         .obs-select {
@@ -478,45 +478,60 @@
             text-align: left;
             cursor: pointer;
             font: inherit;
-            font-size: 14px;
+            font-size: 17px;
             line-height: 1.3;
         }
 
-        .obs-date { font-size: 15px; font-weight: 800; color: #0b3263; }
+        .obs-date { font-size: 18px; font-weight: 800; color: #0b3263; }
         .obs-site { font-weight: 700; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .obs-agency { display: block; font-size: 12px; font-weight: 500; color: #6a7a90; overflow: hidden; text-overflow: ellipsis; }
+        .obs-agency { display: block; font-size: 13px; font-weight: 500; color: #6a7a90; overflow: hidden; text-overflow: ellipsis; }
         .obs-object { white-space: nowrap; }
         .obs-stage { color: #4a5a6e; word-break: keep-all; }
         .obs-cycle { text-align: right; font-weight: 700; white-space: nowrap; }
         .obs-cycle-label { display: none; }
 
-        .obs-report {
-            padding-right: 8px;
-            text-align: right;
-            font-size: 13px;
+        .obs-report-head { text-align: center; }
+
+        .obs-report-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 4px 4px 4px 0;
+            min-height: 34px;
+            padding: 4px 2px;
+            border-radius: 6px;
+            background: #124b91;
+            color: white;
+            font-size: 14px;
+            font-weight: 800;
+            line-height: 1.2;
+            text-align: center;
+            text-decoration: none;
             white-space: nowrap;
         }
 
-        a.obs-report { font-weight: 800; text-decoration: none; }
-        a.obs-report:hover { text-decoration: underline; }
-        .obs-report-ready { color: #124b91; }
-        .obs-report-draft { color: #9a5d00; }
-        .obs-report-none { color: #8a96a6; }
+        a.obs-report-button:hover { background: #0b376d; }
+        .obs-report-button.pending { background: #dde2e8; color: #5d6875; font-weight: 700; }
+        a.obs-report-button.pending:hover { background: #ccd3db; }
 
         /* 좁은 목록에서는 대상지 아래에 대상·생육시기를 둔다. */
-        @container (max-width: 520px) {
+        @container (max-width: 600px) {
             .obs-head { display: none; }
+            .obs-row { grid-template-columns: minmax(0, 1fr) 80px; }
             .obs-cols {
-                grid-template-columns: 50px auto minmax(0, 1fr) auto;
-                grid-template-areas: "date site site cycle" "date object stage cycle";
+                grid-template-columns: auto minmax(0, 1fr);
+                grid-template-areas: "date cycle" "site site" "object stage";
                 gap: 2px 8px;
+                padding: 10px 6px 10px 10px;
             }
+            .obs-report-button { font-size: 13px; }
             .obs-date { grid-area: date; }
             .obs-site { grid-area: site; }
-            .obs-object { grid-area: object; font-size: 13px; }
-            .obs-stage { grid-area: stage; font-size: 13px; }
+            .obs-object { grid-area: object; font-size: 15px; }
+            .obs-stage { grid-area: stage; font-size: 15px; }
             .obs-cycle { grid-area: cycle; }
-            .obs-cycle-label { display: block; font-size: 11px; font-weight: 500; color: #6a7a90; }
+            .obs-cycle-label { display: inline; margin-right: 4px; font-size: 13px; font-weight: 500; color: #6a7a90; }
         }
 
         .status-pill {
@@ -1396,7 +1411,7 @@
     © 2026 NBAR Field Observation Status Sharing
 </footer>
 
-<script src="data/nbar-data.js?v=20261105a"></script>
+<script src="data/nbar-data.js?v=20261105b"></script>
 
 <script>
     const observations = window.NBAR_OBSERVATIONS || [];
@@ -1481,18 +1496,15 @@
         ));
     }
 
-    // 보기: 완성 보고서, 초안: 작성 중인 보고서(reportDraft), 미작성: 공통 양식뿐이라 목록에서 열지 않는다.
-    function reportState(item) {
-        if (!item.html || !reportExists[item.html]) return "none";
-        if (item.reportDraft === true) return "draft";
-        return item.reportComplete === true || !/\/index\.html$/.test(item.html) ? "ready" : "none";
+    // 완성 보고서는 파란 버튼, 완성 전은 회색빛 버튼. 6/10처럼 관측 폴더 밖의 기존 주소는 완성으로 본다.
+    function isReportComplete(item) {
+        return item.reportComplete === true || !/\/index\.html$/.test(item.html);
     }
 
     function reportCell(item) {
-        const state = reportState(item);
-        if (state === "none") return `<span class="obs-report obs-report-none">미작성</span>`;
+        if (!item.html || !reportExists[item.html]) return `<span class="obs-report-button pending">HTML</span>`;
         const href = item.html === 'reports/2026-06-30_gimhae_rice/index.html' ? 'https://kwak0426.github.io/PNU_QUREOS_NBAR_B/reports/2026-06-30_gimhae_rice/index.html' : item.html;
-        return `<a class="obs-report obs-report-${state}" href="${href}" target="_blank" rel="noopener">${state === "draft" ? "초안" : "보기"} ↗</a>`;
+        return `<a class="obs-report-button ${isReportComplete(item) ? "" : "pending"}" href="${href}" target="_blank" rel="noopener">HTML 열기</a>`;
     }
 
         const stageDescriptions = {
@@ -1964,8 +1976,8 @@
 
         const head = `
             <div class="obs-row obs-head">
-                <div class="obs-cols"><span>날짜</span><span>대상지</span><span>대상</span><span>생육시기</span><span class="obs-cycle">반복</span></div>
-                <span class="obs-report">보고서</span>
+                <div class="obs-cols"><span>날짜</span><span>대상</span><span>대상지</span><span>생육시기</span><span class="obs-cycle">당일 반복관측 횟수</span></div>
+                <span class="obs-report-head">보고서</span>
             </div>
         `;
 
@@ -1975,10 +1987,10 @@
             <div class="obs-row ${index === activeIndex ? "active" : ""}">
                 <button class="obs-select obs-cols" type="button" data-index="${index}">
                     <span class="obs-date">${item.date.slice(5).replace(".", "/")}</span>
-                    <span class="obs-site">${item.site}${showAgency ? `<span class="obs-agency">${item.agency || "-"}</span>` : ""}</span>
                     <span class="obs-object">${targetObject(item)}</span>
+                    <span class="obs-site">${item.site}${showAgency ? `<span class="obs-agency">${item.agency || "-"}</span>` : ""}</span>
                     <span class="obs-stage">${item.purpose}</span>
-                    <span class="obs-cycle"><span class="obs-cycle-label">반복</span>${item.cycle}</span>
+                    <span class="obs-cycle"><span class="obs-cycle-label">당일 반복관측</span>${item.cycle}</span>
                 </button>
                 ${reportCell(item)}
             </div>
