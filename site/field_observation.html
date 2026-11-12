@@ -289,12 +289,10 @@
         }
 
         .filter-bar {
-            flex: 0 0 auto;
+            flex: 1 1 auto;
+            min-width: 0;
             display: grid;
             gap: 6px;
-            padding: 8px;
-            border-bottom: 1px solid #e8edf2;
-            background: white;
         }
 
         .filter-row {
@@ -360,6 +358,7 @@
         }
 
         .sort-label {
+            margin-left: auto;
             white-space: nowrap;
             color: #556070;
             font-size: 16px;
@@ -1344,7 +1343,7 @@
             <div class="card-header">
                 <div>
                     <div class="card-title">
-                        현장관측 인덱스
+                        관측 목록
                     </div>
                     <div class="section-note">
                         관측 이벤트와 HTML 산출물 바로가기
@@ -1356,13 +1355,13 @@
                 <div class="inner-panel">
                     <div class="inner-panel-title">관측 목록</div>
                     <div class="sort-bar">
+                        <div class="filter-bar" id="filterBar"></div>
                         <span class="sort-label">날짜 정렬</span>
                         <div class="sort-toggle" id="sortToggle">
                             <button type="button" data-order="asc">오름차순 ↑</button>
                             <button type="button" data-order="desc">내림차순 ↓</button>
                         </div>
                     </div>
-                    <div class="filter-bar" id="filterBar"></div>
                     <div class="tab-list" id="tabList"></div>
                 </div>
 
