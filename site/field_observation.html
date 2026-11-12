@@ -457,7 +457,7 @@
 
         .obs-cols {
             display: grid;
-            grid-template-columns: minmax(70px, 0.6fr) minmax(74px, 0.6fr) minmax(0, 1.35fr) minmax(0, 1.6fr) minmax(126px, 1fr);
+            grid-template-columns: minmax(60px, .55fr) minmax(58px, .55fr) minmax(95px, 1.2fr) minmax(105px, 1.2fr) minmax(95px, 1.2fr) minmax(105px, 1fr);
             align-items: center;
             gap: 8px;
             padding: 10px 6px 10px 8px;
@@ -477,7 +477,7 @@
 
         .obs-date { font-size: 23px; font-weight: 800; color: #0b3263; text-align: center; }
         .obs-site { font-weight: 700; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .obs-agency { display: block; font-size: 16px; font-weight: 500; color: #6a7a90; overflow: hidden; text-overflow: ellipsis; }
+        .obs-agency { min-width: 0; font-size: 18px; font-weight: 500; color: #4a5a6e; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .obs-object { white-space: nowrap; }
         .obs-stage { color: #4a5a6e; word-break: keep-all; }
         .obs-cycle { text-align: center; font-weight: 700; white-space: nowrap; }
@@ -515,13 +515,15 @@
             .obs-cols > span { text-align: left; }
             .obs-cols {
                 grid-template-columns: auto minmax(0, 1fr);
-                grid-template-areas: "date cycle" "site site" "object stage";
+                grid-template-areas: "date cycle" "site site" "agency agency" "object stage";
                 gap: 2px 8px;
                 padding: 10px 6px 10px 10px;
             }
             .obs-report-button { font-size: 15px; }
             .obs-date { grid-area: date; text-align: left; }
             .obs-site { grid-area: site; }
+            .obs-agency { grid-area: agency; }
+            .obs-agency::before { content: "관측 수행 기관: "; color: #6a7a90; font-size: 15px; }
             .obs-object { grid-area: object; font-size: 19px; }
             .obs-stage { grid-area: stage; font-size: 19px; }
             .obs-cycle { grid-area: cycle; text-align: right; }
@@ -1551,7 +1553,7 @@
             ["관측 시간", displayObservationTime(item) || "미확인", ""],
             ["반사도 타프", tarpStatus, tarpSpec === "-" ? "" : tarpSpec],
             ["수집한 다분광 영상 수", displayImageCount(item) || "미확인", ""],
-            ["참여 기관", item.agency || "-", ""]
+            ["관측 수행 기관", item.agency || "미확인", ""]
         ];
     }
 
@@ -1902,7 +1904,7 @@
 
     function renderFilters() {
         filterBar.innerHTML = filterRow("피복", "cover", coverNames, coverFilter)
-            + (agencyNames.length > 1 ? filterRow("기관", "agency", agencyNames, agencyFilter) : "");
+            + (agencyNames.length > 1 ? filterRow("관측 수행 기관", "agency", agencyNames, agencyFilter) : "");
 
         filterBar.querySelectorAll(".filter-chip").forEach((button) => {
             button.addEventListener("click", () => {
@@ -1960,11 +1962,10 @@
 
     function renderTabs(activeIndex) {
         const filtered = filteredEntries();
-        const showAgency = agencyNames.length > 1;
 
         const head = `
             <div class="obs-row obs-head">
-                <div class="obs-cols"><span>날짜</span><span>대상</span><span>대상지</span><span>생육시기</span><span class="obs-cycle">당일 반복관측 횟수</span></div>
+                <div class="obs-cols"><span>날짜</span><span>대상</span><span>대상지</span><span>관측 수행 기관</span><span>생육시기</span><span class="obs-cycle">당일 반복관측 횟수</span></div>
                 <span class="obs-report-head">보고서</span>
             </div>
         `;
@@ -1976,7 +1977,8 @@
                 <button class="obs-select obs-cols" type="button" data-index="${index}">
                     <span class="obs-date">${item.date.slice(5).replace(".", "/")}</span>
                     <span class="obs-object">${targetObject(item)}</span>
-                    <span class="obs-site">${item.site}${showAgency ? `<span class="obs-agency">${item.agency || "-"}</span>` : ""}</span>
+                    <span class="obs-site">${item.site}</span>
+                    <span class="obs-agency">${item.agency || "미확인"}</span>
                     <span class="obs-stage">${item.purpose}</span>
                     <span class="obs-cycle"><span class="obs-cycle-label">당일 반복관측</span>${item.cycle}</span>
                 </button>
