@@ -1407,7 +1407,7 @@
     © 2026 NBAR Field Observation Status Sharing
 </footer>
 
-<script src="data/nbar-data.js?v=20261113-paddy"></script>
+<script src="data/nbar-data.js?v=20261113-gangseo"></script>
 
 <script>
     const observations = window.NBAR_OBSERVATIONS || [];
@@ -1428,7 +1428,7 @@
     // 기관 필터는 데이터에 기관이 둘 이상 있을 때만 보인다.
     const agencyNames = [...new Set(observations.map((item) => item.agency).filter(Boolean))];
     // 처음 또는 필터 변경으로 선택 관측이 빠질 때 먼저 고를 관측(날짜 + 대상지). 없으면 정렬 순서의 첫 관측.
-    const defaultObservation = { date: "2026.05.10", site: "김해 농지" };
+    const defaultObservation = { date: "2026.05.10", site: "강서구 농지" };
     let coverFilter = ALL_FILTER;
     let agencyFilter = ALL_FILTER;
     let dateOrder = "asc";
@@ -1563,7 +1563,7 @@
     const DRONE_VIEWER = "https://kwak0426.github.io/drone/viewer/";
 
     function hasDroneViewer(item) {
-        return item.site === "김해 농지" || (item.date === "2026.06.30" && item.site === "강서구 논 필지");
+        return item.site === "강서구 농지" || (item.date === "2026.06.30" && item.site === "강서구 논 필지");
     }
 
     function viewerUrl(item, round) {
