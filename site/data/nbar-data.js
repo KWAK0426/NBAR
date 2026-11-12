@@ -1,5 +1,5 @@
 // 대시보드 오른쪽 상단에 표시되는 최신 업데이트 시간입니다.
-window.NBAR_LAST_UPDATED = "2026.11.13 08:18";
+window.NBAR_LAST_UPDATED = "2026.11.13 08:27";
 
 // 반사도 모자이크 생성 완료 회차 수는 여기 숫자만 수정하면 됩니다.
 // panelCompletedCycles: 패널 기반 처리 완료 회차 수
@@ -469,7 +469,7 @@ window.NBAR_OBSERVATIONS = [
         observationTime: "미확인",
         imageCount: null,
         title: "[경사지] - 금정산 북문",
-        agency: "",
+        agency: "부산대",
         html: "",
         reportComplete: false,
         status: "현장관측 완료",
@@ -485,6 +485,192 @@ window.NBAR_OBSERVATIONS = [
             ["날짜", "2026.11.11", "추계 산림 관측"],
             ["관측 시간", "미확인", ""],
             ["관측 사이클", "3회", "당일 반복관측 횟수"],
+            ["반사도 타프", "미확인", ""],
+            ["영상 개수", "미확인", ""]
+        ]
+    },
+    {
+        date: "2026.09.22",
+        coverType: "미확인",
+        crop: "",
+        site: "익산",
+        purpose: "미확인",
+        purposeDetail: "현장관측 수행",
+        cycle: "미확인",
+        observationTime: "미확인",
+        imageCount: null,
+        title: "[미확인] - 익산",
+        agency: "위성센터",
+        html: "",
+        reportComplete: false,
+        status: "현장관측 완료",
+        statusClass: "progress",
+        processing: [
+            ["자료 정리", "예정"],
+            ["영상 처리", "예정"],
+            ["품질 검토", "예정"],
+            ["BRDF 분석", "예정"],
+            ["보고서 작성", "예정"]
+        ],
+        schedule: [
+            ["날짜", "2026.09.22", "현장관측"],
+            ["관측 시간", "미확인", ""],
+            ["관측 사이클", "미확인", ""],
+            ["반사도 타프", "미확인", ""],
+            ["영상 개수", "미확인", ""]
+        ]
+    },
+    {
+        date: "2026.07.31",
+        coverType: "미확인",
+        crop: "",
+        site: "익산",
+        purpose: "미확인",
+        purposeDetail: "현장관측 수행",
+        cycle: "미확인",
+        observationTime: "미확인",
+        imageCount: null,
+        title: "[미확인] - 익산",
+        agency: "위성센터",
+        html: "",
+        reportComplete: false,
+        status: "현장관측 완료",
+        statusClass: "progress",
+        processing: [
+            ["자료 정리", "예정"],
+            ["영상 처리", "예정"],
+            ["품질 검토", "예정"],
+            ["BRDF 분석", "예정"],
+            ["보고서 작성", "예정"]
+        ],
+        schedule: [
+            ["날짜", "2026.07.31", "현장관측"],
+            ["관측 시간", "미확인", ""],
+            ["관측 사이클", "미확인", ""],
+            ["반사도 타프", "미확인", ""],
+            ["영상 개수", "미확인", ""]
+        ]
+    },
+    {
+        date: "2026.07.14",
+        coverType: "미확인",
+        crop: "",
+        site: "영덕",
+        purpose: "미확인",
+        purposeDetail: "현장관측 수행",
+        cycle: "미확인",
+        observationTime: "미확인",
+        imageCount: null,
+        title: "[미확인] - 영덕",
+        agency: "위성센터",
+        html: "",
+        reportComplete: false,
+        status: "현장관측 완료",
+        statusClass: "progress",
+        processing: [
+            ["자료 정리", "예정"],
+            ["영상 처리", "예정"],
+            ["품질 검토", "예정"],
+            ["BRDF 분석", "예정"],
+            ["보고서 작성", "예정"]
+        ],
+        schedule: [
+            ["날짜", "2026.07.14", "현장관측"],
+            ["관측 시간", "미확인", ""],
+            ["관측 사이클", "미확인", ""],
+            ["반사도 타프", "미확인", ""],
+            ["영상 개수", "미확인", ""]
+        ]
+    },
+    {
+        date: "2026.08.26",
+        coverType: "미확인",
+        crop: "",
+        site: "영덕",
+        purpose: "미확인",
+        purposeDetail: "현장관측 수행",
+        cycle: "미확인",
+        observationTime: "미확인",
+        imageCount: null,
+        title: "[미확인] - 영덕",
+        agency: "위성센터",
+        html: "",
+        reportComplete: false,
+        status: "현장관측 완료",
+        statusClass: "progress",
+        processing: [
+            ["자료 정리", "예정"],
+            ["영상 처리", "예정"],
+            ["품질 검토", "예정"],
+            ["BRDF 분석", "예정"],
+            ["보고서 작성", "예정"]
+        ],
+        schedule: [
+            ["날짜", "2026.08.26", "현장관측"],
+            ["관측 시간", "미확인", ""],
+            ["관측 사이클", "미확인", ""],
+            ["반사도 타프", "미확인", ""],
+            ["영상 개수", "미확인", ""]
+        ]
+    },
+    {
+        date: "2026.07.13",
+        coverType: "미확인",
+        crop: "",
+        site: "청주",
+        purpose: "미확인",
+        purposeDetail: "현장관측 수행",
+        cycle: "미확인",
+        observationTime: "미확인",
+        imageCount: null,
+        title: "[미확인] - 청주",
+        agency: "위성센터",
+        html: "",
+        reportComplete: false,
+        status: "현장관측 완료",
+        statusClass: "progress",
+        processing: [
+            ["자료 정리", "예정"],
+            ["영상 처리", "예정"],
+            ["품질 검토", "예정"],
+            ["BRDF 분석", "예정"],
+            ["보고서 작성", "예정"]
+        ],
+        schedule: [
+            ["날짜", "2026.07.13", "현장관측"],
+            ["관측 시간", "미확인", ""],
+            ["관측 사이클", "미확인", ""],
+            ["반사도 타프", "미확인", ""],
+            ["영상 개수", "미확인", ""]
+        ]
+    },
+    {
+        date: "2026.08.27",
+        coverType: "미확인",
+        crop: "",
+        site: "청주",
+        purpose: "미확인",
+        purposeDetail: "현장관측 수행",
+        cycle: "미확인",
+        observationTime: "미확인",
+        imageCount: null,
+        title: "[미확인] - 청주",
+        agency: "위성센터",
+        html: "",
+        reportComplete: false,
+        status: "현장관측 완료",
+        statusClass: "progress",
+        processing: [
+            ["자료 정리", "예정"],
+            ["영상 처리", "예정"],
+            ["품질 검토", "예정"],
+            ["BRDF 분석", "예정"],
+            ["보고서 작성", "예정"]
+        ],
+        schedule: [
+            ["날짜", "2026.08.27", "현장관측"],
+            ["관측 시간", "미확인", ""],
+            ["관측 사이클", "미확인", ""],
             ["반사도 타프", "미확인", ""],
             ["영상 개수", "미확인", ""]
         ]
