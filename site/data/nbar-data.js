@@ -494,9 +494,9 @@ window.NBAR_OBSERVATIONS = [
         coverType: "농지",
         crop: "벼",
         site: "익산",
-        purpose: "미확인",
-        purposeDetail: "현장관측 수행",
-        cycle: "미확인",
+        purpose: "등숙기 (추정)",
+        purposeDetail: "일반 벼 재배 시기 기준 추정 · 품종과 이앙일 확인 필요",
+        cycle: "5회",
         observationTime: "미확인",
         imageCount: null,
         title: "[논 벼] - 익산",
@@ -515,7 +515,7 @@ window.NBAR_OBSERVATIONS = [
         schedule: [
             ["날짜", "2026.09.22", "현장관측"],
             ["관측 시간", "미확인", ""],
-            ["관측 사이클", "미확인", ""],
+            ["관측 사이클", "5회", "당일 반복관측 횟수"],
             ["반사도 타프", "미확인", ""],
             ["영상 개수", "미확인", ""]
         ]
@@ -525,9 +525,9 @@ window.NBAR_OBSERVATIONS = [
         coverType: "농지",
         crop: "벼",
         site: "익산",
-        purpose: "미확인",
-        purposeDetail: "현장관측 수행",
-        cycle: "미확인",
+        purpose: "유수형성기 (추정)",
+        purposeDetail: "일반 벼 재배 시기 기준 추정 · 품종과 이앙일 확인 필요",
+        cycle: "5회",
         observationTime: "미확인",
         imageCount: null,
         title: "[논 벼] - 익산",
@@ -546,7 +546,7 @@ window.NBAR_OBSERVATIONS = [
         schedule: [
             ["날짜", "2026.07.31", "현장관측"],
             ["관측 시간", "미확인", ""],
-            ["관측 사이클", "미확인", ""],
+            ["관측 사이클", "5회", "당일 반복관측 횟수"],
             ["반사도 타프", "미확인", ""],
             ["영상 개수", "미확인", ""]
         ]
@@ -556,9 +556,9 @@ window.NBAR_OBSERVATIONS = [
         coverType: "농지",
         crop: "벼",
         site: "영덕",
-        purpose: "미확인",
-        purposeDetail: "현장관측 수행",
-        cycle: "미확인",
+        purpose: "분얼기~유수형성기 (추정)",
+        purposeDetail: "일반 벼 재배 시기 기준 추정 · 품종과 이앙일 확인 필요",
+        cycle: "6회",
         observationTime: "미확인",
         imageCount: null,
         title: "[논 벼] - 영덕",
@@ -577,7 +577,7 @@ window.NBAR_OBSERVATIONS = [
         schedule: [
             ["날짜", "2026.07.14", "현장관측"],
             ["관측 시간", "미확인", ""],
-            ["관측 사이클", "미확인", ""],
+            ["관측 사이클", "6회", "당일 반복관측 횟수"],
             ["반사도 타프", "미확인", ""],
             ["영상 개수", "미확인", ""]
         ]
@@ -587,9 +587,9 @@ window.NBAR_OBSERVATIONS = [
         coverType: "농지",
         crop: "벼",
         site: "영덕",
-        purpose: "미확인",
-        purposeDetail: "현장관측 수행",
-        cycle: "미확인",
+        purpose: "출수기~등숙기 (추정)",
+        purposeDetail: "일반 벼 재배 시기 기준 추정 · 품종과 이앙일 확인 필요",
+        cycle: "6회",
         observationTime: "미확인",
         imageCount: null,
         title: "[논 벼] - 영덕",
@@ -608,7 +608,7 @@ window.NBAR_OBSERVATIONS = [
         schedule: [
             ["날짜", "2026.08.26", "현장관측"],
             ["관측 시간", "미확인", ""],
-            ["관측 사이클", "미확인", ""],
+            ["관측 사이클", "6회", "당일 반복관측 횟수"],
             ["반사도 타프", "미확인", ""],
             ["영상 개수", "미확인", ""]
         ]
@@ -618,9 +618,9 @@ window.NBAR_OBSERVATIONS = [
         coverType: "농지",
         crop: "벼",
         site: "청주",
-        purpose: "미확인",
-        purposeDetail: "현장관측 수행",
-        cycle: "미확인",
+        purpose: "분얼기~유수형성기 (추정)",
+        purposeDetail: "일반 벼 재배 시기 기준 추정 · 품종과 이앙일 확인 필요",
+        cycle: "6회",
         observationTime: "미확인",
         imageCount: null,
         title: "[논 벼] - 청주",
@@ -639,7 +639,7 @@ window.NBAR_OBSERVATIONS = [
         schedule: [
             ["날짜", "2026.07.13", "현장관측"],
             ["관측 시간", "미확인", ""],
-            ["관측 사이클", "미확인", ""],
+            ["관측 사이클", "6회", "당일 반복관측 횟수"],
             ["반사도 타프", "미확인", ""],
             ["영상 개수", "미확인", ""]
         ]
@@ -649,9 +649,9 @@ window.NBAR_OBSERVATIONS = [
         coverType: "농지",
         crop: "벼",
         site: "청주",
-        purpose: "미확인",
-        purposeDetail: "현장관측 수행",
-        cycle: "미확인",
+        purpose: "출수기~등숙기 (추정)",
+        purposeDetail: "일반 벼 재배 시기 기준 추정 · 품종과 이앙일 확인 필요",
+        cycle: "5회",
         observationTime: "미확인",
         imageCount: null,
         title: "[논 벼] - 청주",
@@ -670,7 +670,7 @@ window.NBAR_OBSERVATIONS = [
         schedule: [
             ["날짜", "2026.08.27", "현장관측"],
             ["관측 시간", "미확인", ""],
-            ["관측 사이클", "미확인", ""],
+            ["관측 사이클", "5회", "당일 반복관측 횟수"],
             ["반사도 타프", "미확인", ""],
             ["영상 개수", "미확인", ""]
         ]
