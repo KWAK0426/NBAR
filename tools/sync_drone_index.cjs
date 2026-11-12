@@ -10,6 +10,7 @@ const vm = require('node:vm');
 const SUMMARY_URL = 'https://kwak0426.github.io/drone/summary.json';
 const CATALOG_URL = 'https://kwak0426.github.io/drone/viewer/catalog.json';
 const SITE = '김해 농지';
+const isPaddyObservation = (item) => item.site === SITE || (item.date === '2026.06.30' && item.site === '강서구 논 필지');
 
 function arg(name, fallback) {
   const i = process.argv.indexOf(name);
@@ -128,11 +129,11 @@ async function main() {
     const date = isoDate.replace(/-/g, '.');
     const observations = loadObservations(text);
     // The drone board covers the Gimhae paddy only; other sites on the same date are separate entries.
-    const existing = observations.find((item) => item.date === date && item.site === SITE);
+    const existing = observations.find((item) => item.date === date && isPaddyObservation(item));
 
     if (existing) {
       if (existing.cycle === `${count}회`) continue;
-      const [start, end] = blockRange(text, date, SITE);
+      const [start, end] = blockRange(text, date, existing.site);
       const block = text.slice(start, end)
         .replace(/cycle: "\d+회"/, `cycle: "${count}회"`)
         .replace(/\["관측 사이클", "\d+회"/, `["관측 사이클", "${count}회"`);
@@ -142,18 +143,18 @@ async function main() {
     }
 
     // Insert after the last Gimhae entry that is earlier than this date, else after the last Gimhae entry.
-    const gimhae = observations.filter((item) => item.site === SITE);
+    const gimhae = observations.filter(isPaddyObservation);
     const before = gimhae.filter((item) => item.date < date).pop() || gimhae[gimhae.length - 1];
-    const [, end] = blockRange(text, before.date, SITE);
+    const [, end] = blockRange(text, before.date, before.site);
     text = `${text.slice(0, end)},\n${entryText(isoDate, count)}${text.slice(end)}`;
     changes.push(`${date} 추가 (${growthStage(isoDate)}, ${count}회)`);
   }
 
   const mosaics = mosaicRoundsByDate(catalog);
-  for (const item of loadObservations(text).filter((entry) => entry.site === SITE)) {
+  for (const item of loadObservations(text).filter(isPaddyObservation)) {
     const rounds = mosaics[item.date] || [];
     if (JSON.stringify(item.mosaicRounds) === JSON.stringify(rounds)) continue;
-    const [start, end] = blockRange(text, item.date, SITE);
+    const [start, end] = blockRange(text, item.date, item.site);
     const line = `mosaicRounds: [${rounds.join(', ')}],`;
     let block = text.slice(start, end);
     block = /mosaicRounds: \[[^\]]*\],/.test(block)
@@ -172,7 +173,7 @@ async function main() {
   fs.writeFileSync(dataPath, text);
   // Every Gimhae entry gets its report folder. html paths are relative to the site root (data/.. in both A and B).
   const siteRoot = path.join(path.dirname(dataPath), '..');
-  for (const item of loadObservations(text).filter((entry) => entry.site === SITE)) {
+  for (const item of loadObservations(text).filter(isPaddyObservation)) {
     const folder = path.join(siteRoot, path.dirname(item.html || ''));
     if (!item.html || fs.existsSync(folder)) continue;
     fs.mkdirSync(folder, { recursive: true });

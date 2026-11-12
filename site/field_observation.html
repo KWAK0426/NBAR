@@ -1403,7 +1403,7 @@
     © 2026 NBAR Field Observation Status Sharing
 </footer>
 
-<script src="data/nbar-data.js?v=20261113-forest"></script>
+<script src="data/nbar-data.js?v=20261113-forest-0630"></script>
 
 <script>
     const observations = window.NBAR_OBSERVATIONS || [];
@@ -1494,7 +1494,7 @@
 
     function reportCell(item) {
         if (!item.html || !reportExists[item.html]) return `<span class="obs-report-button pending">HTML</span>`;
-        const href = item.html === 'reports/2026-06-30_gimhae_rice/index.html' ? 'https://kwak0426.github.io/PNU_QUREOS_NBAR_B/reports/2026-06-30_gimhae_rice/index.html' : item.html;
+        const href = item.html === 'reports/2026-06-30_gimhae_rice/index.html' ? `${item.html}?v=20261113` : item.html;
         return `<a class="obs-report-button ${isReportComplete(item) ? "" : "pending"}" href="${href}" target="_blank" rel="noopener">HTML 열기</a>`;
     }
 
@@ -1559,7 +1559,7 @@
     const DRONE_VIEWER = "https://kwak0426.github.io/drone/viewer/";
 
     function hasDroneViewer(item) {
-        return item.site === "김해 농지";
+        return item.site === "김해 농지" || (item.date === "2026.06.30" && item.site === "강서구 논 필지");
     }
 
     function viewerUrl(item, round) {
