@@ -1221,7 +1221,6 @@
             box-shadow: 0 0 0 2px rgba(47, 158, 107, 0.25);
         }
 
-        .round-cell.outside { opacity: 0.45; }
 
         @media (max-width: 620px) {
             .schedule-list {
@@ -1875,12 +1874,12 @@
 
     function renderRoundCells(item, activeRound) {
         const done = mosaicRounds(item);
-        const total = Math.max(6, cycleCount(item));
-        roundCells.style.setProperty("--round-count", total);
+        const total = cycleCount(item);
+        roundCells.style.setProperty("--round-count", Math.max(1, total));
         roundCells.innerHTML = Array.from({ length: total }, (_, i) => i + 1).map((n) => {
             const isDone = done.includes(n);
-            const classes = ["round-cell", isDone ? "done" : "", n === activeRound ? "active" : "", n > cycleCount(item) ? "outside" : ""].join(" ");
-            const title = n > cycleCount(item) ? "관측 없음" : (isDone ? "반사도 모자이크 생성 완료 · 눌러서 보기" : "반사도 모자이크 미완료");
+            const classes = ["round-cell", isDone ? "done" : "", n === activeRound ? "active" : ""].join(" ");
+            const title = isDone ? "반사도 모자이크 생성 완료 · 눌러서 보기" : "반사도 모자이크 미완료";
             return `<li><button class="${classes}" type="button" data-round="${n}" title="${title}" ${isDone ? "" : "disabled"}>${n}회차</button></li>`;
         }).join("");
 
