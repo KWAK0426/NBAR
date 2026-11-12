@@ -1876,7 +1876,7 @@
     function renderRoundCells(item, activeRound) {
         const done = mosaicRounds(item);
         const total = cycleCount(item);
-        roundCells.style.setProperty("--round-count", Math.max(1, total));
+        roundCells.style.setProperty("--round-count", Math.max(6, total));
         roundCells.innerHTML = Array.from({ length: total }, (_, i) => i + 1).map((n) => {
             const isDone = done.includes(n);
             const classes = ["round-cell", isDone ? "done" : "", n === activeRound ? "active" : ""].join(" ");
