@@ -1498,7 +1498,7 @@
 
     function reportCell(item) {
         if (!item.html || !reportExists[item.html]) return `<span class="obs-report-button pending">HTML 열기</span>`;
-        const href = item.html === 'reports/2026-06-30_gimhae_rice/index.html' ? `${item.html}?v=20261113` : item.html;
+        const href = item.html === 'reports/2026-06-30_gimhae_rice/index.html' ? `${item.html}?v=20261113c` : item.html;
         return `<a class="obs-report-button ${isReportComplete(item) || item.date === "2026.06.30" ? "" : "pending"}" href="${href}" target="_blank" rel="noopener">HTML 열기</a>`;
     }
 
