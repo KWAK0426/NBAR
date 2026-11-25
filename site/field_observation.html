@@ -507,8 +507,9 @@
         }
 
         a.obs-report-button:hover { background: #0b376d; }
-        .obs-report-button.pending { background: #dde2e8; color: #5d6875; font-weight: 700; }
-        a.obs-report-button.pending:hover { background: #ccd3db; }
+        .obs-report-button.pending { background: #535b65; color: #8e979f; font-weight: 500; cursor: not-allowed; }
+        a.obs-report-button.pending { cursor: pointer; }
+        a.obs-report-button.pending:hover { background: #474e57; }
 
         /* 좁은 목록에서는 대상지 아래에 대상·생육시기를 둔다. */
         @container (max-width: 760px) {
@@ -1407,7 +1408,7 @@
     © 2026 NBAR Field Observation Status Sharing
 </footer>
 
-<script src="data/nbar-data.js?v=20261113-satellite-stage2"></script>
+<script src="data/nbar-data.js?v=20261125-demo"></script>
 
 <script>
     const observations = window.NBAR_OBSERVATIONS || [];
