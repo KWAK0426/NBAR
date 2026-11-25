@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BRDF 보정 알고리즘 프로토타입</title>
+    <style>
+        :root {
+            --navy: #0a2f5d;
+            --violet: #7b5aa6;
+            --bg: #eef2f6;
+            --paper: #ffffff;
+            --line: #d8e2ee;
+            --text: #142033;
+            --muted: #617289;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Pretendard",
+                "Noto Sans KR",
+                "Segoe UI",
+                sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        header {
+            background: var(--navy);
+            color: #ffffff;
+            border-bottom: 4px solid var(--violet);
+        }
+
+        .header-inner {
+            min-height: 88px;
+            padding: 16px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            min-width: 0;
+        }
+
+        .logo {
+            width: 54px;
+            height: 54px;
+            border-radius: 8px;
+            background: #ffffff;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            flex: 0 0 54px;
+        }
+
+        .logo img {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: 0;
+        }
+
+        .subtitle {
+            margin-top: 5px;
+            color: #dbe6f2;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.45;
+            letter-spacing: 0;
+        }
+
+        .home-link {
+            display: inline-flex;
+            align-items: center;
+            min-height: 38px;
+            padding: 0 12px;
+            border-radius: 6px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.22);
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        main {
+            padding: 14px;
+            display: grid;
+            grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.2fr);
+            gap: 12px;
+        }
+
+        .panel {
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            box-shadow: 0 12px 28px rgba(15, 38, 64, 0.08);
+            padding: 18px;
+        }
+
+        .status {
+            display: inline-flex;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: #f3edf8;
+            border: 1px solid #dccfe8;
+            color: #5f3e80;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        h1 {
+            margin: 12px 0 8px;
+            font-size: 24px;
+            line-height: 1.25;
+        }
+
+        p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .item-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .item {
+            min-height: 74px;
+            padding: 12px;
+            border: 1px solid #e3ebf4;
+            border-radius: 7px;
+            background: #f8fafc;
+        }
+
+        .item strong {
+            display: block;
+            color: var(--navy);
+            font-size: 14px;
+            line-height: 1.25;
+        }
+
+        .item span {
+            display: block;
+            margin-top: 6px;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.45;
+        }
+
+        @media (max-width: 760px) {
+            .header-inner,
+            main {
+                display: block;
+            }
+
+            .home-link {
+                margin-top: 12px;
+            }
+
+            .panel {
+                margin-bottom: 10px;
+            }
+
+            .item-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="header-inner">
+        <div class="brand">
+            <div class="logo"><img src="assets/pnu_logo.webp" alt="부산대학교 로고"></div>
+            <div>
+                <div class="title">BRDF 보정 알고리즘 프로토타입</div>
+                <div class="subtitle">NBAR 1차년도 연구 현황 허브</div>
+            </div>
+        </div>
+        <a class="home-link" href="index.html">1차년도 허브</a>
+    </div>
+</header>
+<main>
+    <section class="panel">
+        <div class="status">준비 중</div>
+        <h1>BRDF 보정 로직을 프로토타입 단위로 관리하는 공간</h1>
+        <p>알고리즘 입력 자료, 보정 모델 구성, 실행 결과, 검증 기준이 정리되면 이 페이지에 연결합니다.</p>
+    </section>
+    <section class="panel">
+        <div class="item-grid">
+            <div class="item"><strong>입력 자료</strong><span>현장 관측, 위성 자료, 각도 조건, 반사도 산출물</span></div>
+            <div class="item"><strong>보정 모델</strong><span>BRDF 구성 방식, 파라미터, 적용 조건</span></div>
+            <div class="item"><strong>실행 결과</strong><span>처리 버전, 산출물 위치, 실행 이력</span></div>
+            <div class="item"><strong>검증 기준</strong><span>비교 대상, 품질 지표, 보정 전후 평가</span></div>
+        </div>
+    </section>
+</main>
+</body>
+</html>

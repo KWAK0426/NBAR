@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>위성 기반 반사이방성 데이터셋 구축</title>
+    <style>
+        :root {
+            --navy: #0a2f5d;
+            --green: #1f8a70;
+            --amber: #c98a2d;
+            --bg: #eef2f6;
+            --paper: #ffffff;
+            --line: #d8e2ee;
+            --text: #142033;
+            --muted: #617289;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Pretendard",
+                "Noto Sans KR",
+                "Segoe UI",
+                sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        header {
+            background: var(--navy);
+            color: #ffffff;
+            border-bottom: 4px solid var(--amber);
+        }
+
+        .header-inner {
+            min-height: 88px;
+            padding: 16px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            min-width: 0;
+        }
+
+        .logo {
+            width: 54px;
+            height: 54px;
+            border-radius: 8px;
+            background: #ffffff;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            flex: 0 0 54px;
+        }
+
+        .logo img {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: 0;
+        }
+
+        .subtitle {
+            margin-top: 5px;
+            color: #dbe6f2;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.45;
+            letter-spacing: 0;
+        }
+
+        .home-link {
+            display: inline-flex;
+            align-items: center;
+            min-height: 38px;
+            padding: 0 12px;
+            border-radius: 6px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.22);
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        main {
+            padding: 14px;
+            display: grid;
+            grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.2fr);
+            gap: 12px;
+        }
+
+        .panel {
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            box-shadow: 0 12px 28px rgba(15, 38, 64, 0.08);
+            padding: 18px;
+        }
+
+        .status {
+            display: inline-flex;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: #fff7e8;
+            border: 1px solid #ead8b7;
+            color: #8a5b13;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        h1 {
+            margin: 12px 0 8px;
+            font-size: 24px;
+            line-height: 1.25;
+        }
+
+        p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .item-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .item {
+            min-height: 74px;
+            padding: 12px;
+            border: 1px solid #e3ebf4;
+            border-radius: 7px;
+            background: #f8fafc;
+        }
+
+        .item strong {
+            display: block;
+            color: var(--navy);
+            font-size: 14px;
+            line-height: 1.25;
+        }
+
+        .item span {
+            display: block;
+            margin-top: 6px;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.45;
+        }
+
+        @media (max-width: 760px) {
+            .header-inner,
+            main {
+                display: block;
+            }
+
+            .home-link {
+                margin-top: 12px;
+            }
+
+            .panel {
+                margin-bottom: 10px;
+            }
+
+            .item-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="header-inner">
+        <div class="brand">
+            <div class="logo"><img src="assets/pnu_logo.webp" alt="부산대학교 로고"></div>
+            <div>
+                <div class="title">위성 기반 반사이방성 데이터셋 구축</div>
+                <div class="subtitle">NBAR 1차년도 연구 현황 허브</div>
+            </div>
+        </div>
+        <a class="home-link" href="index.html">1차년도 허브</a>
+    </div>
+</header>
+<main>
+    <section class="panel">
+        <div class="status">준비 중</div>
+        <h1>위성 자료와 현장 자료를 연결하는 데이터셋 공간</h1>
+        <p>자료 구조가 확정되면 위성 영상 수집 목록, 관측 기하 조건, 현장 관측 매칭 정보를 이 페이지에 정리합니다.</p>
+    </section>
+    <section class="panel">
+        <div class="item-grid">
+            <div class="item"><strong>위성 자료 수집 목록</strong><span>센서, 촬영일, 구름 조건, 사용 가능 여부</span></div>
+            <div class="item"><strong>관측 기하 조건</strong><span>태양각, 센서각, 상대방위각 등 반사이방성 분석 기준</span></div>
+            <div class="item"><strong>현장 자료 매칭</strong><span>대상지, 관측일, UAV/현장 자료와의 연결 상태</span></div>
+            <div class="item"><strong>데이터셋 산출물</strong><span>학습·검증용 목록, 파일 위치, 버전 관리</span></div>
+        </div>
+    </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,2041 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NBAR 현장관측 처리 현황 공유</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Pretendard",
+                "Noto Sans KR",
+                "Segoe UI",
+                sans-serif;
+            background: #eef2f6;
+            color: #172033;
+        }
+
+        header {
+            flex: 0 0 auto;
+            background: #0a2f5d;
+            color: white;
+            border-bottom: 4px solid #1f8a70;
+        }
+
+        .header-inner {
+            width: 100%;
+            max-width: 1800px;
+            margin: 0 auto;
+            min-height: 88px;
+            padding: 16px clamp(16px, 3vw, 48px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .brand-lockup {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            min-width: 0;
+        }
+
+        .logo-badge {
+            width: 54px;
+            height: 54px;
+            flex: 0 0 54px;
+            display: grid;
+            place-items: center;
+            border-radius: 8px;
+            background: #ffffff;
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+
+        .logo-badge img {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .brand-title {
+            font-size: 29px;
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: 0;
+        }
+
+        .brand-subtitle {
+            margin-top: 5px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #dbe6f2;
+            line-height: 1.45;
+            letter-spacing: 0;
+        }
+
+        .header-actions {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-link-button {
+            display: inline-flex;
+            align-items: center;
+            min-height: 38px;
+            padding: 0 12px;
+            border: 1px solid rgba(255,255,255,0.22);
+            border-radius: 6px;
+            background: rgba(255,255,255,0.08);
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .header-link-button:hover {
+            background: rgba(255,255,255,0.14);
+        }
+
+        .last-updated {
+            flex: 0 0 auto;
+            padding: 6px 9px;
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 6px;
+            background: rgba(255,255,255,0.08);
+            color: #d8e3f0;
+            font-size: 12px;
+            line-height: 1.25;
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .last-updated span {
+            display: block;
+            color: #a9bad0;
+            font-weight: 700;
+        }
+
+        .last-updated strong {
+            display: block;
+            margin-top: 2px;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        main {
+            width: 100%;
+            max-width: 1800px;
+            flex: 1;
+            min-height: 0;
+            margin: 10px auto;
+            padding: 0 clamp(16px, 3vw, 48px);
+            display: flex;
+        }
+
+        .dashboard {
+            width: 100%;
+            min-height: 0;
+            flex: 1;
+            display: grid;
+            grid-template-columns: minmax(520px, 1.2fr) minmax(520px, 0.8fr);
+            grid-template-rows: minmax(0, 1fr);
+            gap: 10px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e3e8ef;
+            border-radius: 10px;
+            padding: 16px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+            min-height: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-card {
+            grid-column: 1;
+            grid-row: 1 / 3;
+            border-top: 5px solid #0b3263;
+        }
+
+        .process-group {
+            grid-column: 2;
+            grid-row: 2;
+            padding: 14px;
+            gap: 12px;
+        }
+
+        .process-group-header {
+            flex: 0 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e3e8ef;
+        }
+
+        .process-title-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .process-date-badge {
+            display: inline-flex;
+            align-items: center;
+            min-height: 22px;
+            padding: 3px 7px;
+            border: 1px solid #d8e0ea;
+            border-radius: 6px;
+            background: #f5f8fb;
+            color: #536172;
+            font-size: 12px;
+            font-weight: 800;
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        .process-block {
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .processing-part {
+            flex: 0 0 auto;
+        }
+
+        .stage-detail-part {
+            flex: 1 1 auto;
+        }
+
+        .process-divider {
+            height: 1px;
+            background: #e3e8ef;
+            flex: 0 0 auto;
+        }
+
+        .process-block .card-header {
+            margin-bottom: 10px;
+        }
+
+        .block-title {
+            flex: 0 0 auto;
+            margin-bottom: 8px;
+            color: #174a87;
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+        #schedule {
+            grid-column: 2;
+            grid-row: 1;
+        }
+
+        .detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .main-card-body {
+            flex: 1;
+            min-height: 0;
+            display: grid;
+            grid-template-columns: 1fr;
+        }
+
+        .inner-panel {
+            min-height: 0;
+            border: 1px solid #dfe5ec;
+            border-radius: 8px;
+            background: #fbfdff;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .inner-panel-title {
+            flex: 0 0 auto;
+            padding: 8px 10px;
+            border-bottom: 1px solid #e8edf2;
+            background: #f7f9fb;
+            color: #556070;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .filter-bar {
+            flex: 1 1 auto;
+            min-width: 0;
+            display: grid;
+            gap: 6px;
+        }
+
+        .filter-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-label {
+            flex: 0 0 auto;
+            color: #556070;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .filter-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .filter-chip {
+            border: 1px solid #d8dde3;
+            border-radius: 999px;
+            background: #f7f9fb;
+            color: #556070;
+            cursor: pointer;
+            font: inherit;
+            font-size: 19px;
+            font-weight: 700;
+            padding: 5px 14px;
+            line-height: 1.3;
+        }
+
+        .filter-chip:hover {
+            border-color: #9bb8da;
+            color: #174a87;
+        }
+
+        .filter-chip.active {
+            border-color: #285ea8;
+            background: #285ea8;
+            color: white;
+        }
+
+        .tab-empty {
+            padding: 20px 8px;
+            color: #606a78;
+            font-size: 15px;
+            text-align: center;
+        }
+
+        .sort-bar {
+            flex: 0 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            border-bottom: 1px solid #e8edf2;
+            background: white;
+        }
+
+        .sort-label {
+            margin-left: auto;
+            white-space: nowrap;
+            color: #556070;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .sort-toggle {
+            display: inline-flex;
+            border: 1px solid #d8dde3;
+            border-radius: 7px;
+            overflow: hidden;
+        }
+
+        .sort-toggle button {
+            white-space: nowrap;
+            border: 0;
+            background: #f7f9fb;
+            color: #556070;
+            cursor: pointer;
+            font: inherit;
+            font-size: 16px;
+            font-weight: 700;
+            padding: 5px 10px;
+        }
+
+        .sort-toggle button + button {
+            border-left: 1px solid #d8dde3;
+        }
+
+        .sort-toggle button.active {
+            background: #285ea8;
+            color: white;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 21px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .section-note {
+            color: #606a78;
+            font-size: 14px;
+            line-height: 1.45;
+        }
+
+        .tab-list {
+            flex: 1;
+            min-height: 0;
+            overflow-y: auto;
+            padding: 0 8px 8px;
+            display: block;
+            scrollbar-gutter: stable;
+            container-type: inline-size;
+        }
+
+        /* 머리글과 관측 줄이 같은 칸 너비를 쓴다. 보고서 칸은 줄 오른쪽에 따로 둔다. */
+        .obs-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 112px;
+            align-items: center;
+            border-bottom: 1px solid #e8edf2;
+        }
+
+        .obs-row:hover { background: #f3f7fc; }
+
+        .obs-row.active {
+            background: #edf4fc;
+            box-shadow: inset 3px 0 0 #285ea8;
+        }
+
+        .obs-head {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            background: white;
+            color: #6a7a90;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .obs-head:hover { background: white; }
+        .obs-cols > span { text-align: center; }
+        .obs-head .obs-cycle { white-space: normal; word-break: keep-all; line-height: 1.2; }
+
+        .obs-cols {
+            display: grid;
+            grid-template-columns: minmax(60px, .55fr) minmax(58px, .55fr) minmax(95px, 1.2fr) minmax(105px, 1.2fr) minmax(95px, 1.2fr) minmax(105px, 1fr);
+            align-items: center;
+            gap: 8px;
+            padding: 10px 6px 10px 8px;
+        }
+
+        .obs-select {
+            width: 100%;
+            border: 0;
+            background: transparent;
+            color: #172033;
+            text-align: left;
+            cursor: pointer;
+            font: inherit;
+            font-size: 21px;
+            line-height: 1.3;
+        }
+
+        .obs-date { font-size: 23px; font-weight: 800; color: #0b3263; text-align: center; }
+        .obs-site { font-weight: 700; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .obs-agency { min-width: 0; font-size: 18px; font-weight: 500; color: #4a5a6e; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .obs-object { white-space: nowrap; }
+        .obs-stage { color: #4a5a6e; word-break: keep-all; }
+        .obs-cycle { text-align: center; font-weight: 700; white-space: nowrap; }
+        .obs-cycle-label { display: none; }
+
+        .obs-report-head { text-align: center; }
+
+        .obs-report-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 4px 4px 4px 0;
+            min-height: 34px;
+            padding: 4px 2px;
+            border-radius: 6px;
+            background: #124b91;
+            color: white;
+            font-size: 18px;
+            font-weight: 800;
+            line-height: 1.2;
+            text-align: center;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        a.obs-report-button:hover { background: #0b376d; }
+        .obs-report-button.pending { background: #dde2e8; color: #5d6875; font-weight: 700; }
+        a.obs-report-button.pending:hover { background: #ccd3db; }
+
+        /* 좁은 목록에서는 대상지 아래에 대상·생육시기를 둔다. */
+        @container (max-width: 760px) {
+            .obs-head { display: none; }
+            .obs-row { grid-template-columns: minmax(0, 1fr) 106px; }
+            .obs-cols > span { text-align: left; }
+            .obs-cols {
+                grid-template-columns: auto minmax(0, 1fr);
+                grid-template-areas: "date cycle" "site site" "agency agency" "object stage";
+                gap: 2px 8px;
+                padding: 10px 6px 10px 10px;
+            }
+            .obs-report-button { font-size: 15px; }
+            .obs-date { grid-area: date; text-align: left; }
+            .obs-site { grid-area: site; }
+            .obs-agency { grid-area: agency; }
+            .obs-agency::before { content: "관측 수행 기관: "; color: #6a7a90; font-size: 15px; }
+            .obs-object { grid-area: object; font-size: 19px; }
+            .obs-stage { grid-area: stage; font-size: 19px; }
+            .obs-cycle { grid-area: cycle; text-align: right; }
+            .obs-cycle-label { display: inline; margin-right: 4px; font-size: 15px; font-weight: 500; color: #6a7a90; }
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 76px;
+            padding: 5px 9px;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .done {
+            color: #207a42;
+            background: #eaf7ef;
+            border: 1px solid #bde4ca;
+        }
+
+        .progress {
+            color: #a86700;
+            background: #fff6df;
+            border: 1px solid #f2d68a;
+        }
+
+        .planned {
+            color: #6c7480;
+            background: #f2f4f6;
+            border: 1px solid #d8dde3;
+        }
+
+        .not-applicable {
+            color: #5f6f82;
+            background: #edf1f5;
+            border: 1px solid #d4dce5;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px;
+        }
+
+        th {
+            text-align: left;
+            padding: 9px 10px;
+            background: #f7f9fb;
+            color: #556070;
+            font-weight: 600;
+            border-bottom: 1px solid #dfe5ec;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 9px 10px;
+            border-bottom: 1px solid #e8edf2;
+            vertical-align: middle;
+            line-height: 1.45;
+        }
+
+        tr:last-child td {
+            border-bottom: 0;
+        }
+
+        .status-table {
+            flex: 0 0 auto;
+            min-height: 0;
+            display: grid;
+            grid-template-rows: 34px auto;
+            table-layout: fixed;
+        }
+
+        .status-table thead {
+            display: block;
+            min-height: 0;
+        }
+
+        .status-table thead tr,
+        .status-table tbody tr {
+            display: grid;
+            grid-template-columns: 23% 19% 58%;
+            min-height: 0;
+        }
+
+        .status-table tbody tr.active td:first-child {
+            color: #0b3263;
+            font-weight: 800;
+        }
+
+        .status-table thead tr {
+            height: 34px;
+        }
+
+        .status-table tbody {
+            display: grid;
+            grid-template-rows: repeat(5, 34px);
+            min-height: 0;
+        }
+
+        .status-table th,
+        .status-table td {
+            min-width: 0;
+            padding: 0 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .status-table td {
+            overflow: hidden;
+        }
+
+        .status-table td:last-child {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .stage-status-button {
+            border: 0;
+            background: transparent;
+            padding: 0;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .stage-status-button .status-pill {
+            min-width: 68px;
+        }
+
+        .stage-status-button.active .status-pill {
+            box-shadow: 0 0 0 2px rgba(23, 74, 135, 0.18);
+        }
+
+        .stage-detail-card {
+            flex: 1;
+            min-height: 0;
+            border: 1px solid #dfe7f0;
+            border-radius: 8px;
+            background: #fbfdff;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .stage-detail-header {
+            flex: 0 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e3e8ef;
+        }
+
+        .stage-detail-kicker {
+            color: #657487;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0;
+        }
+
+        .stage-detail-title {
+            margin-top: 3px;
+            color: #0b3263;
+            font-size: 18px;
+            font-weight: 900;
+            line-height: 1.25;
+            word-break: keep-all;
+        }
+
+        .stage-detail-note {
+            margin-top: 3px;
+            color: #606a78;
+            font-size: 14px;
+            line-height: 1.35;
+            word-break: keep-all;
+        }
+
+        .progress-row {
+            display: grid;
+            grid-template-columns: minmax(108px, 1fr) 68px;
+            align-items: center;
+            gap: 6px 10px;
+            padding: 7px 0;
+            border-bottom: 1px solid #edf0f3;
+        }
+
+        .progress-row:last-child {
+            border-bottom: 0;
+        }
+
+        .progress-label {
+            font-weight: 600;
+            line-height: 1.35;
+            font-size: 15px;
+        }
+
+        .progress-count {
+            justify-self: end;
+            color: #606a78;
+            font-size: 15px;
+            white-space: nowrap;
+        }
+
+        .progress-track {
+            grid-column: 1;
+            height: 9px;
+            background: #e8edf3;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #285ea8;
+            border-radius: 10px;
+            width: 0;
+            transition: width 180ms ease;
+        }
+
+        .progress-percent {
+            grid-column: 2;
+            text-align: right;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        #stageDetailBody {
+            flex: 1;
+            min-height: 0;
+            overflow: hidden;
+            display: grid;
+            grid-auto-rows: minmax(0, auto);
+            gap: 6px;
+        }
+
+        .detail-task-row {
+            min-height: 0;
+            display: grid;
+            grid-template-columns: minmax(128px, 1fr) 72px;
+            align-items: center;
+            gap: 5px 10px;
+            padding: 7px 8px;
+            border: 1px solid #e3eaf2;
+            border-radius: 8px;
+            background: #ffffff;
+        }
+
+        .detail-task-row.has-progress {
+            grid-template-columns: minmax(128px, 1fr) 72px;
+        }
+
+        .detail-task-row.has-cycles {
+            align-items: start;
+        }
+
+        .detail-task-title {
+            min-width: 0;
+            color: #263241;
+            font-size: 14px;
+            font-weight: 800;
+            line-height: 1.3;
+            word-break: keep-all;
+            overflow-wrap: anywhere;
+        }
+
+        .detail-task-note {
+            margin-top: 2px;
+            color: #657487;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 1.25;
+            word-break: keep-all;
+        }
+
+        .detail-task-row .status-pill {
+            min-width: 64px;
+            justify-self: end;
+            padding: 4px 7px;
+            font-size: 12px;
+        }
+
+        .detail-progress-track {
+            grid-column: 1;
+            height: 7px;
+            border-radius: 10px;
+            background: #e8edf3;
+            overflow: hidden;
+        }
+
+        .detail-progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            background: #285ea8;
+        }
+
+        .detail-progress-percent {
+            grid-column: 2;
+            color: #606a78;
+            text-align: right;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .cycle-chip-list {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(48px, 1fr));
+            gap: 5px;
+            margin-top: 2px;
+        }
+
+        .cycle-chip {
+            min-width: 0;
+            padding: 5px 6px;
+            border-radius: 7px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 800;
+            line-height: 1.15;
+        }
+
+        .cycle-chip span {
+            display: block;
+            margin-top: 2px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .schedule-list {
+            list-style: none;
+            min-height: 0;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+        }
+
+        .schedule-item {
+            display: grid;
+            grid-template-columns: 1fr;
+            align-content: center;
+            gap: 3px;
+            min-width: 0;
+            padding: 8px 10px;
+            border: 1px solid #dfe7f0;
+            border-radius: 8px;
+            background: #ffffff;
+            box-shadow: inset 4px 0 0 #285ea8;
+        }
+
+        .schedule-date {
+            color: #556070;
+            font-weight: 800;
+            font-size: 14px;
+            line-height: 1.25;
+        }
+
+        .schedule-type {
+            min-width: 0;
+            font-size: 20px;
+            font-weight: 800;
+            text-align: left;
+            color: #0b3263;
+            line-height: 1.2;
+            word-break: keep-all;
+            overflow-wrap: anywhere;
+        }
+
+        .schedule-text {
+            font-size: 14px;
+            color: #424b58;
+            line-height: 1.4;
+            word-break: keep-all;
+            overflow-wrap: anywhere;
+        }
+
+        .detail-layout {
+            flex: 1;
+            min-height: 0;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            grid-template-rows: auto auto minmax(150px, 1fr);
+            gap: 12px;
+        }
+
+        .mosaic-panel {
+            min-height: 0;
+            border: 1px solid #dfe7f0;
+            border-radius: 8px;
+            background: #fbfdff;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .mosaic-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex: 0 0 auto;
+        }
+
+        .mosaic-title {
+            color: #174a87;
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+        .mosaic-state {
+            flex: 0 0 auto;
+            padding: 4px 8px;
+            border-radius: 20px;
+            background: #eef3f8;
+            color: #627083;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .mosaic-state.ready {
+            background: #e6f4ec;
+            color: #23724d;
+        }
+
+        .mosaic-frame {
+            position: relative;
+            flex: 1;
+            min-height: 0;
+            border: 1px solid #ccd8e6;
+            border-radius: 8px;
+            overflow: hidden;
+            background:
+                linear-gradient(90deg, rgba(23, 74, 135, 0.12) 1px, transparent 1px),
+                linear-gradient(0deg, rgba(23, 74, 135, 0.12) 1px, transparent 1px),
+                linear-gradient(135deg, #e8f0e8, #dce9ef 52%, #eef3e8);
+            background-size: 26px 26px, 26px 26px, auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mosaic-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .mosaic-placeholder {
+            padding: 12px;
+            text-align: center;
+            color: #536174;
+            font-size: 14px;
+            line-height: 1.45;
+        }
+
+        .mosaic-placeholder strong {
+            display: block;
+            margin-bottom: 4px;
+            color: #0b3263;
+            font-size: 16px;
+        }
+
+        .mosaic-meta {
+            color: #657487;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        footer {
+            display: none;
+            margin-top: 40px;
+            padding: 25px;
+            text-align: center;
+            color: #7b8491;
+            font-size: 15px;
+            border-top: 1px solid #e0e5ea;
+        }
+
+        @media (max-width: 1120px) {
+            body {
+                height: auto;
+                min-height: 100vh;
+                overflow: auto;
+            }
+
+            .dashboard {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .card {
+                overflow: visible;
+            }
+
+            .main-card {
+                order: 1;
+            }
+
+            #schedule {
+                order: 2;
+            }
+
+            .process-group {
+                order: 3;
+            }
+
+            .schedule-list {
+                height: auto;
+                grid-template-rows: none;
+            }
+
+            .mosaic-frame {
+                min-height: 160px;
+            }
+
+            .status-table thead tr,
+            .status-table tbody tr {
+                grid-template-columns: 90px 88px minmax(0, 1fr);
+            }
+
+            .status-table tbody {
+                grid-template-rows: none;
+            }
+
+            .status-table tbody tr {
+                min-height: 44px;
+            }
+
+            .status-table td:last-child {
+                white-space: normal;
+                overflow-wrap: anywhere;
+            }
+
+        }
+
+        @media (max-width: 620px) {
+            .header-inner {
+                padding: 13px 12px;
+                flex-wrap: wrap;
+                align-items: flex-start;
+            }
+
+            .header-actions {
+                margin-left: auto;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+            }
+
+            .last-updated {
+                margin-left: 0;
+            }
+
+            main {
+                padding: 0 10px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .progress-row {
+                grid-template-columns: 1fr 70px;
+                gap: 9px 14px;
+            }
+
+            .progress-track {
+                grid-column: 1 / -1;
+            }
+
+            .schedule-item {
+                grid-template-columns: 1fr;
+                gap: 5px;
+                align-items: start;
+            }
+
+            .detail-layout {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        .schedule-list {
+            grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.9fr) minmax(0, 1.25fr) minmax(0, 0.8fr) !important;
+            gap: 6px;
+        }
+
+        .stage-strip {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 6px;
+        }
+
+        .stage-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 6px;
+            border: 1px solid #dfe7f0;
+            border-top: 4px solid #cfd8e3;
+            border-radius: 8px;
+            background: #ffffff;
+            text-align: center;
+        }
+
+        .stage-step.done {
+            border-top-color: #2f9e6b;
+        }
+
+        .stage-step.progress {
+            border-top-color: #d9962b;
+            background: #fffaf0;
+        }
+
+        .stage-step-name {
+            color: #0b3263;
+            font-size: 15px;
+            font-weight: 800;
+            line-height: 1.3;
+            word-break: keep-all;
+        }
+
+        .round-cells-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 10px;
+        }
+
+        .round-cells-legend {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #606a78;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        .round-cells-legend span {
+            width: 10px;
+            height: 10px;
+            border-radius: 3px;
+        }
+
+        .legend-done { background: #2f9e6b; }
+        .legend-none { background: #c9d1db; margin-left: 6px; }
+
+        .round-cells {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(var(--round-count, 6), minmax(0, 1fr));
+            gap: 6px;
+        }
+
+        .round-cell {
+            width: 100%;
+            min-height: 46px;
+            display: grid;
+            place-items: center;
+            border: 1px solid #d3dbe5;
+            border-radius: 8px;
+            background: #eef1f5;
+            color: #7a8594;
+            font: inherit;
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .round-cell.done {
+            border-color: #2f9e6b;
+            background: #e3f4e8;
+            color: #1d7a45;
+            cursor: pointer;
+        }
+
+        .round-cell.done:hover { background: #d3eedc; }
+
+        .round-cell.active {
+            background: #2f9e6b;
+            color: #ffffff;
+            box-shadow: 0 0 0 2px rgba(47, 158, 107, 0.25);
+        }
+
+
+        @media (max-width: 620px) {
+            .schedule-list {
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            }
+
+            .stage-strip {
+                grid-template-columns: 1fr;
+            }
+
+            .stage-step {
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 8px 10px;
+            }
+        }
+
+        /* 글씨 크기: 한눈에 읽히되 과하지 않게 (2026-10-29 조정) */
+        .brand-title { font-size: 29px; }
+        .brand-subtitle { font-size: 16px; }
+        .header-link-button { font-size: 15px; }
+        .last-updated { font-size: 14px; }
+        .last-updated strong { font-size: 16px; }
+        .card-title { font-size: 27px; }
+        .section-note { font-size: 15px; }
+        .inner-panel-title { display: none; }
+        .block-title { font-size: 18px; }
+        /* 상세 정보: 인덱스에 없는 관측 정보만 작게 */
+        .schedule-item { padding: 8px 10px; gap: 2px; background: #f7f9fb; box-shadow: none; align-content: start; }
+        .schedule-date { font-size: 14px; font-weight: 700; color: #6a7585; word-break: keep-all; }
+        .schedule-type { font-size: 18px; font-weight: 800; }
+        .schedule-text { font-size: 13px; color: #606a78; }
+        .stage-step { padding: 12px 6px; gap: 10px; }
+        .stage-step-name { font-size: 18px; }
+        .status-pill { font-size: 15px; }
+        .mosaic-title { font-size: 18px; }
+        .mosaic-state { font-size: 15px; }
+        .mosaic-placeholder { font-size: 15px; }
+        .mosaic-placeholder strong { font-size: 20px; }
+        .mosaic-meta { font-size: 14px; }
+
+        @media (max-width: 760px) {
+            .card-title { font-size: 27px; }
+            .header-actions { flex-wrap: wrap; max-width: 100%; }
+            .header-link-button { font-size: 15px; }
+        }
+
+        .round-chips { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
+        .round-chip {
+            padding: 5px 11px;
+            border: 1px solid #d3deea;
+            border-radius: 999px;
+            background: #ffffff;
+            color: #3a4a5e;
+            font: inherit;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+        .round-chip:hover { border-color: #285ea8; color: #174a87; }
+        .round-chip.active { background: #174a87; border-color: #174a87; color: #ffffff; }
+        .mosaic-link { text-decoration: none; color: inherit; cursor: zoom-in; background: #0f1b2a; }
+        .mosaic-canvas { width: 100%; height: 100%; object-fit: contain; display: block; }
+        .mosaic-link .mosaic-placeholder { width: 100%; color: #c9d6e6; word-break: keep-all; }
+        .mosaic-link .mosaic-placeholder strong { color: #ffffff; }
+        .mosaic-open {
+            position: absolute;
+            right: 12px;
+            bottom: 12px;
+            padding: 7px 12px;
+            border-radius: 8px;
+            background: rgba(11, 50, 99, 0.88);
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 800;
+            opacity: 0.85;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        .mosaic-link:hover .mosaic-open { opacity: 1; transform: translateY(-2px); }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-inner">
+        <div class="brand-lockup">
+            <div class="logo-badge">
+                <img src="assets/pnu_logo.webp" alt="부산대학교 로고">
+            </div>
+
+            <div>
+                <div class="brand-title">
+                    NBAR 현장관측 처리 현황 공유
+                </div>
+                <div class="brand-subtitle">
+                    관측 이력, 자료 처리 단계, HTML 보고서 산출물 통합 조회
+                </div>
+            </div>
+        </div>
+
+        <div class="header-actions">
+            <a class="header-link-button" href="index.html">1차년도 허브</a>
+            <a class="header-link-button" href="reports/field_data_processing_method.html">공통 처리 문서</a>
+
+            <div class="last-updated" aria-label="최신 업데이트 시간">
+                <span>최신 업데이트</span>
+                <strong id="lastUpdatedText"></strong>
+            </div>
+        </div>
+
+    </div>
+</header>
+
+<main>
+    <div class="dashboard">
+
+        <section class="card main-card" id="reports">
+            <div class="card-header">
+                <div>
+                    <div class="card-title">
+                        관측 목록
+                    </div>
+                    <div class="section-note">
+                        관측 이벤트와 HTML 산출물 바로가기
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-card-body">
+                <div class="inner-panel">
+                    <div class="inner-panel-title">관측 목록</div>
+                    <div class="sort-bar">
+                        <div class="filter-bar" id="filterBar"></div>
+                        <span class="sort-label">날짜 정렬</span>
+                        <div class="sort-toggle" id="sortToggle">
+                            <button type="button" data-order="asc">오름차순 ↑</button>
+                            <button type="button" data-order="desc">내림차순 ↓</button>
+                        </div>
+                    </div>
+                    <div class="tab-list" id="tabList"></div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <section class="card" id="schedule">
+            <div class="card-header detail-header">
+                <div>
+                    <div class="card-title">
+                        선택 관측 상세
+                    </div>
+                    <div class="section-note" id="detailSubtitle"></div>
+                </div>
+                <span class="status-pill progress" id="processingStatus">진행 중</span>
+            </div>
+
+            <div class="detail-layout">
+                <ul class="schedule-list" id="scheduleList"></ul>
+
+                <div class="process-block processing-part" id="processing">
+                    <div class="round-cells-head">
+                        <div class="block-title">데이터 처리 완료 회차</div>
+                        <div class="round-cells-legend"><span class="legend-done"></span>반사도 모자이크 생성 완료 <span class="legend-none"></span>미완료</div>
+                    </div>
+                    <ol class="round-cells" id="roundCells"></ol>
+                </div>
+
+                <div class="mosaic-panel" id="mosaicPanel"></div>
+            </div>
+        </section>
+
+
+
+    </div>
+</main>
+
+<footer>
+    © 2026 NBAR Field Observation Status Sharing
+</footer>
+
+<script src="data/nbar-data.js?v=20261113-satellite-stage2"></script>
+
+<script>
+    const observations = window.NBAR_OBSERVATIONS || [];
+
+
+    const filterBar = document.getElementById("filterBar");
+    const tabList = document.getElementById("tabList");
+    const processingStatus = document.getElementById("processingStatus");
+    const processDateBadge = document.getElementById("processDateBadge");
+    const roundCells = document.getElementById("roundCells");
+    const lastUpdatedText = document.getElementById("lastUpdatedText");
+    const scheduleList = document.getElementById("scheduleList");
+    const detailSubtitle = document.getElementById("detailSubtitle");
+    const mosaicPanel = document.getElementById("mosaicPanel");
+    const sortToggle = document.getElementById("sortToggle");
+    const ALL_FILTER = "전체";
+    const coverNames = ["농지", "밭", "나지", "경사지", "미확인"];
+    // 기관 필터는 데이터에 기관이 둘 이상 있을 때만 보인다.
+    const agencyNames = [...new Set(observations.map((item) => item.agency).filter(Boolean))];
+    // 처음 또는 필터 변경으로 선택 관측이 빠질 때 먼저 고를 관측(날짜 + 대상지). 없으면 정렬 순서의 첫 관측.
+    const defaultObservation = { date: "2026.05.10", site: "강서구 농지" };
+    let coverFilter = ALL_FILTER;
+    let agencyFilter = ALL_FILTER;
+    let dateOrder = "asc";
+    let currentIndex = 0;
+    try {
+        if (localStorage.getItem("nbarDateOrder") === "desc") dateOrder = "desc";
+    } catch (error) {}
+    const defaultStageName = "자료 정리";
+    let activeStageName = defaultStageName;
+
+    if (lastUpdatedText) {
+        lastUpdatedText.textContent = window.NBAR_LAST_UPDATED || "-";
+    }
+
+    function targetObject(item) {
+        const match = String(item.title || "").match(/^\[(.+?)\]/);
+        return match ? match[1] : (item.crop || item.coverType);
+    }
+
+    function categoryLabel(item) {
+        return item.crop ? `${item.coverType}/${item.crop}` : item.coverType;
+    }
+
+    function sameSiteCount(item) {
+        return observations.filter((other) =>
+            other.site === item.site &&
+            other.coverType === item.coverType
+        ).length;
+    }
+
+    function sameCategorySiteCount(item) {
+        return observations.filter((other) =>
+            other.site === item.site &&
+            other.coverType === item.coverType &&
+            other.crop === item.crop
+        ).length;
+    }
+
+    function badgeClass(text) {
+        if (text === "완료") return "done";
+        if (text === "진행 중") return "progress";
+        if (text === "대상 아님") return "not-applicable";
+        return "planned";
+    }
+
+    function processingState(item, stageName) {
+        const row = item.processing.find(([stage]) => stage === stageName);
+        return row ? row[1] : "예정";
+    }
+
+    // 보고서 파일이 실제로 올라와 있는지(HEAD 요청)로 버튼을 켠다. 폴더에 index.html만 올리면 열기로 바뀐다.
+    const reportExists = {};
+
+    function checkReports() {
+        const paths = [...new Set(observations.map((item) => item.html).filter(Boolean))];
+        return Promise.all(paths.map((path) =>
+            fetch(path, { method: "HEAD", cache: "no-store" })
+                .then((response) => { reportExists[path] = response.ok; })
+                .catch(() => { reportExists[path] = false; })
+        ));
+    }
+
+    // 완성 보고서는 파란 버튼, 완성 전은 회색빛 버튼. 6/10처럼 관측 폴더 밖의 기존 주소는 완성으로 본다.
+    function isReportComplete(item) {
+        return item.reportComplete === true || !/\/index\.html$/.test(item.html);
+    }
+
+    function reportCell(item) {
+        if (!item.html || !reportExists[item.html]) return `<span class="obs-report-button pending">HTML 열기</span>`;
+        const href = item.html === 'reports/2026-06-30_gimhae_rice/index.html' ? `${item.html}?v=20261113c` : item.html;
+        return `<a class="obs-report-button ${isReportComplete(item) || item.date === "2026.06.30" ? "" : "pending"}" href="${href}" target="_blank" rel="noopener">HTML 열기</a>`;
+    }
+
+        const stageDescriptions = {
+            "자료 정리": "관측 야장, 현장 사진, 원본 영상 목록 정리",
+            "영상 처리": "패널 기반 / ELC 기반 반사도 모자이크 생성",
+            "품질 검토": "자료 누락, 정합, 반사도 범위, 모자이크 품질 검수",
+            "BRDF 분석": "BRDF 모델 기반 관측 각도 효과 보정 및 반사도 정규화",
+            "보고서 작성": "관측 개요, 처리 결과, HTML 보고서 정리"
+        };
+
+    function hasReflectanceTarp(item) {
+        const tarpRow = item.schedule.find(([label]) => label === "반사도 타프");
+        return Boolean(tarpRow && tarpRow[1] !== "미설치");
+    }
+
+    function scheduleValue(item, label) {
+        const row = item.schedule.find(([name]) => name === label);
+        return row ? row[1] : "-";
+    }
+
+    function displayDate(date) {
+        return date.split(".").join(". ");
+    }
+
+    function displayImageCount(item) {
+        if (item.imageCount != null && Number.isFinite(Number(item.imageCount))) {
+            return `${Number(item.imageCount).toLocaleString("ko-KR")}장`;
+        }
+
+        const raw = scheduleValue(item, "영상 개수").replace("분광밴드별 ", "").trim();
+        const match = raw.match(/^(\d+)장$/);
+        return match ? `${Number(match[1]).toLocaleString("ko-KR")}장` : raw;
+    }
+
+    function displayObservationTime(item) {
+        return item.observationTime || scheduleValue(item, "관측 시간");
+    }
+
+    function tarpDetail(item) {
+        const tarp = scheduleValue(item, "반사도 타프");
+        if (tarp === "미설치") return ["미설치", "-"];
+        if (tarp === "미확인") return ["미확인", "-"];
+
+        const tarpDetails = window.NBAR_TARP_DETAILS || {};
+        const byDate = tarpDetails.byDate || {};
+        return ["설치", observationSetting(byDate, item) || tarpDetails.defaultInstalled || "설치"];
+    }
+
+    // 인덱스 줄에 없는 정보: 관측 시간, 반사도 타프(설치 시 구성), 수집한 다분광 영상 수, 참여 기관
+    function detailRows(item) {
+        const [tarpStatus, tarpSpec] = tarpDetail(item);
+        return [
+            ["관측 시간", displayObservationTime(item) || "미확인", ""],
+            ["반사도 타프", tarpStatus, tarpSpec === "-" ? "" : tarpSpec],
+            ["수집한 다분광 영상 수", displayImageCount(item) || "미확인", ""],
+            ["관측 수행 기관", item.agency || "미확인", ""]
+        ];
+    }
+
+    // 김해 논 RGB 모자이크: 드론 뷰어의 1m 섬네일을 2–98% 스트레치로 표시, 누르면 뷰어로 이동
+    const DRONE_VIEWER = "https://kwak0426.github.io/drone/viewer/";
+
+    function hasDroneViewer(item) {
+        return item.site === "강서구 농지" || (item.date === "2026.06.30" && item.site === "강서구 논 필지");
+    }
+
+    function viewerUrl(item, round) {
+        const date = item.date.split(".").join("-");
+        return `${DRONE_VIEWER}?date=${date}&round=${round}&kind=RGB`;
+    }
+
+    function thumbUrl(item, round) {
+        return `${DRONE_VIEWER}rgb_1m/${item.date.split(".").join("-")}-R${round}-MS-RGB-1m.webp`;
+    }
+
+    function stretchToCanvas(img, canvas) {
+        const width = img.naturalWidth;
+        const height = img.naturalHeight;
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+        const frame = ctx.getImageData(0, 0, width, height);
+        const px = frame.data;
+        const lows = [];
+        const highs = [];
+        for (let c = 0; c < 3; c += 1) {
+            const hist = new Uint32Array(256);
+            let total = 0;
+            for (let i = 0; i < px.length; i += 4) {
+                if (px[i + 3] === 0) continue;
+                hist[px[i + c]] += 1;
+                total += 1;
+            }
+            let acc = 0;
+            let low = 0;
+            let high = 255;
+            for (let v = 0; v < 256; v += 1) {
+                acc += hist[v];
+                if (acc <= total * 0.02) low = v;
+                if (acc < total * 0.98) high = v + 1;
+            }
+            lows.push(low);
+            highs.push(Math.max(high, low + 1));
+        }
+        for (let i = 0; i < px.length; i += 4) {
+            for (let c = 0; c < 3; c += 1) {
+                const t = Math.max(0, Math.min(1, (px[i + c] - lows[c]) / (highs[c] - lows[c])));
+                px[i + c] = 255 * Math.pow(t, 0.75);
+            }
+        }
+        ctx.putImageData(frame, 0, 0);
+    }
+
+    function renderDroneMosaic(item, round) {
+        mosaicPanel.innerHTML = `
+            <div class="mosaic-heading">
+                <div class="mosaic-title">RGB 모자이크</div>
+                <div class="mosaic-state ready">${round}회차</div>
+            </div>
+            <a class="mosaic-frame mosaic-link" href="${viewerUrl(item, round)}" target="_blank" rel="noopener" title="드론 뷰어에서 크게 보기">
+                <div class="mosaic-placeholder"><strong>불러오는 중</strong></div>
+                <canvas class="mosaic-canvas" hidden></canvas>
+                <span class="mosaic-open">뷰어에서 보기 ↗</span>
+            </a>
+            <div class="mosaic-meta">${displayDate(item.date)} · ${round}회차 · 2–98% 스트레치</div>
+        `;
+
+
+        const link = mosaicPanel.querySelector(".mosaic-link");
+        const canvas = mosaicPanel.querySelector(".mosaic-canvas");
+        const placeholder = mosaicPanel.querySelector(".mosaic-placeholder");
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.onload = () => {
+            if (!mosaicPanel.contains(canvas)) return;
+            try {
+                stretchToCanvas(img, canvas);
+            } catch (error) {
+                canvas.replaceWith(img);
+                img.className = "mosaic-canvas";
+            }
+            placeholder.remove();
+            canvas.hidden = false;
+        };
+        img.onerror = () => {
+            if (!mosaicPanel.contains(placeholder)) return;
+            placeholder.innerHTML = `<strong>${round}회차 모자이크 없음</strong>눌러서 뷰어에서 다른 회차 보기`;
+            link.href = `${DRONE_VIEWER}?date=${item.date.split(".").join("-")}&kind=RGB`;
+        };
+        img.src = thumbUrl(item, round);
+    }
+
+    function mosaicMarkup(item) {
+        const mosaic = item.mosaic || {};
+        const src = typeof mosaic === "string" ? mosaic : mosaic.src;
+        const alt = typeof mosaic === "object" && mosaic.alt ? mosaic.alt : `${item.date} RGB 모자이크`;
+
+        if (src) {
+            return `
+                <div class="mosaic-heading">
+                    <div class="mosaic-title">RGB 모자이크</div>
+                    <div class="mosaic-state ready">등록됨</div>
+                </div>
+                <div class="mosaic-frame">
+                    <img src="${src}" alt="${alt}">
+                </div>
+                <div class="mosaic-meta">${displayDate(item.date)} · ${item.site}</div>
+            `;
+        }
+
+        return `
+            <div class="mosaic-heading">
+                <div class="mosaic-title">RGB 모자이크</div>
+                <div class="mosaic-state">준비 중</div>
+            </div>
+            <div class="mosaic-frame">
+                <div class="mosaic-placeholder">
+                    <strong>대표 이미지 없음</strong>
+                    RGB 모자이크 생성 후 표시
+                </div>
+            </div>
+            <div class="mosaic-meta">${displayDate(item.date)} · ${item.site}</div>
+        `;
+    }
+
+    function normalizedCount(value, total) {
+        const number = Number(value);
+        if (!Number.isFinite(number)) return 0;
+        return Math.max(0, Math.min(total, Math.round(number)));
+    }
+
+    // 날짜별 설정은 "날짜 대상지" 키를 먼저 찾는다(같은 날 다른 대상지 관측 구분). 날짜만 쓴 키는 예전 형식.
+    function observationSetting(map, item) {
+        const settings = map || {};
+        return settings[`${item.date} ${item.site}`] ?? settings[item.date];
+    }
+
+    function mosaicProgressConfig(item) {
+        const config = window.NBAR_MOSAIC_CYCLE_PROGRESS || {};
+        const defaults = config.default || {};
+        const byDate = config.byDate || {};
+        return { ...defaults, ...(observationSetting(byDate, item) || {}) };
+    }
+
+    function qualityProgressConfig(item) {
+        const config = window.NBAR_QUALITY_CYCLE_PROGRESS || {};
+        const defaults = config.default || {};
+        const byDate = config.byDate || {};
+        return { ...defaults, ...(observationSetting(byDate, item) || {}) };
+    }
+
+    function cycleCount(item) {
+        const match = String(item.cycle).match(/\d+/);
+        return match ? Number(match[0]) : 0;
+    }
+
+    function cycleChips(totalCycles, completedCycles, notApplicable = false) {
+        if (notApplicable) {
+            return Array.from({ length: totalCycles }, (_, index) => ({
+                label: `${index + 1}회`,
+                status: "대상 아님"
+            }));
+        }
+
+        return Array.from({ length: totalCycles }, (_, index) => ({
+            label: `${index + 1}회`,
+            status: index < completedCycles ? "완료" : "예정"
+        }));
+    }
+
+    function cycleSummary(cycles) {
+        if (cycles.length === 0) return "미확인";
+        if (cycles.every((cycle) => cycle.status === "대상 아님")) return "대상 아님";
+        if (cycles.length > 0 && cycles.every((cycle) => cycle.status === "완료")) return "완료";
+        if (cycles.some((cycle) => cycle.status === "완료")) return "진행 중";
+        return "예정";
+    }
+
+    function stagedTasks(names, state) {
+        return names.map((label, index) => {
+            if (state === "완료") return { label, status: "완료", percent: 100 };
+            if (state === "진행 중") {
+                return { label, status: index === 0 ? "진행 중" : "예정", percent: index === 0 ? 50 : 0 };
+            }
+            return { label, status: "예정", percent: 0 };
+        });
+    }
+
+    function dataCleanupDetail(item) {
+        const state = processingState(item, "자료 정리");
+        const itemStatus = state === "완료" ? "완료" : "미완료";
+
+        return {
+            title: "1. 자료 정리",
+            note: "관측 자료 보존 및 목록화",
+            status: state,
+            rows: [
+                { label: "원본 다분광 영상 백업", status: itemStatus },
+                { label: "초분광 자료 백업", status: itemStatus },
+                { label: "관측 야장 문서화", status: itemStatus },
+                { label: "현장 사진 정리", status: itemStatus }
+            ]
+        };
+    }
+
+    function qualityDetail(item) {
+        const state = processingState(item, "품질 검토");
+        const totalCycles = cycleCount(item);
+        const config = qualityProgressConfig(item);
+        const panelCompletedCycles = normalizedCount(config.panelCompletedCycles, totalCycles);
+        const elcCompletedCycles = normalizedCount(config.elcCompletedCycles, totalCycles);
+        const panelCycles = cycleChips(totalCycles, panelCompletedCycles);
+        const elcCycles = cycleChips(totalCycles, elcCompletedCycles, !hasReflectanceTarp(item));
+
+        return {
+            title: "3. 품질 검토",
+            note: "반사도 모자이크 품질 검토 (패널 / ELC)",
+            status: state,
+            rows: [
+                { label: "1) 패널 기반", status: cycleSummary(panelCycles), cycles: panelCycles },
+                { label: "2) ELC 기반", status: cycleSummary(elcCycles), cycles: elcCycles }
+            ]
+        };
+    }
+
+    function brdfDetail(item) {
+        const state = processingState(item, "BRDF 분석");
+        return {
+            title: "4. BRDF 분석",
+            note: "피복별 BRDF 구축",
+            status: state,
+            rows: stagedTasks([
+                "태양·센서 기하 정보 정리",
+                "BRDF 입력 변수 구성",
+                "BRDF 모델 적합",
+                "NBAR 정규화 산출",
+                "정규화 전후 결과 비교"
+            ], state)
+        };
+    }
+
+    function reportDetail(item) {
+        const state = processingState(item, "보고서 작성");
+        return {
+            title: "5. 보고서 작성",
+            note: "관측 개요, 방법, 결과물을 HTML로 정리",
+            status: state,
+            rows: stagedTasks([
+                "관측 개요 정리",
+                "처리 결과 표 정리",
+                "RGB·반사도 모자이크 삽입",
+                "HTML 보고서 링크 연결"
+            ], state)
+        };
+    }
+
+    function stageDetail(item, stageName) {
+        if (stageName === "자료 정리") return dataCleanupDetail(item);
+        if (stageName === "영상 처리") {
+            const totalCycles = cycleCount(item);
+            const config = mosaicProgressConfig(item);
+            const panelCompletedCycles = normalizedCount(config.panelCompletedCycles, totalCycles);
+            const elcCompletedCycles = normalizedCount(config.elcCompletedCycles, totalCycles);
+            const panelCycles = cycleChips(totalCycles, panelCompletedCycles);
+            const elcCycles = cycleChips(totalCycles, elcCompletedCycles, !hasReflectanceTarp(item));
+
+            return {
+                title: "2. 영상 처리",
+                note: "반사도 모자이크 생성 (패널 / ELC)",
+                status: processingState(item, "영상 처리"),
+                rows: [
+                    { label: "1) 패널 기반", status: cycleSummary(panelCycles), cycles: panelCycles },
+                    { label: "2) ELC 기반", status: cycleSummary(elcCycles), cycles: elcCycles }
+                ]
+            };
+        }
+        if (stageName === "품질 검토") return qualityDetail(item);
+        if (stageName === "BRDF 분석") return brdfDetail(item);
+        return reportDetail(item);
+    }
+
+    function taskRowMarkup(row) {
+        const hasProgress = typeof row.percent === "number";
+        const hasCycles = Array.isArray(row.cycles) && row.cycles.length > 0;
+        return `
+            <div class="detail-task-row ${hasProgress ? "has-progress" : ""} ${hasCycles ? "has-cycles" : ""}">
+                <div>
+                    <div class="detail-task-title">${row.label}</div>
+                    ${row.note ? `<div class="detail-task-note">${row.note}</div>` : ""}
+                </div>
+                <span class="status-pill ${badgeClass(row.status)}">${row.status}</span>
+                ${hasCycles ? `
+                    <div class="cycle-chip-list">
+                        ${row.cycles.map((cycle) => `
+                            <div class="cycle-chip ${badgeClass(cycle.status)}">
+                                ${cycle.label}
+                                <span>${cycle.status}</span>
+                            </div>
+                        `).join("")}
+                    </div>
+                ` : ""}
+                ${hasProgress ? `
+                    <div class="detail-progress-track">
+                        <div class="detail-progress-fill" style="width: ${row.percent}%;"></div>
+                    </div>
+                    <div class="detail-progress-percent">${row.percentText || `${row.percent}%`}</div>
+                ` : ""}
+            </div>
+        `;
+    }
+
+    // 데이터 처리 완료 회차: 기본 6칸, 드론 뷰어에 RGB 모자이크가 있는 회차는 초록, 없으면 회색
+    function mosaicRounds(item) {
+        return Array.isArray(item.mosaicRounds) ? item.mosaicRounds : [];
+    }
+
+    function renderRoundCells(item, activeRound) {
+        const done = mosaicRounds(item);
+        const total = cycleCount(item);
+        roundCells.style.setProperty("--round-count", Math.max(6, total));
+        roundCells.innerHTML = Array.from({ length: total }, (_, i) => i + 1).map((n) => {
+            const isDone = done.includes(n);
+            const classes = ["round-cell", isDone ? "done" : "", n === activeRound ? "active" : ""].join(" ");
+            const title = isDone ? "반사도 모자이크 생성 완료 · 눌러서 보기" : "반사도 모자이크 미완료";
+            return `<li><button class="${classes}" type="button" data-round="${n}" title="${title}" ${isDone ? "" : "disabled"}>${n}회차</button></li>`;
+        }).join("");
+
+        roundCells.querySelectorAll(".round-cell.done").forEach((button) => {
+            button.addEventListener("click", () => {
+                const round = Number(button.dataset.round);
+                renderRoundCells(item, round);
+                renderDroneMosaic(item, round);
+            });
+        });
+    }
+
+    function filterRow(label, kind, names, active) {
+        const chips = [ALL_FILTER, ...names].map((name) => `
+            <button class="filter-chip ${name === active ? "active" : ""}" type="button" data-kind="${kind}" data-name="${name}">${name}</button>
+        `).join("");
+        return `<div class="filter-row"><span class="filter-label">${label}</span><div class="filter-chips">${chips}</div></div>`;
+    }
+
+    function renderFilters() {
+        filterBar.innerHTML = filterRow("피복", "cover", coverNames, coverFilter)
+            + (agencyNames.length > 1 ? filterRow("관측 수행 기관", "agency", agencyNames, agencyFilter) : "");
+
+        filterBar.querySelectorAll(".filter-chip").forEach((button) => {
+            button.addEventListener("click", () => {
+                if (button.dataset.kind === "cover") coverFilter = button.dataset.name;
+                else agencyFilter = button.dataset.name;
+                applyFilters();
+            });
+        });
+    }
+
+    // 필터에 맞는 관측을 날짜(같은 날이면 대상지) 순으로 정렬한다.
+    function filteredEntries() {
+        const entries = observations
+            .map((item, index) => ({ item, index }))
+            .filter(({ item }) => coverFilter === ALL_FILTER || item.coverType === coverFilter)
+            .filter(({ item }) => agencyFilter === ALL_FILTER || item.agency === agencyFilter)
+            .sort((a, b) => `${a.item.date} ${a.item.site}`.localeCompare(`${b.item.date} ${b.item.site}`));
+        return dateOrder === "desc" ? entries.reverse() : entries;
+    }
+
+    function defaultIndex(entries) {
+        const preferred = entries.find(({ item }) => item.date === defaultObservation.date && item.site === defaultObservation.site);
+        return (preferred || entries[0]).index;
+    }
+
+    // 선택 중인 관측이 필터에 남아 있으면 유지하고, 빠지면 기본 관측으로 옮긴다.
+    function applyFilters() {
+        const entries = filteredEntries();
+        tabList.scrollTop = 0;
+        if (!entries.length) {
+            renderFilters();
+            renderTabs(currentIndex);
+            return;
+        }
+        render(entries.some(({ index }) => index === currentIndex) ? currentIndex : defaultIndex(entries));
+    }
+
+    function renderSortToggle() {
+        sortToggle.querySelectorAll("button").forEach((button) => {
+            button.classList.toggle("active", button.dataset.order === dateOrder);
+        });
+    }
+
+    sortToggle.querySelectorAll("button").forEach((button) => {
+        button.addEventListener("click", () => {
+            dateOrder = button.dataset.order;
+            try {
+                localStorage.setItem("nbarDateOrder", dateOrder);
+            } catch (error) {}
+            renderSortToggle();
+            renderTabs(currentIndex);
+            tabList.scrollTop = 0;
+        });
+    });
+
+    function renderTabs(activeIndex) {
+        const filtered = filteredEntries();
+
+        const head = `
+            <div class="obs-row obs-head">
+                <div class="obs-cols"><span>날짜</span><span>대상</span><span>대상지</span><span>관측 수행 기관</span><span>생육시기</span><span class="obs-cycle">당일 반복관측 횟수</span></div>
+                <span class="obs-report-head">보고서</span>
+            </div>
+        `;
+
+        tabList.innerHTML = !filtered.length
+            ? `<div class="tab-empty">조건에 맞는 관측이 없습니다.</div>`
+            : head + filtered.map(({ item, index }) => `
+            <div class="obs-row ${index === activeIndex ? "active" : ""}">
+                <button class="obs-select obs-cols" type="button" data-index="${index}">
+                    <span class="obs-date">${item.date.slice(5).replace(".", "/")}</span>
+                    <span class="obs-object">${targetObject(item)}</span>
+                    <span class="obs-site">${item.site}</span>
+                    <span class="obs-agency">${item.agency || "미확인"}</span>
+                    <span class="obs-stage">${item.purpose}</span>
+                    <span class="obs-cycle"><span class="obs-cycle-label">당일 반복관측</span>${item.cycle}</span>
+                </button>
+                ${reportCell(item)}
+            </div>
+        `).join("");
+
+        tabList.querySelectorAll(".obs-select").forEach((button) => {
+            button.addEventListener("click", () => render(Number(button.dataset.index)));
+        });
+    }
+
+    function render(index) {
+        const item = observations[index];
+        currentIndex = index;
+        renderFilters();
+        renderTabs(index);
+        detailSubtitle.textContent = `${displayDate(item.date)} · ${item.title}`;
+
+        processingStatus.className = `status-pill ${item.statusClass}`;
+        processingStatus.textContent = item.status;
+        if (processDateBadge) {
+            processDateBadge.textContent = displayDate(item.date);
+        }
+
+        const rounds = hasDroneViewer(item) ? mosaicRounds(item) : [];
+        const firstRound = rounds.includes(item.mosaicDefaultRound) ? item.mosaicDefaultRound : rounds[0];
+        renderRoundCells(item, firstRound);
+
+        scheduleList.innerHTML = detailRows(item).map(([label, value, note]) => `
+            <li class="schedule-item">
+                <div class="schedule-date">${label}</div>
+                <div class="schedule-type">${value}</div>
+                ${note ? `<div class="schedule-text">${note}</div>` : ""}
+            </li>
+        `).join("");
+
+        if (firstRound) renderDroneMosaic(item, firstRound);
+        else mosaicPanel.innerHTML = mosaicMarkup(item);
+    }
+
+    renderSortToggle();
+    if (observations.length > 0) {
+        render(defaultIndex(filteredEntries()));
+        checkReports().then(() => renderTabs(currentIndex));
+    }
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+

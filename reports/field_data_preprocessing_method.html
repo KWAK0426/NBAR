@@ -1,0 +1,846 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>UAV 다분광 데이터 전처리 방법서</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']],
+                processEscapes: true
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <style>
+        :root {
+            --navy: #0b2545;
+            --navy-2: #153c66;
+            --blue: #2563a7;
+            --blue-soft: #eef5fb;
+            --green: #13795b;
+            --green-soft: #edf8f3;
+            --amber: #a05b11;
+            --amber-soft: #fff7e8;
+            --ink: #182230;
+            --muted: #667085;
+            --line: #d8e1eb;
+            --soft: #f5f7fa;
+            --white: #ffffff;
+        }
+
+        * { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            color: var(--ink);
+            background: var(--soft);
+            font-family: "Pretendard", "Noto Sans KR", "Malgun Gothic", Arial, sans-serif;
+            line-height: 1.6;
+            letter-spacing: 0;
+        }
+
+        a { color: inherit; }
+
+        .topbar {
+            min-height: 78px;
+            color: var(--white);
+            background: var(--navy);
+            border-bottom: 4px solid #2d86bc;
+        }
+
+        .topbar-inner {
+            width: 100%;
+            min-height: 78px;
+            margin: 0 auto;
+            padding: 10px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .brand {
+            min-width: 0;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .brand img {
+            width: 46px;
+            height: 46px;
+            flex: 0 0 auto;
+            object-fit: contain;
+            background: var(--white);
+            border-radius: 50%;
+            padding: 3px;
+        }
+
+        .brand-title {
+            font-size: 21px;
+            font-weight: 800;
+            line-height: 1.25;
+        }
+
+        .brand-subtitle {
+            margin-top: 3px;
+            color: #c9d8e8;
+            font-size: 12px;
+            line-height: 1.35;
+        }
+
+        .header-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        .header-links a {
+            padding: 8px 11px;
+            color: #eaf2f9;
+            border: 1px solid #43617f;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .header-links a:hover { background: #173b61; }
+
+        .layout {
+            width: 100%;
+            margin: 0 auto;
+            padding: 22px 24px 42px;
+            display: grid;
+            grid-template-columns: 230px minmax(0, 1fr);
+            gap: 22px;
+        }
+
+        .toc {
+            position: sticky;
+            top: 18px;
+            align-self: start;
+            overflow: hidden;
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: 6px;
+        }
+
+        .toc strong {
+            display: block;
+            padding: 13px 15px;
+            color: var(--white);
+            background: var(--navy-2);
+            font-size: 13px;
+        }
+
+        .toc a {
+            display: grid;
+            grid-template-columns: 28px 1fr;
+            gap: 8px;
+            align-items: center;
+            padding: 12px 14px;
+            border-bottom: 1px solid #e8edf3;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .toc a:last-child { border-bottom: 0; }
+        .toc a:hover { background: var(--blue-soft); }
+
+        .toc-number {
+            width: 27px;
+            height: 27px;
+            display: grid;
+            place-items: center;
+            color: var(--white);
+            background: var(--blue);
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .content { min-width: 0; }
+
+        .scope {
+            margin-bottom: 18px;
+            padding: 15px 18px;
+            color: #294057;
+            background: var(--white);
+            border-left: 5px solid var(--blue);
+            box-shadow: 0 1px 0 rgba(15, 34, 54, 0.05);
+            font-size: 14px;
+        }
+
+        .scope strong {
+            display: block;
+            margin-bottom: 3px;
+            color: var(--navy);
+            font-size: 13px;
+        }
+
+        .stage-map {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1px;
+            overflow: hidden;
+            margin-bottom: 22px;
+            background: #bcc9d7;
+            border: 1px solid #bcc9d7;
+            border-radius: 6px;
+        }
+
+        .stage-map a {
+            min-height: 90px;
+            padding: 16px 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: var(--white);
+            text-decoration: none;
+        }
+
+        .stage-map a:hover { background: var(--blue-soft); }
+
+        .stage-map span {
+            color: var(--blue);
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .stage-map strong {
+            margin-top: 4px;
+            color: var(--navy);
+            font-size: 17px;
+            line-height: 1.3;
+        }
+
+        .stage-map small {
+            margin-top: 4px;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .section {
+            margin-bottom: 24px;
+            overflow: hidden;
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            box-shadow: 0 3px 14px rgba(26, 48, 73, 0.05);
+        }
+
+        .section-head {
+            padding: 19px 22px 17px;
+            color: var(--white);
+            background: var(--navy-2);
+            border-left: 6px solid #3d96c6;
+        }
+
+        .section-kicker {
+            color: #bcd7ea;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .section-head h2 {
+            margin: 2px 0 0;
+            font-size: 22px;
+            line-height: 1.3;
+        }
+
+        .section-body { padding: 22px; }
+
+        .summary-line {
+            margin: 0 0 18px;
+            color: #40536a;
+            font-size: 14px;
+        }
+
+        .source-grid,
+        .output-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .source-item,
+        .output-item {
+            min-width: 0;
+            padding: 13px 14px;
+            background: #f8fafc;
+            border: 1px solid #dfe7ef;
+            border-top: 3px solid var(--blue);
+            border-radius: 5px;
+        }
+
+        .output-item { border-top-color: var(--green); }
+
+        .source-item b,
+        .output-item b {
+            display: block;
+            margin-bottom: 3px;
+            color: var(--navy);
+            font-size: 13px;
+        }
+
+        .source-item span,
+        .output-item span {
+            display: block;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.45;
+        }
+
+        .branch-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin: 18px 0;
+        }
+
+        .branch {
+            overflow: hidden;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+        }
+
+        .branch-head {
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--blue-soft);
+            border-bottom: 1px solid #d7e5f2;
+        }
+
+        .branch.elc .branch-head {
+            background: var(--green-soft);
+            border-bottom-color: #cfe7dc;
+        }
+
+        .branch-code {
+            min-width: 42px;
+            padding: 4px 7px;
+            color: var(--white);
+            background: var(--blue);
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 800;
+            text-align: center;
+        }
+
+        .branch.elc .branch-code { background: var(--green); }
+
+        .branch-head strong {
+            color: var(--navy);
+            font-size: 14px;
+        }
+
+        .branch ol {
+            margin: 0;
+            padding: 14px 18px 14px 35px;
+            color: #43546a;
+            font-size: 13px;
+        }
+
+        .detail-list {
+            overflow: hidden;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+        }
+
+        .detail-step {
+            display: grid;
+            grid-template-columns: 74px minmax(0, 1fr);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .detail-step:last-child { border-bottom: 0; }
+
+        .detail-index {
+            padding: 21px 8px;
+            color: var(--navy);
+            background: #edf2f7;
+            border-right: 1px solid var(--line);
+            font-size: 13px;
+            font-weight: 900;
+            text-align: center;
+        }
+
+        .detail-content { padding: 19px 20px 21px; }
+
+        .detail-content h3 {
+            margin: 0 0 5px;
+            color: var(--navy);
+            font-size: 16px;
+            line-height: 1.35;
+        }
+
+        .detail-content p {
+            margin: 0 0 12px;
+            color: #47576c;
+            font-size: 13px;
+        }
+
+        .io-row {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .io-row div {
+            padding: 9px 11px;
+            color: #526176;
+            background: #f7f9fb;
+            border: 1px solid #e3e9f0;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .io-row b {
+            margin-right: 6px;
+            color: var(--blue);
+        }
+
+        .latex-block {
+            overflow-x: auto;
+            margin: 10px 0;
+            padding: 12px 14px;
+            background: #fbfcfe;
+            border: 1px solid #dce5ee;
+            border-left: 4px solid var(--blue);
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .latex-label {
+            margin-bottom: 3px;
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .terms {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 5px 14px;
+            margin: 10px 0 0;
+        }
+
+        .terms div {
+            display: flex;
+            gap: 4px;
+            color: #59687b;
+            font-size: 12px;
+        }
+
+        .terms dt {
+            color: var(--navy);
+            font-weight: 800;
+        }
+
+        .terms dd { margin: 0; }
+
+        .check-line {
+            margin-top: 10px;
+            padding: 9px 11px;
+            color: #31536b;
+            background: var(--blue-soft);
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .check-line b { color: var(--blue); }
+
+        .caution {
+            margin-top: 16px;
+            padding: 12px 14px;
+            color: #74410c;
+            background: var(--amber-soft);
+            border-left: 4px solid #d58a2d;
+            font-size: 13px;
+        }
+
+        code {
+            padding: 1px 4px;
+            color: #274461;
+            background: #edf2f7;
+            border-radius: 3px;
+            font-family: Consolas, monospace;
+            font-size: 0.95em;
+        }
+
+        footer {
+            padding: 16px 24px 22px;
+            color: #728096;
+            background: var(--soft);
+            border-top: 1px solid #dfe5ec;
+            font-size: 11px;
+            text-align: center;
+        }
+
+        @media (max-width: 1060px) {
+            .layout { grid-template-columns: 1fr; }
+            .toc {
+                position: static;
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+            .toc strong { grid-column: 1 / -1; }
+            .toc a { border-bottom: 0; border-right: 1px solid #e8edf3; }
+            .toc a:last-child { border-right: 0; }
+        }
+
+        @media (max-width: 800px) {
+            .topbar-inner { align-items: flex-start; flex-direction: column; }
+            .header-links { justify-content: flex-start; }
+            .stage-map,
+            .source-grid,
+            .output-grid { grid-template-columns: 1fr; }
+            .branch-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 620px) {
+            .topbar-inner { padding: 12px 14px; }
+            .brand-title { font-size: 18px; }
+            .layout { padding: 14px 10px 32px; }
+            .toc { grid-template-columns: 1fr; }
+            .toc a { border-right: 0; border-bottom: 1px solid #e8edf3; }
+            .section-head,
+            .section-body { padding-left: 15px; padding-right: 15px; }
+            .detail-step { grid-template-columns: 52px minmax(0, 1fr); }
+            .detail-index { padding-left: 5px; padding-right: 5px; }
+            .detail-content { padding: 16px 13px 18px; }
+            .io-row,
+            .terms { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<header class="topbar">
+    <div class="topbar-inner">
+        <div class="brand">
+            <img src="../assets/pnu_logo.webp" alt="부산대학교 로고">
+            <div>
+                <div class="brand-title">UAV 다분광 데이터 전처리 방법서</div>
+                <div class="brand-subtitle">현장 취득자료에서 반사도 영상과 정사 산출물을 만드는 공통 처리 기준</div>
+            </div>
+        </div>
+        <nav class="header-links" aria-label="관련 페이지">
+            <a href="field_data_results_method.html">결과 생성·분석 방법서</a>
+            <a href="../field_observation.html">현장 결과 현황</a>
+        </nav>
+    </div>
+</header>
+
+<div class="layout">
+    <aside class="toc">
+        <strong>영상 전처리 · 3단계</strong>
+        <a href="#stage-0"><span class="toc-number">0</span><span>데이터 취득</span></a>
+        <a href="#stage-1"><span class="toc-number">1</span><span>반사도 영상 생성</span></a>
+        <a href="#stage-2"><span class="toc-number">2</span><span>Metashape 처리·산출</span></a>
+    </aside>
+
+    <main class="content">
+        <div class="scope">
+            <strong>문서 적용 범위</strong>
+            UAV 다분광 원영상과 현장 보정자료를 확보한 뒤, 패널 또는 타프 ELC 경로로 반사도 영상을 생성하고 Metashape에서 DEM과 정사 산출물을 만드는 과정까지를 다룹니다. 대상지 마스킹, BRDF 역산 및 NBAR 생성은 결과 생성·분석 방법서에서 별도로 관리합니다.
+        </div>
+
+        <nav class="stage-map" aria-label="영상 전처리 3단계">
+            <a href="#stage-0">
+                <span>0단계</span>
+                <strong>데이터 취득</strong>
+                <small>UAV · 기준물 · Ed · 현장기록</small>
+            </a>
+            <a href="#stage-1">
+                <span>1단계</span>
+                <strong>반사도 영상 생성</strong>
+                <small>패널 경로 / 타프 ELC 경로</small>
+            </a>
+            <a href="#stage-2">
+                <span>2단계</span>
+                <strong>Metashape 처리 및 산출</strong>
+                <small>정렬 · DEM · Ortho Photos · Mosaic</small>
+            </a>
+        </nav>
+
+        <section class="section" id="stage-0">
+            <div class="section-head">
+                <div class="section-kicker">0단계</div>
+                <h2>데이터 취득</h2>
+            </div>
+            <div class="section-body">
+                <p class="summary-line">비행 전에 처리 경로를 정하고, UAV 원영상과 반사도 기준물·조도·현장기록을 같은 회차 단위로 확보합니다.</p>
+
+                <div class="source-grid" aria-label="취득 자료">
+                    <div class="source-item"><b>UAV 다분광 원영상</b><span>밴드별 DN TIFF와 XMP/EXIF 메타데이터</span></div>
+                    <div class="source-item"><b>촬영 시각·위치</b><span>영상별 시각, 위·경도, 고도 및 센서 정보</span></div>
+                    <div class="source-item"><b>패널 기준자료</b><span>패널 영상과 밴드별 기준 반사도</span></div>
+                    <div class="source-item"><b>타프 기준자료</b><span>타프 위치, 실측 반사도, 기준·검증 구분</span></div>
+                    <div class="source-item"><b>RAMSES Ed</b><span>촬영 시간대의 밴드별 하향복사조도 시계열</span></div>
+                    <div class="source-item"><b>현장 기록</b><span>비행 회차, 날씨, 기준물 설치 및 특이사항</span></div>
+                </div>
+
+                <div class="detail-list">
+                    <section class="detail-step">
+                        <div class="detail-index">0.1</div>
+                        <div class="detail-content">
+                            <h3>관측 설계와 처리 경로 결정</h3>
+                            <p>비행 고도·중복도·격자 방향·회차를 정하고, 해당 관측이 패널 기반 처리인지 타프 기반 ELC 처리인지 기록합니다. 센서 종류와 밴드 구성도 회차별로 고정합니다.</p>
+                            <div class="io-row"><div><b>확인</b>센서 모델, 밴드 수, 파일 접미사</div><div><b>기록</b>처리 경로, 회차, 기준물 구성</div></div>
+                        </div>
+                    </section>
+
+                    <section class="detail-step">
+                        <div class="detail-index">0.2</div>
+                        <div class="detail-content">
+                            <h3>UAV 다분광 영상 취득</h3>
+                            <p>동일 회차 안에서 계획한 다각도 격자 비행을 수행하고, 촬영번호별 모든 밴드가 빠짐없이 생성되었는지 확인합니다.</p>
+                            <div class="io-row"><div><b>입력</b>비행계획과 센서 설정</div><div><b>산출</b>촬영번호별 다중밴드 DN 원영상</div></div>
+                            <div class="check-line"><b>검증</b> 촬영번호·밴드·영상 크기·메타데이터가 완전한지 백업 직후 확인합니다.</div>
+                        </div>
+                    </section>
+
+                    <section class="detail-step">
+                        <div class="detail-index">0.3</div>
+                        <div class="detail-content">
+                            <h3>기준자료와 현장기록 동기화</h3>
+                            <p>패널 또는 타프 영상, RAMSES Ed와 현장 야장을 UAV 촬영 시간대에 맞춰 정리합니다. 타프는 ELC 계수 산출용과 독립 검증용 영상을 구분합니다.</p>
+                            <div class="io-row"><div><b>입력</b>기준물 영상·Ed 시계열·현장 야장</div><div><b>산출</b>회차별 원자료 목록과 시간 기준</div></div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="stage-1">
+            <div class="section-head">
+                <div class="section-kicker">1단계</div>
+                <h2>반사도 영상 생성</h2>
+            </div>
+            <div class="section-body">
+                <p class="summary-line">취득한 원영상은 기준자료에 따라 두 경로로 처리합니다. 패널 관측은 Metashape의 패널 보정 경로를 사용하고, 타프 관측은 외부 Ed와 ELC 계수를 이용해 반사도 TIFF를 먼저 생성합니다.</p>
+
+                <div class="branch-grid" aria-label="반사도 영상 생성 경로">
+                    <article class="branch">
+                        <div class="branch-head"><span class="branch-code">1-1</span><strong>패널 기반 반사도 생성</strong></div>
+                        <ol>
+                            <li>DN 다분광 원영상을 Metashape에 입력</li>
+                            <li>패널 영상과 기준 반사도 지정</li>
+                            <li>Metashape 방사보정 수행</li>
+                            <li>반사도 상태에서 2단계 처리 진행</li>
+                        </ol>
+                    </article>
+                    <article class="branch elc">
+                        <div class="branch-head"><span class="branch-code">1-2</span><strong>타프 기반 ELC 반사도 생성</strong></div>
+                        <ol>
+                            <li>DN에서 radiance로 방사보정</li>
+                            <li>센서 간 상호교정 및 RAMSES Ed 시간매칭</li>
+                            <li>타프 후보영상 선별과 native ROI 지정</li>
+                            <li>Ed 정규화 후 ELC 계수 산출·검증</li>
+                            <li>전체 영상에 적용하여 반사도 TIFF 생성</li>
+                        </ol>
+                    </article>
+                </div>
+
+                <div class="detail-list">
+                    <section class="detail-step">
+                        <div class="detail-index">1-1.1</div>
+                        <div class="detail-content">
+                            <h3>패널 기반 반사도 생성</h3>
+                            <p>원본 다분광 영상을 그대로 Metashape에 입력하고, 패널 검출과 밴드별 기준 반사도 설정을 통해 반사도 보정을 수행합니다. 구체적인 메뉴 순서와 설정값은 별도 Metashape 처리 지침을 연결합니다.</p>
+                            <div class="io-row"><div><b>입력</b>DN 원영상, 패널 영상, 패널 반사도</div><div><b>산출</b>Metashape 내부의 반사도 보정 영상</div></div>
+                            <div class="check-line"><b>검증</b> 패널 경로에서는 원영상의 BlackLevel과 센서 메타데이터를 유지합니다.</div>
+                        </div>
+                    </section>
+
+                    <section class="detail-step">
+                        <div class="detail-index">1-2.1</div>
+                        <div class="detail-content">
+                            <h3>DN에서 센서 Radiance로 방사보정</h3>
+                            <p>각 밴드 DN에서 BlackLevel을 제거하고, 메타데이터의 방사보정계수·비네팅·행 보정·ISO·노출시간을 적용합니다. MicaSense 센서의 공통 방사보정 원리를 따르되 센서 모델별 밴드 구성과 메타데이터를 구분합니다.</p>
+                            <div class="io-row"><div><b>입력</b>밴드별 DN TIFF와 XMP/EXIF</div><div><b>산출</b>native 크기의 밴드별 radiance TIFF</div></div>
+                            <div class="latex-block">
+                                <div class="latex-label">MicaSense 방사보정</div>
+                                \[
+                                L_b(r,c)=\frac{a_{1,b}}{2^{n_b}G_b t_{e,b}}
+                                V_b(r,c)R_b(r)\max\!\left(DN_b(r,c)-B_b,0\right)
+                                \]
+                            </div>
+                            <dl class="terms">
+                                <div><dt>\(L_b\)</dt><dd>밴드 \(b\)의 센서 radiance</dd></div>
+                                <div><dt>\(DN_b\)</dt><dd>원영상 디지털 값</dd></div>
+                                <div><dt>\(B_b\)</dt><dd>BlackLevel 평균</dd></div>
+                                <div><dt>\(G_b,t_{e,b}\)</dt><dd>ISO 이득과 노출시간</dd></div>
+                                <div><dt>\(V_b,R_b\)</dt><dd>비네팅과 행 보정계수</dd></div>
+                                <div><dt>\(n_b\)</dt><dd>BitsPerSample</dd></div>
+                            </dl>
+                        </div>
+                    </section>
+
+                    <section class="detail-step">
+                        <div class="detail-index">1-2.2</div>
+                        <div class="detail-content">
+                            <h3>센서 간 상호교정과 RAMSES Ed 시간매칭</h3>
+                            <p>센서·밴드별 상호교정계수를 radiance에 적용하고, 각 영상의 촬영시각과 가장 가까운 RAMSES Ed 시각을 대응시킵니다. 위치정보는 관측 이력과 기하 검증에 사용하며 Ed 매칭 기준은 촬영시각입니다.</p>
+                            <div class="io-row"><div><b>입력</b>radiance, 센서별 계수, 촬영시각, Ed 시계열</div><div><b>산출</b>상호교정 radiance와 영상별 Ed 연결표</div></div>
+                            <div class="latex-block">
+                                <div class="latex-label">센서 간 상호교정</div>
+                                \[
+                                L_{\mathrm{int},b}(r,c,t)=k^{\mathrm{inter}}_bL_b(r,c,t)
+                                \]
+                            </div>
+                            <div class="latex-block">
+                                <div class="latex-label">가장 가까운 Ed 시각 선택</div>
+                                \[
+                                t_E^{*}(t)=\underset{\tau\in\mathcal T_E}{\operatorname{arg\,min}}\,|t-\tau|
+                                \]
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="detail-step">
+                        <div class="detail-index">1-2.3</div>
+                        <div class="detail-content">
+                            <h3>타프 후보영상 선별</h3>
+                            <p>타프 중심의 EPSG 좌표와 영상 footprint를 이용해 타프가 포함될 가능성이 있는 기준·검증 영상을 추립니다. 후보는 정합 표시영상으로 확인한 뒤, 타프 전체가 안정적으로 보이는 영상만 승인합니다.</p>
+                            <div class="io-row"><div><b>입력</b>타프 좌표, 영상 위치·footprint, 촬영번호</div><div><b>산출</b>ELC 기준영상과 독립 검증영상 목록</div></div>
+                        </div>
+                    </section>
+
+                    <section class="detail-step">
+                        <div class="detail-index">1-2.4</div>
+                        <div class="detail-content">
+                            <h3>native 밴드 타프 ROI 설정</h3>
+                            <p>타프 중심과 초기 범위를 지정한 뒤, 다중밴드 경계·분할 결과를 이용해 타프 내부 사각영역을 결정합니다. 자동 경계가 불안정하면 네 모서리를 수동 지정하며, ELC 대표값은 정합 표시영상이 아니라 각 밴드의 native 보정영상에서 읽습니다.</p>
+                            <div class="io-row"><div><b>입력</b>승인 영상, 타프 중심, 밴드 좌표변환</div><div><b>산출</b>타프·밴드별 native ROI와 유효 화소</div></div>
+                            <div class="latex-block">
+                                <div class="latex-label">ROI 대표 radiance와 변동계수</div>
+                                \[
+                                \bar L_{b,j}=\frac{1}{N_{b,j}}\sum_{i=1}^{N_{b,j}}L_{b,j,i},
+                                \qquad
+                                CV_{b,j}(\%)=100\frac{\sigma_{b,j}}{\bar L_{b,j}}
+                                \]
+                            </div>
+                            <div class="check-line"><b>검증</b> 경계 혼합화소, 과포화·그림자 화소와 승인된 내부 제외영역을 제거한 뒤 대표값을 계산합니다.</div>
+                        </div>
+                    </section>
+
+                    <section class="detail-step">
+                        <div class="detail-index">1-2.5</div>
+                        <div class="detail-content">
+                            <h3>Ed 정규화</h3>
+                            <p>각 촬영시각의 조명 차이를 ELC 기준영상 시각 \(t_0\)의 조건으로 맞춥니다. 이 단계는 조명 변화를 보정하며, 관측각 효과는 이후 BRDF 분석에서 처리합니다.</p>
+                            <div class="io-row"><div><b>입력</b>상호교정 radiance, 영상별 Ed, 기준시각</div><div><b>산출</b>기준시각 조도로 정규화된 radiance</div></div>
+                            <div class="latex-block">
+                                <div class="latex-label">기준시각 Ed 정규화</div>
+                                \[
+                                q_b(t)=\frac{E_{d,b}(t_0)}{E_{d,b}(t)},
+                                \qquad
+                                L_{\mathrm{norm},b}(r,c,t)=q_b(t)L_{\mathrm{int},b}(r,c,t)
+                                \]
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="detail-step">
+                        <div class="detail-index">1-2.6</div>
+                        <div class="detail-content">
+                            <h3>ELC 계수 산출·검증과 전체 영상 적용</h3>
+                            <p>타프 실측 반사도와 정규화 radiance의 관계를 밴드별 선형식으로 적합합니다. 적합에 사용하지 않은 검증영상의 오차를 확인한 뒤, 승인된 계수를 모든 영상에 적용해 반사도 TIFF를 생성합니다.</p>
+                            <div class="io-row"><div><b>입력</b>타프 반사도, ROI radiance, 검증영상</div><div><b>산출</b>밴드별 ELC 계수와 reflectance TIFF</div></div>
+                            <div class="latex-block">
+                                <div class="latex-label">ELC 전방모형과 반사도 복원</div>
+                                \[
+                                \bar L_{\mathrm{norm},b,j}=a_b\rho_{b,j}+b_b+\varepsilon_{b,j}
+                                \]
+                                \[
+                                \widehat\rho_b(r,c,t)=
+                                \frac{L_{\mathrm{norm},b}(r,c,t)-\widehat b_b}{\widehat a_b}
+                                \]
+                            </div>
+                            <div class="latex-block">
+                                <div class="latex-label">독립 검증 오차</div>
+                                \[
+                                \operatorname{Bias}=\frac{1}{N}\sum_{i=1}^{N}(\widehat\rho_i-\rho_i),
+                                \qquad
+                                \operatorname{RMSE}=\sqrt{\frac{1}{N}\sum_{i=1}^{N}(\widehat\rho_i-\rho_i)^2}
+                                \]
+                            </div>
+                            <div class="check-line"><b>계수 방향</b> 저장 규칙은 <code>L=a*rho+b</code>로 통일하며 역회귀 계수와 섞지 않습니다.</div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="caution">타프가 없는 관측은 ELC 경로의 대상이 아닙니다. 해당 회차는 패널 기반 처리만 수행하고 ELC 관련 항목은 ‘대상 아님’으로 기록합니다.</div>
+            </div>
+        </section>
+
+        <section class="section" id="stage-2">
+            <div class="section-head">
+                <div class="section-kicker">2단계</div>
+                <h2>Metashape 처리 및 산출</h2>
+            </div>
+            <div class="section-body">
+                <p class="summary-line">1단계의 두 처리 경로를 Metashape에서 합칩니다. 카메라 정렬과 지표면 모델을 만든 뒤, 후속 분석에 필요한 영상별 Ortho Photos와 확인용 Ortho Mosaic을 함께 저장합니다.</p>
+
+                <div class="detail-list">
+                    <section class="detail-step">
+                        <div class="detail-index">2.1</div>
+                        <div class="detail-content">
+                            <h3>입력 영상과 보정 상태 확인</h3>
+                            <p>패널 경로는 원영상과 패널 보정 상태를 유지하고, 타프 ELC 경로는 외부에서 생성한 반사도 TIFF를 입력합니다. ELC 반사도 TIFF가 Metashape에서 다시 BlackLevel 보정을 받지 않도록 밴드별 값을 0으로 설정합니다.</p>
+                            <div class="io-row"><div><b>패널 경로</b>DN 원영상 + 패널 보정</div><div><b>ELC 경로</b>reflectance TIFF + BlackLevel 0</div></div>
+                            <div class="check-line"><b>검증</b> 동일 청크에서 입력 방식과 보정 상태를 혼합하지 않습니다.</div>
+                        </div>
+                    </section>
+
+                    <section class="detail-step">
+                        <div class="detail-index">2.2</div>
+                        <div class="detail-content">
+                            <h3>카메라 정렬과 지표면 모델 생성</h3>
+                            <p>사진 정렬, 카메라 최적화, 깊이맵 또는 조밀점군 처리, DEM 생성을 수행합니다. 정렬 오차와 위치 오차를 확인하고 필요한 경우 이상 카메라를 정리한 뒤 다시 최적화합니다.</p>
+                            <div class="io-row"><div><b>입력</b>반사도 상태의 다중밴드 영상과 카메라 메타데이터</div><div><b>산출</b>정렬 카메라, tie points, DEM</div></div>
+                        </div>
+                    </section>
+
+                    <section class="detail-step">
+                        <div class="detail-index">2.3</div>
+                        <div class="detail-content">
+                            <h3>정사 산출물 내보내기</h3>
+                            <p>후속 분석에 필요한 좌표계·해상도·NoData 기준을 고정하고, 영상별 정사영상과 전체 모자이크를 구분해 저장합니다. 영상별 Ortho Photos는 같은 지표화소의 다각도 관측을 보존하므로 BRDF 입력자료 생성에 필수입니다.</p>
+                            <div class="io-row"><div><b>입력</b>정렬 청크와 DEM</div><div><b>산출</b>프로젝트, DEM, 카메라 위치, Ortho Photos, Mosaic</div></div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="output-grid" aria-label="Metashape 산출물">
+                    <div class="output-item"><b>Metashape 프로젝트</b><span>정렬·보정 상태와 처리 이력을 보존</span></div>
+                    <div class="output-item"><b>DEM</b><span>정사투영과 관측기하 계산의 지표고도 기준</span></div>
+                    <div class="output-item"><b>GPS_est.txt</b><span>최적화된 카메라 위치와 촬영영상 연결정보</span></div>
+                    <div class="output-item"><b>Ortho Photos</b><span>영상별 관측각과 반사도를 유지한 정사영상</span></div>
+                    <div class="output-item"><b>Ortho Mosaic</b><span>회차 전체의 공간 분포 확인과 보고용 영상</span></div>
+                    <div class="output-item"><b>처리 기록</b><span>좌표계·해상도·NoData·보정 경로와 설정값</span></div>
+                </div>
+
+                <div class="caution">영상 전처리는 이 단계의 정사 산출물 생성에서 끝납니다. 연구 대상지 마스킹, 반사도·관측기하 적층, BRDF inversion 및 NBAR 영상 생성은 ‘결과 생성·분석 방법서’의 범위입니다.</div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<footer>UAV 다분광 데이터 전처리 방법서 · 0 데이터 취득 · 1 반사도 영상 생성 · 2 Metashape 처리 및 산출</footer>
+</body>
+</html>

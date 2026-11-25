@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NBAR 공통 처리 문서</title>
+    <style>
+        :root {
+            --navy: #0b2545;
+            --blue: #1d4ed8;
+            --green: #0f8a5f;
+            --ink: #172033;
+            --muted: #64748b;
+            --line: #dbe3ee;
+            --soft: #f4f7fb;
+            --white: #ffffff;
+        }
+
+        * { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            color: var(--ink);
+            background: #eef2f7;
+            font-family: "Malgun Gothic", "Apple SD Gothic Neo", Arial, sans-serif;
+            line-height: 1.65;
+        }
+
+        a { color: inherit; }
+
+        .topbar {
+            min-height: 88px;
+            color: var(--white);
+            background: var(--navy);
+            border-bottom: 4px solid var(--green);
+        }
+
+        .topbar-inner {
+            max-width: 1440px;
+            min-height: 88px;
+            margin: 0 auto;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            min-width: 0;
+            gap: 14px;
+        }
+
+        .brand img {
+            width: 58px;
+            height: 58px;
+            object-fit: contain;
+            background: #fff;
+            border-radius: 6px;
+            padding: 4px;
+        }
+
+        .brand-title {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 0;
+        }
+
+        .brand-subtitle {
+            margin-top: 3px;
+            color: #d7e4f3;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .header-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        .header-links a {
+            padding: 8px 12px;
+            border: 1px solid rgba(255,255,255,.35);
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .header-links a:hover,
+        .header-links a:focus-visible { background: rgba(255,255,255,.12); }
+
+        .layout {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 22px 24px 44px;
+            display: grid;
+            grid-template-columns: 250px minmax(0, 1fr);
+            gap: 20px;
+        }
+
+        .toc {
+            position: sticky;
+            top: 18px;
+            align-self: start;
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: 7px;
+            padding: 18px;
+        }
+
+        .toc strong {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .toc a {
+            display: block;
+            padding: 9px 8px;
+            border-top: 1px solid #edf1f6;
+            color: #334155;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .toc a:hover,
+        .toc a:focus-visible { color: var(--blue); background: #f8fafc; }
+
+        .content { min-width: 0; }
+
+        .scope {
+            margin-bottom: 18px;
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            border-left: 5px solid var(--green);
+            border-radius: 7px;
+            padding: 16px 18px;
+        }
+
+        .scope strong { display: block; margin-bottom: 3px; color: #065f46; }
+
+        .section {
+            margin-bottom: 18px;
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: 7px;
+            overflow: hidden;
+        }
+
+        .section-head {
+            padding: 20px 24px 16px;
+            border-bottom: 1px solid var(--line);
+            background: #fbfcfe;
+        }
+
+        .section-kicker {
+            color: var(--green);
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        h1, h2, h3 { line-height: 1.35; letter-spacing: 0; }
+
+        h2 { margin: 3px 0 0; font-size: 23px; }
+
+        h3 { margin: 0 0 8px; font-size: 17px; }
+
+        .section-body { padding: 22px 24px 26px; }
+
+        .process {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .process-step {
+            min-height: 118px;
+            padding: 16px;
+            border-right: 1px solid var(--line);
+            background: #fff;
+        }
+
+        .process-step:last-child { border-right: 0; }
+
+        .step-no {
+            color: var(--blue);
+            font-size: 12px;
+            font-weight: 900;
+        }
+
+        .process-step strong { display: block; margin: 5px 0; font-size: 15px; }
+
+        .process-step span { color: var(--muted); font-size: 13px; }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .method-box {
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            padding: 18px;
+            background: #fff;
+        }
+
+        /* 허브와 같은 칸 전체 링크: 마우스를 올리면 떠오르고 오른쪽 위 화살표가 채워짐 */
+        .method-card {
+            --accent: var(--blue);
+            position: relative;
+            min-height: 220px;
+            display: flex;
+            flex-direction: column;
+            padding: 24px 22px 22px;
+            color: inherit;
+            text-decoration: none;
+            border-top: 4px solid var(--accent);
+            box-shadow: 0 6px 18px rgba(15, 38, 64, 0.08);
+            transition: box-shadow 0.18s ease, transform 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
+        }
+
+        .method-card.protocol { --accent: var(--green); }
+        .method-card .section-kicker { color: var(--accent); }
+        .method-card h2 { padding-right: 44px; word-break: keep-all; }
+        .method-card p { word-break: keep-all; }
+
+        .method-card:hover,
+        .method-card:focus-visible {
+            border-color: var(--accent);
+            background: color-mix(in srgb, var(--accent) 5%, #ffffff);
+            box-shadow: 0 14px 30px rgba(15, 38, 64, 0.16);
+            transform: translateY(-4px);
+        }
+
+        a.method-card::after {
+            content: "→";
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: #eef2f6;
+            color: #0f172a;
+            font-size: 17px;
+            font-weight: 800;
+            transition: background-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+        }
+
+        a.method-card:hover::after,
+        a.method-card:focus-visible::after {
+            background: var(--accent);
+            color: #ffffff;
+            transform: translateX(3px);
+        }
+
+        a.method-card:active {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(15, 38, 64, 0.12);
+        }
+
+        a.method-card:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px;
+        }
+
+        .method-card .card-state {
+            margin-top: auto;
+            align-self: flex-start;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: #eef2f6;
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .method-box ul { margin: 8px 0 0; padding-left: 20px; }
+
+        .method-box li { margin: 5px 0; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 14px;
+        }
+
+        th, td {
+            padding: 11px 12px;
+            border: 1px solid var(--line);
+            text-align: left;
+            vertical-align: top;
+            font-size: 14px;
+        }
+
+        th { background: var(--soft); font-weight: 800; }
+
+        .formula {
+            margin: 14px 0;
+            padding: 15px 18px;
+            border: 1px solid #bfdbfe;
+            border-left: 5px solid var(--blue);
+            border-radius: 6px;
+            background: #eff6ff;
+            color: #1e3a8a;
+            font-weight: 800;
+        }
+
+        .part-title {
+            margin: 26px 0 12px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--navy);
+            color: var(--navy);
+            font-size: 21px;
+            font-weight: 900;
+        }
+
+        .part-title:first-of-type { margin-top: 0; }
+
+        .stage-map {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .stage-map a {
+            min-height: 92px;
+            padding: 15px 16px;
+            border: 1px solid var(--line);
+            border-top: 4px solid var(--blue);
+            border-radius: 6px;
+            background: #fff;
+            text-decoration: none;
+        }
+
+        .stage-map.result a { border-top-color: var(--green); }
+
+        .stage-map span {
+            display: block;
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .stage-map strong {
+            display: block;
+            margin-top: 4px;
+            font-size: 16px;
+        }
+
+        .summary-line {
+            margin: 0 0 16px;
+            color: #334155;
+            font-size: 15px;
+        }
+
+        .formula-group {
+            margin-top: 18px;
+            border: 1px solid #bfdbfe;
+            border-radius: 7px;
+            overflow: hidden;
+            background: #f8fbff;
+        }
+
+        .formula-group > strong {
+            display: block;
+            padding: 10px 14px;
+            color: #1e3a8a;
+            background: #dbeafe;
+            font-size: 14px;
+        }
+
+        .eq {
+            padding: 13px 16px;
+            border-top: 1px solid #dbeafe;
+            color: #172554;
+            overflow-x: auto;
+        }
+
+        .eq:first-of-type { border-top: 0; }
+
+        .eq-label {
+            display: block;
+            margin-bottom: 4px;
+            color: #475569;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .math {
+            display: block;
+            white-space: nowrap;
+            font-family: Cambria, "Times New Roman", serif;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 0;
+        }
+
+        .definition-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .definition-grid div {
+            padding: 10px 12px;
+            border: 1px solid var(--line);
+            border-radius: 5px;
+            background: #fff;
+            color: #475569;
+            font-size: 13px;
+        }
+
+        .definition-grid b { color: var(--ink); }
+
+        details.kernel {
+            margin-top: 12px;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            background: #fff;
+        }
+
+        details.kernel summary {
+            padding: 11px 14px;
+            cursor: pointer;
+            font-weight: 800;
+        }
+
+        details.kernel .kernel-body { padding: 0 14px 14px; }
+
+        .caution {
+            margin-top: 14px;
+            padding: 14px 16px;
+            border-left: 4px solid #d97706;
+            background: #fffbeb;
+            color: #78350f;
+            font-size: 14px;
+        }
+
+        footer {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 24px 28px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        @media (max-width: 980px) {
+            .layout { grid-template-columns: 1fr; }
+            .toc { position: static; }
+            .process { grid-template-columns: 1fr; }
+            .stage-map { grid-template-columns: 1fr; }
+            .definition-grid { grid-template-columns: 1fr 1fr; }
+            .process-step { min-height: 0; border-right: 0; border-bottom: 1px solid var(--line); }
+            .process-step:last-child { border-bottom: 0; }
+        }
+
+        @media (max-width: 720px) {
+            .topbar-inner { align-items: flex-start; flex-direction: column; padding: 14px 16px; }
+            .brand-title { font-size: 20px; }
+            .layout { padding: 12px; }
+            .two-col { grid-template-columns: 1fr; }
+            .definition-grid { grid-template-columns: 1fr; }
+            .section-head, .section-body { padding-left: 18px; padding-right: 18px; }
+            .header-links { justify-content: flex-start; }
+            .table-scroll { overflow-x: auto; }
+            table { min-width: 680px; }
+        }
+    </style>
+</head>
+<body>
+<header class="topbar">
+    <div class="topbar-inner">
+        <div class="brand">
+            <img src="../assets/pnu_logo.webp" alt="부산대학교 로고">
+            <div>
+                <div class="brand-title">NBAR 공통 처리 문서</div>
+                <div class="brand-subtitle">드론 현장관측 프로토콜과 전처리 방법을 독립된 문서로 관리</div>
+            </div>
+        </div>
+        <nav class="header-links" aria-label="관련 페이지">
+            <a href="../field_observation.html">현장 결과 현황</a>
+        </nav>
+    </div>
+</header>
+
+<main class="content" style="max-width:1100px;margin:0 auto;padding:28px 24px 48px">
+    <div class="scope">
+        <strong>공통 문서를 두 가지로 구분했습니다</strong>
+        드론 현장관측 절차를 정리한 프로토콜과 원영상의 전처리 과정을 각각 선택해 확인할 수 있습니다.
+    </div>
+    <div class="two-col">
+        <div class="method-box method-card protocol" aria-disabled="true">
+            <div class="section-kicker">01</div>
+            <h2>드론 현장관측 프로토콜</h2>
+            <p>현장 관측 준비, 장비 구성, 비행·지상 측정 순서와 기록 방법</p>
+            <span class="card-state">문서 준비 중</span>
+        </div>
+        <a class="method-box method-card" href="field_data_preprocessing_method.html">
+            <div class="section-kicker">02</div>
+            <h2>UAV 다분광 데이터 전처리</h2>
+            <p>DN → Radiance, 밴드 정합, 센서 간 교정, Ed 정규화, ELC 반사도 변환, 정사투영 및 BRDF 입력자료 구성</p>
+        </a>
+    </div>
+</main>
+
+<footer>NBAR 공통 처리 문서 · 드론 현장관측 프로토콜과 전처리 방법서를 분리 관리</footer>
+</body>
+</html>
