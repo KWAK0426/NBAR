@@ -410,7 +410,7 @@ window.NBAR_OBSERVATIONS = [
         title: "[나지] - 농업위성센터",
         agency: "부산대",
         html: "reports/2026-06-10_nias_bare/index.html",
-        reportComplete: false,
+        reportComplete: true,
         status: "보고서 작성 중",
         statusClass: "progress",
         processing: [
