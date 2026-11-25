@@ -409,7 +409,8 @@ window.NBAR_OBSERVATIONS = [
         imageCount: 7679,
         title: "[나지] - 농업위성센터",
         agency: "부산대",
-        html: "reports/2026-06-10_field_result_report.html",
+        html: "reports/2026-06-10_nias_bare/index.html",
+        reportComplete: false,
         status: "보고서 작성 중",
         statusClass: "progress",
         processing: [
