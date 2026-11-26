@@ -1918,14 +1918,16 @@
         });
     }
 
-    // 필터에 맞는 관측을 날짜(같은 날이면 대상지) 순으로 정렬한다.
+    // 필터에 맞는 관측을 날짜(같은 날이면 대상지) 순으로 정렬하고, 논(농지) 관측을 맨 앞에 모은다.
     function filteredEntries() {
         const entries = observations
             .map((item, index) => ({ item, index }))
             .filter(({ item }) => coverFilter === ALL_FILTER || item.coverType === coverFilter)
             .filter(({ item }) => agencyFilter === ALL_FILTER || item.agency === agencyFilter)
             .sort((a, b) => `${a.item.date} ${a.item.site}`.localeCompare(`${b.item.date} ${b.item.site}`));
-        return dateOrder === "desc" ? entries.reverse() : entries;
+        if (dateOrder === "desc") entries.reverse();
+        const paddyFirst = ({ item }) => (item.coverType === "농지" ? 0 : 1);
+        return entries.sort((a, b) => paddyFirst(a) - paddyFirst(b));
     }
 
     function defaultIndex(entries) {
